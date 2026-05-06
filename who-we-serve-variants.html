@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who We Work With — variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --accent:#4de5c4;--accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  /* real client photos from mindsetdrm CDN */
+  --cloe:'https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png';
+  --coach:'https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png';
+  --hp:'https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png';
+  --watts:'https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png';
+  --ziglar:'https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png';
+  /* industry imagery */
+  --broadcast:'https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80';
+  --production:'https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80';
+  --newsroom:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80';
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1100px circle at 10% 10%,rgba(77,229,196,0.22),transparent 55%),radial-gradient(900px circle at 90% 90%,rgba(31,197,163,0.18),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.topbar{max-width:1400px;margin:0 auto;padding:32px 32px 12px;display:flex;justify-content:space-between;align-items:center}
+.topbar .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+h1.page-title{max-width:1400px;margin:16px auto 10px;padding:0 32px;font-size:2.4rem;font-weight:600;letter-spacing:-0.025em}
+.page-sub{max-width:1400px;margin:0 auto 56px;padding:0 32px;color:var(--text-mute);font-size:1.1rem;max-width:80ch}
+.variant-wrap{max-width:1400px;margin:0 auto;padding:56px 32px 40px;border-top:1px solid var(--line)}
+.variant-wrap:first-of-type{border-top:none}
+.variant-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;gap:20px;flex-wrap:wrap}
+.variant-head h2{font-size:1.6rem;font-weight:600;letter-spacing:-0.02em}
+.variant-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.variant-head .pick{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--accent);color:var(--accent);cursor:pointer;background:transparent;border-radius:3px;transition:all .2s ease}
+.variant-head .pick:hover{background:var(--accent);color:var(--bg)}
+.section-h{margin-bottom:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+@media(max-width:860px){.section-h{grid-template-columns:1fr;gap:16px}}
+.section-h h3{font-size:clamp(2rem,3.6vw,3.2rem);font-weight:500;letter-spacing:-0.025em;line-height:1;margin-bottom:8px}
+.section-h p{color:var(--text-mute);font-size:0.98rem}
+
+/* ========= V1: Current — 3 columns, 3-face split per card ========= */
+.w1{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+@media(max-width:860px){.w1{grid-template-columns:1fr}}
+.w1-card{padding:44px 32px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.w1-card:last-child{border-right:none}
+.w1-faces{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;height:220px;border-radius:3px;overflow:hidden;border:1px solid var(--line-strong)}
+.w1-face{position:relative;background-size:cover;background-position:center top;filter:saturate(1.1);border-right:1px solid var(--line-strong);display:flex;flex-direction:column;justify-content:flex-end;padding:10px;overflow:hidden}
+.w1-face:last-child{border-right:none}
+.w1-face::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(18,19,26,0.85) 100%)}
+.w1-face > *{position:relative;z-index:1}
+.w1-face-name{font-size:0.78rem;font-weight:600;color:var(--text);line-height:1.2}
+.w1-face-role{font-family:var(--mono);font-size:0.58rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
+.w1-idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--text-mute);margin-top:6px}
+.w1-name{font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:500;letter-spacing:-0.02em;line-height:1.1}
+.w1-desc{color:var(--text-mute);font-size:0.95rem;line-height:1.5}
+
+/* ========= V2: Stacked horizontal rows ========= */
+.w2{display:flex;flex-direction:column;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.w2-row{display:grid;grid-template-columns:300px 1fr auto;gap:36px;padding:28px 32px;background:var(--bg-card);border-bottom:1px solid var(--line);align-items:center;transition:background .3s ease}
+@media(max-width:860px){.w2-row{grid-template-columns:1fr;gap:16px}}
+.w2-row:last-child{border-bottom:none}
+.w2-row:hover{background:var(--bg-lift)}
+.w2-faces{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;height:100px;border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.w2-face{position:relative;background-size:cover;background-position:center top;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;padding:6px;overflow:hidden}
+.w2-face:last-child{border-right:none}
+.w2-face::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(18,19,26,0.85))}
+.w2-face span{position:relative;z-index:1;font-family:var(--mono);font-size:0.58rem;color:#fff;letter-spacing:0.08em;text-transform:uppercase}
+.w2-body .idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--accent);margin-bottom:6px}
+.w2-body .name{font-size:1.4rem;font-weight:600;letter-spacing:-0.015em;margin-bottom:8px}
+.w2-body .desc{color:var(--text-mute);font-size:0.95rem;line-height:1.5;max-width:55ch}
+.w2-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.w2-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 8px;border:1px solid var(--line);color:var(--text-mute);border-radius:2px;text-transform:uppercase}
+
+/* ========= V3: Interactive tabs — click audience to see detail ========= */
+.w3{border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;background:var(--bg-card)}
+.w3-tabs{display:grid;grid-template-columns:repeat(3,1fr);background:rgba(0,0,0,0.2);border-bottom:1px solid var(--line)}
+@media(max-width:760px){.w3-tabs{grid-template-columns:1fr}}
+.w3-tab{padding:24px;border-right:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:all .2s ease;border-bottom:3px solid transparent}
+.w3-tab:last-child{border-right:none}
+.w3-tab:hover{background:rgba(77,229,196,0.04)}
+.w3-tab.active{background:var(--bg-card);border-bottom-color:var(--accent)}
+.w3-tab .idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--accent)}
+.w3-tab .name{font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text-mute)}
+.w3-tab.active .name{color:var(--text)}
+.w3-body{padding:40px;display:grid;grid-template-columns:2fr 1fr;gap:40px;min-height:380px}
+@media(max-width:860px){.w3-body{grid-template-columns:1fr}}
+.w3-faces-big{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;height:320px;border-radius:3px;overflow:hidden}
+.w3-face-big{position:relative;background-size:cover;background-position:center top;border-radius:3px;overflow:hidden;transition:all .3s ease}
+.w3-face-big:hover{transform:scale(1.02)}
+.w3-face-big::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(18,19,26,0.88))}
+.w3-face-big .lbl{position:absolute;bottom:14px;left:14px;right:14px;z-index:1}
+.w3-face-big .lbl .n{font-size:0.95rem;font-weight:600;color:#fff;line-height:1.2}
+.w3-face-big .lbl .r{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;margin-top:3px;display:block}
+.w3-detail{display:flex;flex-direction:column;gap:16px}
+.w3-detail h4{font-size:1.8rem;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+.w3-detail p{color:var(--text-mute);font-size:1rem;line-height:1.6}
+.w3-detail .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+/* ========= V4: Logo wall + metric badges ========= */
+.w4{display:grid;grid-template-columns:1.4fr 1fr;gap:32px}
+@media(max-width:860px){.w4{grid-template-columns:1fr}}
+.w4-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:520px){.w4-wall{grid-template-columns:repeat(2,1fr)}}
+.w4-tile{aspect-ratio:1;background-size:cover;background-position:center top;border-radius:3px;border:1px solid var(--line);position:relative;overflow:hidden;transition:all .3s ease;cursor:pointer}
+.w4-tile:hover{border-color:var(--accent);transform:translateY(-2px)}
+.w4-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(18,19,26,0.9))}
+.w4-tile .nm{position:absolute;bottom:8px;left:10px;right:10px;z-index:1;font-size:0.72rem;font-weight:500;color:#fff;line-height:1.2}
+.w4-right{display:flex;flex-direction:column;gap:12px}
+.w4-stat{padding:24px;border:1px solid var(--line);background:var(--bg-card);border-radius:3px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s ease}
+.w4-stat:hover{border-color:var(--accent-dim)}
+.w4-stat .v{font-size:2.4rem;font-weight:600;color:var(--accent);letter-spacing:-0.02em;line-height:0.95}
+.w4-stat .l{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute)}
+.w4-stat .d{font-size:0.9rem;color:var(--text-mute);line-height:1.45;margin-top:4px}
+
+/* ========= V5: Testimonial-first — featured quote per audience ========= */
+.w5{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line-strong)}
+@media(max-width:860px){.w5{grid-template-columns:1fr}}
+.w5-card{background:var(--bg-card);padding:36px 32px;display:flex;flex-direction:column;gap:20px}
+.w5-audience{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);display:flex;gap:10px}
+.w5-q{font-size:1.15rem;line-height:1.5;color:var(--text);font-style:italic;min-height:140px}
+.w5-attrib{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.w5-photo{width:48px;height:48px;border-radius:50%;background-size:cover;background-position:center top;border:1.5px solid var(--accent);flex-shrink:0}
+.w5-attrib-name{font-size:0.95rem;font-weight:600}
+.w5-attrib-role{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:2px}
+
+/* ========= V6: Grid of all 9 people at once ========= */
+.w6-head{margin-bottom:24px;text-align:center}
+.w6-head h3{font-size:clamp(2.4rem,4vw,3.4rem);font-weight:500;letter-spacing:-0.03em;line-height:1}
+.w6-head p{color:var(--text-mute);margin-top:8px}
+.w6{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:2px;border:1px solid var(--line)}
+@media(max-width:860px){.w6{grid-template-columns:repeat(2,1fr)}}
+.w6-tile{aspect-ratio:4/5;background-size:cover;background-position:center top;position:relative;overflow:hidden;transition:transform .3s ease;cursor:pointer}
+.w6-tile:hover{transform:scale(1.02)}
+.w6-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(18,19,26,0.92))}
+.w6-tile .meta{position:absolute;inset:0;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;z-index:1;gap:4px}
+.w6-tile .cat{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase}
+.w6-tile .nm{font-size:1.2rem;font-weight:600;color:#fff;line-height:1.2}
+.w6-tile .rl{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--text-mute);text-transform:uppercase}
+
+/* ========= V7: Vertical timeline / pathway ========= */
+.w7{position:relative;padding-left:48px;display:flex;flex-direction:column;gap:32px}
+.w7::before{content:"";position:absolute;left:16px;top:20px;bottom:20px;width:2px;background:linear-gradient(180deg,var(--accent) 0%,var(--accent-dim) 50%,transparent 100%);opacity:0.4}
+.w7-node{position:relative;border:1px solid var(--line-strong);border-radius:4px;background:var(--bg-card);padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:36px;transition:all .3s ease}
+@media(max-width:760px){.w7-node{grid-template-columns:1fr}}
+.w7-node:hover{border-color:var(--accent-dim);transform:translateX(4px)}
+.w7-node::before{content:"";position:absolute;left:-40px;top:32px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);z-index:1}
+.w7-node::after{content:attr(data-step);position:absolute;left:-55px;top:60px;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase}
+.w7-body h4{font-size:1.5rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px}
+.w7-body p{color:var(--text-mute);font-size:0.97rem;line-height:1.55;max-width:55ch}
+.w7-faces{display:flex;gap:-8px}
+.w7-faces .face{width:56px;height:56px;border-radius:50%;background-size:cover;background-position:center top;border:2px solid var(--bg-card);margin-left:-14px}
+.w7-faces .face:first-child{margin-left:0}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/" class="mark">rightset<sup style="font-size:8px;font-family:var(--mono)">®</sup></a>
+  <a href="/" class="back">← Back to home</a>
+</div>
+<h1 class="page-title">Who We Work With &mdash; pick a layout</h1>
+<p class="page-sub">Seven different ways to present Creators &middot; Brands &amp; Media &middot; Rightsholders &amp; Estates. Click <strong>Pick V#</strong> to copy the choice.</p>
+
+<!-- V1 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 01</span><h2 style="margin-top:6px">3 columns, 3-face split per card (CURRENT)</h2></div><button class="pick">Pick V1</button></div>
+  <div class="section-h"><div><div class="kicker">§ Our clients</div><h3>Who we work with.</h3></div><p>Three groups of rightsholders.</p></div>
+  <div class="w1">
+    <div class="w1-card">
+      <div class="w1-faces">
+        <div class="w1-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"><span class="w1-face-name">Cloe Couture</span><span class="w1-face-role">Creator</span></div>
+        <div class="w1-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png')"><span class="w1-face-name">Coach Pain</span><span class="w1-face-role">Speaker</span></div>
+        <div class="w1-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png')"><span class="w1-face-name">High Performance</span><span class="w1-face-role">Podcast</span></div>
+      </div>
+      <span class="w1-idx">01 / CREATORS</span>
+      <h4 class="w1-name">Creators &amp; Speakers</h4>
+      <p class="w1-desc">YouTubers, streamers, podcasters, and speakers. We claim every re-upload and pay you monthly.</p>
+    </div>
+    <div class="w1-card">
+      <div class="w1-faces">
+        <div class="w1-face" style="background-image:url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80')"><span class="w1-face-name">Broadcast</span><span class="w1-face-role">Networks</span></div>
+        <div class="w1-face" style="background-image:url('https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80')"><span class="w1-face-name">Production</span><span class="w1-face-role">Studios</span></div>
+        <div class="w1-face" style="background-image:url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80')"><span class="w1-face-name">Newsroom</span><span class="w1-face-role">Publishers</span></div>
+      </div>
+      <span class="w1-idx">02 / BRANDS &amp; MEDIA</span>
+      <h4 class="w1-name">Brands &amp; Media</h4>
+      <p class="w1-desc">Networks, studios, publishers, and sports leagues. Enterprise-grade claim management across the portfolio.</p>
+    </div>
+    <div class="w1-card">
+      <div class="w1-faces">
+        <div class="w1-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"><span class="w1-face-name">Alan Watts</span><span class="w1-face-role">Estate</span></div>
+        <div class="w1-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png')"><span class="w1-face-name">Zig Ziglar</span><span class="w1-face-role">Estate</span></div>
+        <div class="w1-face" style="background-image:linear-gradient(180deg,#0a0e1a,#1b2030)"><span class="w1-face-name">Jim Rohn</span><span class="w1-face-role">Estate</span></div>
+      </div>
+      <span class="w1-idx">03 / RIGHTSHOLDERS</span>
+      <h4 class="w1-name">Rightsholders &amp; Estates</h4>
+      <p class="w1-desc">Family estates, documentary libraries, legacy archives. We wake up dormant IP into recurring monthly revenue.</p>
+    </div>
+  </div>
+</section>
+
+<!-- V2 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 02</span><h2 style="margin-top:6px">Stacked horizontal rows (one per audience)</h2></div><button class="pick">Pick V2</button></div>
+  <div class="section-h"><div><div class="kicker">§ Our clients</div><h3>Three audiences.</h3></div><p>Each gets its own row with client faces, tags, and a one-line pitch.</p></div>
+  <div class="w2">
+    <div class="w2-row">
+      <div class="w2-faces">
+        <div class="w2-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"><span>Cloe</span></div>
+        <div class="w2-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png')"><span>Pain</span></div>
+        <div class="w2-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png')"><span>HP</span></div>
+      </div>
+      <div class="w2-body">
+        <div class="idx">01 &middot; CREATORS &amp; SPEAKERS</div>
+        <div class="name">Individual creators &amp; speakers.</div>
+        <p class="desc">YouTubers, streamers, podcasters, dancers, keynote speakers. We claim every re-upload and pay monthly.</p>
+      </div>
+      <div class="w2-tags"><span class="w2-tag">YouTubers</span><span class="w2-tag">Podcasters</span><span class="w2-tag">Speakers</span></div>
+    </div>
+    <div class="w2-row">
+      <div class="w2-faces">
+        <div class="w2-face" style="background-image:url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80')"><span>NET</span></div>
+        <div class="w2-face" style="background-image:url('https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80')"><span>STU</span></div>
+        <div class="w2-face" style="background-image:url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80')"><span>PUB</span></div>
+      </div>
+      <div class="w2-body">
+        <div class="idx">02 &middot; BRANDS &amp; MEDIA</div>
+        <div class="name">Enterprise media organizations.</div>
+        <p class="desc">Networks, studios, digital publishers, sports leagues. Enterprise claim management across the full portfolio.</p>
+      </div>
+      <div class="w2-tags"><span class="w2-tag">Networks</span><span class="w2-tag">Studios</span><span class="w2-tag">Publishers</span></div>
+    </div>
+    <div class="w2-row">
+      <div class="w2-faces">
+        <div class="w2-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"><span>AW</span></div>
+        <div class="w2-face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png')"><span>ZZ</span></div>
+        <div class="w2-face" style="background-image:linear-gradient(180deg,#0a0e1a,#1b2030)"><span>JR</span></div>
+      </div>
+      <div class="w2-body">
+        <div class="idx">03 &middot; RIGHTSHOLDERS &amp; ESTATES</div>
+        <div class="name">Legacy catalogs &amp; family estates.</div>
+        <p class="desc">Family estates, documentary libraries, legacy archives. Dormant IP into recurring monthly revenue.</p>
+      </div>
+      <div class="w2-tags"><span class="w2-tag">Estates</span><span class="w2-tag">Archives</span><span class="w2-tag">Legacy</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- V3 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 03</span><h2 style="margin-top:6px">Interactive tabs &mdash; click audience to drill in</h2></div><button class="pick">Pick V3</button></div>
+  <div class="section-h"><div><div class="kicker">§ Our clients</div><h3>Who we work with.</h3></div><p>One audience at a time, with big client portraits.</p></div>
+  <div class="w3" id="w3">
+    <div class="w3-tabs">
+      <div class="w3-tab active" data-i="0"><span class="idx">01</span><span class="name">Creators &amp; Speakers</span></div>
+      <div class="w3-tab" data-i="1"><span class="idx">02</span><span class="name">Brands &amp; Media</span></div>
+      <div class="w3-tab" data-i="2"><span class="idx">03</span><span class="name">Rightsholders &amp; Estates</span></div>
+    </div>
+    <div class="w3-body">
+      <div class="w3-faces-big" id="w3-faces"></div>
+      <div class="w3-detail">
+        <h4 id="w3-name">Creators &amp; Speakers</h4>
+        <p id="w3-desc">YouTubers, streamers, podcasters, dancers, and keynote speakers whose clips, reactions, and foreign-language cuts show up everywhere except their own channel. We turn that off-channel distribution into a monthly check.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V4 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 04</span><h2 style="margin-top:6px">Client portrait wall + metric summary</h2></div><button class="pick">Pick V4</button></div>
+  <div class="section-h"><div><div class="kicker">§ Our clients</div><h3>Portraits + numbers.</h3></div><p>The faces of our roster, alongside the totals that matter.</p></div>
+  <div class="w4">
+    <div class="w4-wall">
+      <div class="w4-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"><span class="nm">Cloe Couture</span></div>
+      <div class="w4-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png')"><span class="nm">Coach Pain</span></div>
+      <div class="w4-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png')"><span class="nm">High Performance</span></div>
+      <div class="w4-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"><span class="nm">Alan Watts estate</span></div>
+      <div class="w4-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png')"><span class="nm">Zig Ziglar estate</span></div>
+      <div class="w4-tile" style="background-image:url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80')"><span class="nm">Broadcast networks</span></div>
+      <div class="w4-tile" style="background-image:url('https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80')"><span class="nm">Film studios</span></div>
+      <div class="w4-tile" style="background-image:url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80')"><span class="nm">Digital publishers</span></div>
+    </div>
+    <div class="w4-right">
+      <div class="w4-stat"><div class="v">01</div><div class="l">Creators &amp; Speakers</div><div class="d">Individual rightsholders &mdash; from creators to keynote speakers.</div></div>
+      <div class="w4-stat"><div class="v">02</div><div class="l">Brands &amp; Media</div><div class="d">Networks, studios, digital publishers, sports leagues.</div></div>
+      <div class="w4-stat"><div class="v">03</div><div class="l">Rightsholders &amp; Estates</div><div class="d">Family estates, documentary libraries, legacy archives.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V5 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 05</span><h2 style="margin-top:6px">Testimonial-first &mdash; one quote per audience</h2></div><button class="pick">Pick V5</button></div>
+  <div class="section-h"><div><div class="kicker">§ Our clients</div><h3>The words of the people we work with.</h3></div><p>Three audiences, each represented by a client voice.</p></div>
+  <div class="w5">
+    <div class="w5-card">
+      <span class="w5-audience"><span>01</span><span>Creators</span></span>
+      <p class="w5-q">&ldquo;My clips were everywhere except my own channel. Rightset auto-claims matches, and the dispute team handles the edge cases.&rdquo;</p>
+      <div class="w5-attrib"><div class="w5-photo" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"></div><div><div class="w5-attrib-name">Cloe Couture</div><div class="w5-attrib-role">Content creator</div></div></div>
+    </div>
+    <div class="w5-card">
+      <span class="w5-audience"><span>02</span><span>Brands &amp; Media</span></span>
+      <p class="w5-q">&ldquo;Enterprise-grade claim management, SSO, API access, human-reviewed disputes across the full portfolio.&rdquo;</p>
+      <div class="w5-attrib"><div class="w5-photo" style="background-image:url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80')"></div><div><div class="w5-attrib-name">Media partner</div><div class="w5-attrib-role">Broadcast network</div></div></div>
+    </div>
+    <div class="w5-card">
+      <span class="w5-audience"><span>03</span><span>Rightsholders</span></span>
+      <p class="w5-q">&ldquo;Thousands of channels were using estate content without permission. Rightset took us from zero visibility to full control in under a year.&rdquo;</p>
+      <div class="w5-attrib"><div class="w5-photo" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"></div><div><div class="w5-attrib-name">Alan Watts estate</div><div class="w5-attrib-role">Family estate &middot; IP owner</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V6 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 06</span><h2 style="margin-top:6px">All 9 clients at once (client-first grid)</h2></div><button class="pick">Pick V6</button></div>
+  <div class="w6-head"><div class="kicker" style="justify-content:center">§ Our clients</div><h3>Who we work with.</h3><p>Every client, every face. Audience labels on each tile.</p></div>
+  <div class="w6">
+    <div class="w6-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"><div class="meta"><span class="cat">Creator</span><span class="nm">Cloe Couture</span><span class="rl">YouTube &middot; TikTok</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png')"><div class="meta"><span class="cat">Speaker</span><span class="nm">Coach Pain</span><span class="rl">Motivational</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png')"><div class="meta"><span class="cat">Podcast</span><span class="nm">High Performance</span><span class="rl">Podcast</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80')"><div class="meta"><span class="cat">Brand</span><span class="nm">Broadcast networks</span><span class="rl">Sports &amp; News</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80')"><div class="meta"><span class="cat">Studio</span><span class="nm">Film studios</span><span class="rl">TV &amp; film</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80')"><div class="meta"><span class="cat">Media</span><span class="nm">Digital publishers</span><span class="rl">News &amp; editorial</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"><div class="meta"><span class="cat">Estate</span><span class="nm">Alan Watts</span><span class="rl">Philosophy archive</span></div></div>
+    <div class="w6-tile" style="background-image:url('https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png')"><div class="meta"><span class="cat">Estate</span><span class="nm">Zig Ziglar</span><span class="rl">Motivational library</span></div></div>
+    <div class="w6-tile" style="background-image:linear-gradient(180deg,#0a0e1a,#1b2030)"><div class="meta"><span class="cat">Estate</span><span class="nm">Jim Rohn</span><span class="rl">SUCCESS library</span></div></div>
+  </div>
+</section>
+
+<!-- V7 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 07</span><h2 style="margin-top:6px">Vertical pathway / timeline (process feel)</h2></div><button class="pick">Pick V7</button></div>
+  <div class="section-h"><div><div class="kicker">§ Our clients</div><h3>From one creator to a catalog.</h3></div><p>Linear, progressive read &mdash; like a journey through our audience types.</p></div>
+  <div class="w7">
+    <div class="w7-node" data-step="Audience 01">
+      <div class="w7-body">
+        <h4>Creators &amp; Speakers</h4>
+        <p>YouTubers, streamers, podcasters, and keynote speakers &mdash; individual rightsholders whose clips, reactions, and foreign-language cuts show up everywhere.</p>
+      </div>
+      <div class="w7-faces">
+        <span class="face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"></span>
+        <span class="face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png')"></span>
+        <span class="face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png')"></span>
+      </div>
+    </div>
+    <div class="w7-node" data-step="Audience 02">
+      <div class="w7-body">
+        <h4>Brands &amp; Media</h4>
+        <p>Networks, studios, digital publishers, and sports leagues with multi-channel catalogs. Enterprise-grade claim management, SSO, API, SLA across the full portfolio.</p>
+      </div>
+      <div class="w7-faces">
+        <span class="face" style="background-image:url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80')"></span>
+        <span class="face" style="background-image:url('https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80')"></span>
+        <span class="face" style="background-image:url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80')"></span>
+      </div>
+    </div>
+    <div class="w7-node" data-step="Audience 03">
+      <div class="w7-body">
+        <h4>Rightsholders &amp; Estates</h4>
+        <p>Family estates, documentary libraries, and legacy archives. We digitize, fingerprint, and wake up decades of IP that had gone quiet into recurring monthly revenue.</p>
+      </div>
+      <div class="w7-faces">
+        <span class="face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"></span>
+        <span class="face" style="background-image:url('https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png')"></span>
+        <span class="face" style="background-image:linear-gradient(180deg,#0a0e1a,#1b2030)"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.pick').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var n=btn.textContent.replace(/[^0-9]/g,'');
+    navigator.clipboard.writeText('Clients V'+n).then(function(){
+      var orig=btn.textContent;btn.textContent='Copied — tell me "Clients V'+n+'"';
+      setTimeout(function(){btn.textContent=orig},2400);
+    });
+  });
+});
+// V3 tabs
+var w3data=[
+  {n:'Creators & Speakers',d:'YouTubers, streamers, podcasters, dancers, and keynote speakers whose clips, reactions, and foreign-language cuts show up everywhere except their own channel. We turn that off-channel distribution into a monthly check.',faces:[['https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png','Cloe Couture','Creator'],['https://mindsetdrm.com/lovable-uploads/1af06f14-7429-4168-946d-e72c3191bb1f.png','Coach Pain','Speaker'],['https://mindsetdrm.com/lovable-uploads/889e60d9-7a32-4923-a04a-791b063f9cfb.png','High Performance','Podcast']]},
+  {n:'Brands & Media',d:'Networks, studios, digital publishers, and sports leagues with multi-channel catalogs. Enterprise-grade claim management, SSO, API access, and human-reviewed dispute handling across the full portfolio.',faces:[['https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=800&q=80','Broadcast networks','Networks'],['https://images.unsplash.com/photo-1627483262769-04d0a1401487?auto=format&fit=crop&w=800&q=80','Film studios','Studios'],['https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80','Digital publishers','News']]},
+  {n:'Rightsholders & Estates',d:'Family estates, documentary libraries, and legacy archives. We digitize, fingerprint, and wake up decades of IP that had gone quiet — turning it into a recurring monthly payout with full analytics.',faces:[['https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png','Alan Watts','Estate'],['https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png','Zig Ziglar','Estate'],['linear-gradient(180deg,#0a0e1a,#1b2030)','Jim Rohn','Estate']]}
+];
+function renderW3(i){
+  var d=w3data[i];
+  document.getElementById('w3-name').textContent=d.n;
+  document.getElementById('w3-desc').textContent=d.d;
+  var faces=document.getElementById('w3-faces');
+  faces.innerHTML='';
+  d.faces.forEach(function(f){
+    var el=document.createElement('div');
+    el.className='w3-face-big';
+    el.style.backgroundImage=f[0].startsWith('linear')?f[0]:'url('+f[0]+')';
+    el.innerHTML='<div class="lbl"><span class="n">'+f[1]+'</span><span class="r">'+f[2]+'</span></div>';
+    faces.appendChild(el);
+  });
+}
+renderW3(0);
+document.querySelectorAll('#w3 .w3-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('#w3 .w3-tab').forEach(function(x){x.classList.remove('active')});
+    tab.classList.add('active');
+    renderW3(parseInt(tab.dataset.i,10));
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources section variants — pick one</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --accent:#4de5c4;--accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --img1:'https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=800&q=80';
+  --img2:'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80';
+  --img3:'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80';
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1100px circle at 10% 10%,rgba(77,229,196,0.22),transparent 55%),radial-gradient(900px circle at 90% 90%,rgba(31,197,163,0.18),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.topbar{max-width:1400px;margin:0 auto;padding:32px 32px 12px;display:flex;justify-content:space-between;align-items:center}
+.topbar .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+h1.page-title{max-width:1400px;margin:16px auto 10px;padding:0 32px;font-size:2.4rem;font-weight:600;letter-spacing:-0.025em}
+.page-sub{max-width:1400px;margin:0 auto 56px;padding:0 32px;color:var(--text-mute);font-size:1.1rem;max-width:80ch}
+.variant-wrap{max-width:1400px;margin:0 auto;padding:56px 32px 40px;border-top:1px solid var(--line)}
+.variant-wrap:first-of-type{border-top:none}
+.variant-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;gap:20px;flex-wrap:wrap}
+.variant-head h2{font-size:1.6rem;font-weight:600;letter-spacing:-0.02em}
+.variant-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.variant-head .pick{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--accent);color:var(--accent);cursor:pointer;background:transparent;border-radius:3px;transition:all .2s ease}
+.variant-head .pick:hover{background:var(--accent);color:var(--bg)}
+.section-h{margin-bottom:32px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+@media(max-width:860px){.section-h{grid-template-columns:1fr;gap:16px}}
+.section-h h3{font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:500;letter-spacing:-0.03em;line-height:1;margin-bottom:10px}
+.section-h p{color:var(--text-mute);font-size:1.05rem;max-width:50ch}
+
+/* ============ V1 — Current: 3 cards with images ============ */
+.r1{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:860px){.r1{grid-template-columns:1fr}}
+.r1-card{background:var(--bg-card);display:flex;flex-direction:column;overflow:hidden;transition:background .3s ease;cursor:pointer}
+.r1-card:hover{background:var(--bg-lift)}
+.r1-img{height:200px;background-size:cover;background-position:center;position:relative}
+.r1-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(15,20,24,0.5))}
+.r1-body{padding:28px;display:flex;flex-direction:column;gap:14px;flex:1}
+.r1-meta{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);display:flex;gap:12px}
+.r1-title{font-size:1.3rem;font-weight:500;line-height:1.25;letter-spacing:-0.015em;transition:color .3s ease}
+.r1-card:hover .r1-title{color:var(--accent)}
+.r1-desc{color:var(--text-mute);font-size:0.97rem;line-height:1.5;flex:1}
+.r1-read{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-top:8px}
+
+/* ============ V2 — Editorial list, big featured + 2 mini ============ */
+.r2{display:grid;grid-template-columns:1.6fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:860px){.r2{grid-template-columns:1fr}}
+.r2-hero{background:var(--bg-card);padding:0;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;transition:background .3s ease}
+.r2-hero:hover{background:var(--bg-lift)}
+.r2-hero .img{height:360px;background-size:cover;background-position:center;position:relative}
+.r2-hero .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(15,20,24,0.7))}
+.r2-hero .body{padding:36px 32px;display:flex;flex-direction:column;gap:14px}
+.r2-hero .title{font-size:1.85rem;font-weight:500;letter-spacing:-0.02em;line-height:1.15}
+.r2-hero .desc{color:var(--text-mute);font-size:1rem;line-height:1.55}
+.r2-hero .meta{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);display:flex;gap:12px}
+.r2-side{display:flex;flex-direction:column}
+.r2-mini{background:var(--bg-card);padding:28px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line);flex:1;cursor:pointer;transition:background .3s ease}
+.r2-mini:last-child{border-bottom:none}
+.r2-mini:hover{background:var(--bg-lift)}
+.r2-mini .meta{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.r2-mini .title{font-size:1.2rem;font-weight:500;line-height:1.25;letter-spacing:-0.01em}
+.r2-mini .desc{color:var(--text-mute);font-size:0.93rem;line-height:1.55;flex:1}
+
+/* ============ V3 — Compact list (no images, editorial) ============ */
+.r3{border:1px solid var(--line-strong);border-radius:4px;background:var(--bg-card);overflow:hidden}
+.r3-item{display:grid;grid-template-columns:auto 1fr auto auto;gap:32px;align-items:center;padding:28px 32px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .3s ease;position:relative}
+@media(max-width:760px){.r3-item{grid-template-columns:1fr;gap:10px}}
+.r3-item:last-child{border-bottom:none}
+.r3-item:hover{background:var(--bg-lift)}
+.r3-num{font-family:var(--mono);font-size:1.1rem;color:var(--accent);font-weight:500}
+.r3-main h4{font-size:1.3rem;font-weight:500;letter-spacing:-0.015em;margin-bottom:6px;transition:color .3s ease}
+.r3-item:hover .r3-main h4{color:var(--accent)}
+.r3-main p{color:var(--text-mute);font-size:0.95rem;line-height:1.5}
+.r3-tag{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);padding:5px 10px;border:1px solid var(--line);border-radius:2px;white-space:nowrap}
+.r3-arr{font-family:var(--mono);font-size:11px;color:var(--text-mute);transition:transform .3s ease, color .3s ease}
+.r3-item:hover .r3-arr{color:var(--accent);transform:translateX(4px)}
+
+/* ============ V4 — Cards with image overlays (full-bleed) ============ */
+.r4{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.r4{grid-template-columns:1fr}}
+.r4-card{position:relative;aspect-ratio:4/5;background-size:cover;background-position:center;border-radius:4px;overflow:hidden;cursor:pointer;border:1px solid var(--line);transition:all .3s ease}
+.r4-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(77,229,196,0.25)}
+.r4-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,20,24,0.2) 0%,rgba(15,20,24,0.85) 70%,rgba(15,20,24,0.95) 100%)}
+.r4-body{position:absolute;inset:0;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;z-index:1;gap:12px}
+.r4-meta{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);display:flex;gap:10px}
+.r4-title{font-size:1.5rem;font-weight:500;line-height:1.2;letter-spacing:-0.015em;color:#fff}
+.r4-desc{color:rgba(255,255,255,0.75);font-size:0.92rem;line-height:1.5}
+.r4-read{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-top:4px}
+
+/* ============ V5 — Filter bar + grid ============ */
+.r5-filter{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.r5-chip{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--line);color:var(--text-mute);border-radius:2px;cursor:pointer;transition:all .2s ease;background:transparent}
+.r5-chip:hover{border-color:var(--accent-dim);color:var(--text)}
+.r5-chip.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.r5-count{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--text-mute);align-self:center;text-transform:uppercase}
+.r5{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.r5{grid-template-columns:1fr}}
+.r5-card{background:var(--bg-card);border:1px solid var(--line);border-radius:3px;padding:24px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:all .3s ease}
+.r5-card:hover{border-color:var(--accent-dim);background:var(--bg-lift)}
+.r5-card .type{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--accent-dim);color:var(--accent);border-radius:2px;align-self:flex-start}
+.r5-card h4{font-size:1.25rem;font-weight:500;letter-spacing:-0.01em;line-height:1.25}
+.r5-card p{color:var(--text-mute);font-size:0.93rem;line-height:1.5;flex:1}
+.r5-card .foot{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--text-mute);text-transform:uppercase}
+.r5-card .foot .read{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/" class="mark">rightset<sup style="font-size:8px;font-family:var(--mono)">®</sup></a>
+  <a href="/" class="back">← Back to home</a>
+</div>
+<h1 class="page-title">Resources &amp; reading section &mdash; pick a layout</h1>
+<p class="page-sub">Five treatments of the News Room/Resources area. Tell me the variant number to ship to the home page.</p>
+
+<!-- ========== VARIANT 1 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 01</span><h2 style="margin-top:6px">Three equal cards with images (CURRENT)</h2></div><button class="pick">Pick V1</button></div>
+  <div class="section-h">
+    <div><div class="kicker">§ News room</div><h3>Resources &amp; reading.</h3></div>
+    <p>Field notes on rights, revenue, and platform policy.</p>
+  </div>
+  <div class="r1">
+    <div class="r1-card"><div class="r1-img" style="background-image:linear-gradient(135deg,rgba(77,229,196,0.32),rgba(125,211,252,0.28)),url(https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=800&q=80)"></div><div class="r1-body"><div class="r1-meta"><span>GUIDE</span><span>·</span><span>8 MIN</span></div><div class="r1-title">How Content ID actually works.</div><div class="r1-desc">What it catches, what it misses, and where revenue leaks.</div><span class="r1-read">Read article →</span></div></div>
+    <div class="r1-card"><div class="r1-img" style="background-image:linear-gradient(135deg,rgba(255,176,136,0.28),rgba(77,229,196,0.25)),url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80)"></div><div class="r1-body"><div class="r1-meta"><span>PLAYBOOK</span><span>·</span><span>12 MIN</span></div><div class="r1-title">Waking up a dormant archive.</div><div class="r1-desc">A rightsholder&rsquo;s playbook.</div><span class="r1-read">Read article →</span></div></div>
+    <div class="r1-card"><div class="r1-img" style="background-image:linear-gradient(135deg,rgba(125,211,252,0.28),rgba(77,229,196,0.28)),url(https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80)"></div><div class="r1-body"><div class="r1-meta"><span>POLICY</span><span>·</span><span>6 MIN</span></div><div class="r1-title">AI voice clones &amp; deepfakes.</div><div class="r1-desc">The fastest-growing category of unauthorized content.</div><span class="r1-read">Read article →</span></div></div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 2 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 02</span><h2 style="margin-top:6px">Featured hero + 2 side articles (editorial)</h2></div><button class="pick">Pick V2</button></div>
+  <div class="section-h">
+    <div><div class="kicker">§ News room</div><h3>Resources &amp; reading.</h3></div>
+    <p>Field notes on rights, revenue, and platform policy.</p>
+  </div>
+  <div class="r2">
+    <div class="r2-hero">
+      <div class="img" style="background-image:linear-gradient(135deg,rgba(77,229,196,0.25),rgba(125,211,252,0.2)),url(https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=1200&q=80)"></div>
+      <div class="body">
+        <div class="meta"><span>FEATURED &middot; GUIDE</span><span>·</span><span>8 MIN READ</span></div>
+        <div class="title">How Content ID actually works (and where it leaks revenue).</div>
+        <div class="desc">A plain-English breakdown of YouTube&rsquo;s rights system: what it catches, what it misses, and how creators lose money in the gaps.</div>
+      </div>
+    </div>
+    <div class="r2-side">
+      <div class="r2-mini"><div class="meta"><span>PLAYBOOK</span><span>·</span><span>12 MIN</span></div><div class="title">Waking up a dormant archive: a rightsholder&rsquo;s playbook.</div><div class="desc">From dusty tape libraries to recurring monthly payouts. What to digitize first, what to expect in month one.</div></div>
+      <div class="r2-mini"><div class="meta"><span>POLICY</span><span>·</span><span>6 MIN</span></div><div class="title">AI voice clones, deepfakes &amp; the future of rights enforcement.</div><div class="desc">The fastest-growing category of unauthorized content and the enforcement playbook that&rsquo;s evolving around it.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 3 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 03</span><h2 style="margin-top:6px">Editorial list &mdash; no images, compact</h2></div><button class="pick">Pick V3</button></div>
+  <div class="section-h">
+    <div><div class="kicker">§ Resources</div><h3>Field notes from the rights team.</h3></div>
+    <p>No imagery. Just the words. Dense, scannable, press-release feel.</p>
+  </div>
+  <div class="r3">
+    <div class="r3-item"><span class="r3-num">01</span><div class="r3-main"><h4>How Content ID actually works.</h4><p>What YouTube&rsquo;s rights system catches, what it misses, and where the revenue leaks.</p></div><span class="r3-tag">Guide &middot; 8 min</span><span class="r3-arr">Read →</span></div>
+    <div class="r3-item"><span class="r3-num">02</span><div class="r3-main"><h4>Waking up a dormant archive.</h4><p>A rightsholder&rsquo;s playbook &mdash; from dusty tape libraries to recurring monthly payouts.</p></div><span class="r3-tag">Playbook &middot; 12 min</span><span class="r3-arr">Read →</span></div>
+    <div class="r3-item"><span class="r3-num">03</span><div class="r3-main"><h4>AI voice clones &amp; deepfakes.</h4><p>The fastest-growing category of unauthorized content and how enforcement is evolving.</p></div><span class="r3-tag">Policy &middot; 6 min</span><span class="r3-arr">Read →</span></div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 4 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 04</span><h2 style="margin-top:6px">Poster cards &mdash; full-bleed cinematic</h2></div><button class="pick">Pick V4</button></div>
+  <div class="section-h">
+    <div><div class="kicker">§ News room</div><h3>Resources &amp; reading.</h3></div>
+    <p>Image-forward. Each card is a full-bleed poster with text overlaid.</p>
+  </div>
+  <div class="r4">
+    <div class="r4-card" style="background-image:url(https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&w=800&q=80)">
+      <div class="r4-body"><div class="r4-meta"><span>GUIDE</span><span>·</span><span>8 MIN</span></div><div class="r4-title">How Content ID actually works.</div><div class="r4-desc">What it catches, what it misses, and where revenue leaks.</div><span class="r4-read">Read article →</span></div>
+    </div>
+    <div class="r4-card" style="background-image:url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80)">
+      <div class="r4-body"><div class="r4-meta"><span>PLAYBOOK</span><span>·</span><span>12 MIN</span></div><div class="r4-title">Waking up a dormant archive.</div><div class="r4-desc">A rightsholder&rsquo;s playbook for turning legacy IP into recurring revenue.</div><span class="r4-read">Read article →</span></div>
+    </div>
+    <div class="r4-card" style="background-image:url(https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80)">
+      <div class="r4-body"><div class="r4-meta"><span>POLICY</span><span>·</span><span>6 MIN</span></div><div class="r4-title">AI voice clones &amp; deepfakes.</div><div class="r4-desc">The fastest-growing category of unauthorized content.</div><span class="r4-read">Read article →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 5 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 05</span><h2 style="margin-top:6px">Filterable library (feels like a real content hub)</h2></div><button class="pick">Pick V5</button></div>
+  <div class="section-h">
+    <div><div class="kicker">§ News room</div><h3>The library.</h3></div>
+    <p>Filterable archive &mdash; scales as we publish more.</p>
+  </div>
+  <div class="r5-filter">
+    <button class="r5-chip active">All</button>
+    <button class="r5-chip">Guides</button>
+    <button class="r5-chip">Playbooks</button>
+    <button class="r5-chip">Policy</button>
+    <button class="r5-chip">Case studies</button>
+    <span class="r5-count">3 articles &middot; more coming</span>
+  </div>
+  <div class="r5">
+    <div class="r5-card"><span class="type">Guide</span><h4>How Content ID actually works.</h4><p>What it catches, what it misses, and where revenue leaks.</p><div class="foot"><span>8 min &middot; Apr 2026</span><span class="read">Read →</span></div></div>
+    <div class="r5-card"><span class="type">Playbook</span><h4>Waking up a dormant archive.</h4><p>A rightsholder&rsquo;s playbook for turning legacy IP into recurring monthly payouts.</p><div class="foot"><span>12 min &middot; Apr 2026</span><span class="read">Read →</span></div></div>
+    <div class="r5-card"><span class="type">Policy</span><h4>AI voice clones &amp; deepfakes.</h4><p>The fastest-growing category of unauthorized content and the evolving enforcement playbook.</p><div class="foot"><span>6 min &middot; Apr 2026</span><span class="read">Read →</span></div></div>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.pick').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var n=btn.textContent.replace(/[^0-9]/g,'');
+    navigator.clipboard.writeText('Use Resources V'+n).then(function(){
+      var orig=btn.textContent;btn.textContent='Copied — tell me "Resources V'+n+'"';
+      setTimeout(function(){btn.textContent=orig},2400);
+    });
+  });
+});
+document.querySelectorAll('.r5-chip').forEach(function(c){
+  c.addEventListener('click',function(){
+    document.querySelectorAll('.r5-chip').forEach(function(x){x.classList.remove('active')});
+    c.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

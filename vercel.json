@@ -1,0 +1,59 @@
+{
+  "redirects": [
+    {
+      "source": "/concepts",
+      "destination": "/concepts/",
+      "permanent": false
+    },
+    {
+      "source": "/v1-blue-slate.html",
+      "destination": "/concepts/v1-blue-slate.html",
+      "permanent": false
+    },
+    {
+      "source": "/v5-black-blue.html",
+      "destination": "/concepts/v5-black-blue.html",
+      "permanent": false
+    },
+    {
+      "source": "/v2-gold.html",
+      "destination": "/concepts/v2-gold.html",
+      "permanent": false
+    },
+    {
+      "source": "/v3-indigo.html",
+      "destination": "/concepts/v3-indigo.html",
+      "permanent": false
+    },
+    {
+      "source": "/v4-coral.html",
+      "destination": "/concepts/v4-coral.html",
+      "permanent": false
+    },
+    {
+      "source": "/v6-black-orange.html",
+      "destination": "/concepts/v6-black-orange.html",
+      "permanent": false
+    },
+    {
+      "source": "/headlines.html",
+      "destination": "/concepts/headlines.html",
+      "permanent": false
+    },
+    {
+      "source": "/cta-options.html",
+      "destination": "/concepts/cta-options.html",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    { "source": "/concepts/v1-blue-slate", "destination": "/concepts/v1-blue-slate.html" },
+    { "source": "/concepts/v5-black-blue", "destination": "/concepts/v5-black-blue.html" },
+    { "source": "/concepts/v2-gold", "destination": "/concepts/v2-gold.html" },
+    { "source": "/concepts/v3-indigo", "destination": "/concepts/v3-indigo.html" },
+    { "source": "/concepts/v4-coral", "destination": "/concepts/v4-coral.html" },
+    { "source": "/concepts/v6-black-orange", "destination": "/concepts/v6-black-orange.html" },
+    { "source": "/concepts/headlines", "destination": "/concepts/headlines.html" },
+    { "source": "/concepts/cta-options", "destination": "/concepts/cta-options.html" }
+  ]
+}

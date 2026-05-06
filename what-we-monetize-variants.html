@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Monetize — variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --accent:#4de5c4;--accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --g1:'https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif';
+  --g2:'https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif';
+  --g3:'https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif';
+  --g4:'https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif';
+  --g5:'https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif';
+  --g6:'https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif';
+  --g7:'https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif';
+  --g8:'https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif';
+  --g1a:'https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy.gif';
+  --g2a:'https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy.gif';
+  --g3a:'https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy.gif';
+  --g4a:'https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy.gif';
+  --g5a:'https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy.gif';
+  --g6a:'https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy.gif';
+  --g7a:'https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy.gif';
+  --g8a:'https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy.gif';
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1100px circle at 10% 10%,rgba(77,229,196,0.22),transparent 55%),radial-gradient(900px circle at 90% 90%,rgba(31,197,163,0.18),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.topbar{max-width:1400px;margin:0 auto;padding:32px 32px 12px;display:flex;justify-content:space-between;align-items:center}
+.topbar .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+h1.page-title{max-width:1400px;margin:16px auto 10px;padding:0 32px;font-size:2.4rem;font-weight:600;letter-spacing:-0.025em}
+.page-sub{max-width:1400px;margin:0 auto 56px;padding:0 32px;color:var(--text-mute);font-size:1.1rem;max-width:80ch}
+.variant-wrap{max-width:1400px;margin:0 auto;padding:56px 32px 40px;border-top:1px solid var(--line)}
+.variant-wrap:first-of-type{border-top:none}
+.variant-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;gap:20px;flex-wrap:wrap}
+.variant-head h2{font-size:1.6rem;font-weight:600;letter-spacing:-0.02em}
+.variant-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.variant-head .pick{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--accent);color:var(--accent);cursor:pointer;background:transparent;border-radius:3px;transition:all .2s ease}
+.variant-head .pick:hover{background:var(--accent);color:var(--bg)}
+.section-h{margin-bottom:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+@media(max-width:860px){.section-h{grid-template-columns:1fr;gap:16px}}
+.section-h h3{font-size:clamp(2rem,3.6vw,3.2rem);font-weight:500;letter-spacing:-0.025em;line-height:1;margin-bottom:8px}
+.section-h p{color:var(--text-mute);font-size:0.98rem}
+.img-anim img, .img-anim{transition:filter .3s ease}
+
+/* ========= V1: Current (row with title + right-side video) ========= */
+.m1{border-top:1px solid var(--line)}
+.m1-row{display:grid;grid-template-columns:64px minmax(260px,1.2fr) minmax(220px,1fr);gap:48px;padding:28px 24px 28px 0;border-bottom:1px solid var(--line);align-items:center;transition:background .3s ease}
+@media(max-width:760px){.m1-row{grid-template-columns:48px 1fr;gap:16px}.m1-reel{grid-column:1/-1;justify-self:stretch;max-width:none}}
+.m1-row:hover{background:var(--bg-card)}
+.m1-idx{font-family:var(--mono);font-size:11px;color:var(--text-mute);letter-spacing:0.14em}
+.m1-name{font-size:clamp(1.35rem,2vw,1.85rem);font-weight:500;letter-spacing:-0.015em}
+.m1-row:hover .m1-name{color:var(--accent)}
+.m1-reel{position:relative;aspect-ratio:16/9;max-width:360px;width:100%;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;justify-self:end;background:var(--bg-card)}
+.m1-reel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+
+/* ========= V2: 4x2 grid of video tiles ========= */
+.m2{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1024px){.m2{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.m2{grid-template-columns:1fr}}
+.m2-card{position:relative;aspect-ratio:4/5;background:var(--bg-card);border:1px solid var(--line);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .3s ease}
+.m2-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 16px 40px -20px rgba(77,229,196,0.3)}
+.m2-thumb{position:absolute;inset:0}
+.m2-thumb img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.m2-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(15,20,24,0.92) 95%)}
+.m2-body{position:absolute;inset:0;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2;gap:6px}
+.m2-idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--accent)}
+.m2-name{font-size:1.2rem;font-weight:500;letter-spacing:-0.01em;line-height:1.2;color:#fff}
+
+/* ========= V3: Large featured + sidebar grid ========= */
+.m3{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+@media(max-width:860px){.m3{grid-template-columns:1fr}}
+.m3-hero{position:relative;aspect-ratio:16/10;border-radius:4px;overflow:hidden;background:var(--bg-card);border:1px solid var(--line-strong);cursor:pointer}
+.m3-hero img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.m3-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(15,20,24,0.9))}
+.m3-hero .meta{position:absolute;inset:0;padding:32px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2;gap:10px}
+.m3-hero .meta .idx{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;color:var(--accent)}
+.m3-hero .meta .name{font-size:2rem;font-weight:500;letter-spacing:-0.02em;color:#fff;line-height:1.1}
+.m3-side{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:520px){.m3-side{grid-template-columns:1fr}}
+.m3-tile{position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:var(--bg-card);border:1px solid var(--line);cursor:pointer;transition:all .3s ease}
+.m3-tile:hover{border-color:var(--accent)}
+.m3-tile img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.m3-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(15,20,24,0.85))}
+.m3-tile .label{position:absolute;bottom:10px;left:12px;font-size:0.88rem;font-weight:500;color:#fff;z-index:2}
+
+/* ========= V4: Sidebar tabs + big preview ========= */
+.m4{display:grid;grid-template-columns:280px 1fr;gap:0;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;background:var(--bg-card)}
+@media(max-width:860px){.m4{grid-template-columns:1fr}}
+.m4-nav{background:rgba(0,0,0,0.2);border-right:1px solid var(--line);padding:8px 0}
+.m4-nav-item{display:flex;align-items:center;gap:14px;padding:16px 24px;cursor:pointer;border-left:3px solid transparent;transition:all .2s ease;color:var(--text-mute)}
+.m4-nav-item:hover{color:var(--text);background:rgba(77,229,196,0.05)}
+.m4-nav-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(77,229,196,0.08)}
+.m4-nav-item .idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;opacity:0.6;min-width:24px}
+.m4-nav-item .name{font-size:0.97rem;font-weight:500}
+.m4-preview{padding:32px;display:flex;align-items:center;gap:32px;min-height:360px}
+@media(max-width:860px){.m4-preview{flex-direction:column;align-items:stretch}}
+.m4-video{flex:1;aspect-ratio:16/9;border-radius:3px;overflow:hidden;background:var(--bg-lift);border:1px solid var(--line-strong);position:relative}
+.m4-video img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.m4-text{flex:1;display:flex;flex-direction:column;gap:14px}
+.m4-text .idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--accent)}
+.m4-text h4{font-size:2rem;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+.m4-text p{color:var(--text-mute);font-size:0.97rem;line-height:1.55}
+
+/* ========= V5: Typography-first (no images) ========= */
+.m5{border-top:1px solid var(--line)}
+.m5-row{display:grid;grid-template-columns:80px 1fr auto;gap:24px;padding:36px 0;border-bottom:1px solid var(--line);align-items:center;transition:all .3s ease;cursor:pointer}
+.m5-row:hover{padding-left:16px}
+.m5-row:hover .m5-name{color:var(--accent)}
+.m5-idx{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:0.14em}
+.m5-name{font-size:clamp(2rem,4.2vw,3.4rem);font-weight:400;letter-spacing:-0.025em;line-height:1;transition:color .3s ease}
+.m5-arr{font-family:var(--mono);font-size:14px;color:var(--text-mute);transition:transform .3s ease,color .3s ease}
+.m5-row:hover .m5-arr{color:var(--accent);transform:translateX(8px)}
+
+/* ========= V6: Horizontal carousel (scroll snap) ========= */
+.m6-scroll{display:flex;gap:16px;overflow-x:auto;padding:4px 0 20px;scroll-snap-type:x mandatory;scrollbar-color:var(--accent) var(--bg-lift);scrollbar-width:thin}
+.m6-scroll::-webkit-scrollbar{height:6px}
+.m6-scroll::-webkit-scrollbar-track{background:var(--bg-lift)}
+.m6-scroll::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+.m6-card{flex:0 0 320px;aspect-ratio:9/16;border-radius:4px;overflow:hidden;background:var(--bg-card);border:1px solid var(--line);scroll-snap-align:start;position:relative;cursor:pointer;transition:transform .3s ease}
+.m6-card:hover{transform:translateY(-4px)}
+.m6-card img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.m6-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(15,20,24,0.95))}
+.m6-card .meta{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2;gap:8px}
+.m6-card .idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--accent)}
+.m6-card .name{font-size:1.4rem;font-weight:500;color:#fff;line-height:1.15}
+
+/* ========= V7: Masonry mosaic (varied tile sizes) ========= */
+.m7{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:120px;gap:10px}
+@media(max-width:860px){.m7{grid-template-columns:repeat(2,1fr)}}
+.m7-tile{position:relative;border-radius:3px;overflow:hidden;background:var(--bg-card);border:1px solid var(--line);cursor:pointer;transition:all .3s ease}
+.m7-tile:hover{border-color:var(--accent);transform:scale(1.02)}
+.m7-tile img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.m7-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(15,20,24,0.85))}
+.m7-tile .meta{position:absolute;bottom:0;left:0;right:0;padding:14px;z-index:2}
+.m7-tile .idx{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;color:var(--accent)}
+.m7-tile .name{font-size:0.95rem;font-weight:500;color:#fff;margin-top:3px}
+.m7-tile.tall{grid-row:span 2}
+.m7-tile.wide{grid-column:span 2}
+.m7-tile.big{grid-row:span 2;grid-column:span 2}
+.m7-tile.big .name{font-size:1.3rem}
+
+/* ========= V8: Ticker / marquee strip ========= */
+.m8-head{text-align:center;margin-bottom:24px}
+.m8-head h3{font-size:clamp(2.4rem,4vw,3.4rem);font-weight:500;letter-spacing:-0.03em;line-height:1}
+.m8-ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0;overflow:hidden;position:relative}
+.m8-ticker::before,.m8-ticker::after{content:"";position:absolute;top:0;bottom:0;width:140px;z-index:2;pointer-events:none}
+.m8-ticker::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.m8-ticker::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.m8-track{display:flex;gap:48px;animation:m8-scroll 45s linear infinite;width:max-content}
+.m8-item{display:flex;align-items:center;gap:18px;flex-shrink:0}
+.m8-item .thumb{width:120px;height:80px;border-radius:3px;overflow:hidden;background:var(--bg-card);border:1px solid var(--line);flex-shrink:0}
+.m8-item .thumb img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.m8-item .name{font-size:1.2rem;font-weight:500;letter-spacing:-0.01em;white-space:nowrap}
+.m8-item .idx{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--accent);display:block;margin-top:3px}
+@keyframes m8-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/" class="mark">rightset<sup style="font-size:8px;font-family:var(--mono)">®</sup></a>
+  <a href="/" class="back">← Back to home</a>
+</div>
+<h1 class="page-title">What We Monetize &mdash; pick a layout</h1>
+<p class="page-sub">Eight different ways to present the 8 content categories. All variants use your locked GIFs. Click <strong>Pick V#</strong> to copy the choice.</p>
+
+<!-- V1 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 01</span><h2 style="margin-top:6px">Numbered rows with right-side videos (CURRENT)</h2></div><button class="pick">Pick V1</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>The content we track.</h3></div><p>Every format we find, claim, and monetize across YouTube.</p></div>
+  <div class="m1">
+    <div class="m1-row"><span class="m1-idx">01</span><span class="m1-name">Creator originals</span><div class="m1-reel"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">02</span><span class="m1-name">Viral clip channels</span><div class="m1-reel"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">03</span><span class="m1-name">Sports &amp; highlights</span><div class="m1-reel"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">04</span><span class="m1-name">Live streams &amp; replays</span><div class="m1-reel"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">05</span><span class="m1-name">TV, film &amp; documentary</span><div class="m1-reel"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">06</span><span class="m1-name">Podcasts &amp; interviews</span><div class="m1-reel"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">07</span><span class="m1-name">Archives &amp; estates</span><div class="m1-reel"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"></div></div>
+    <div class="m1-row"><span class="m1-idx">08</span><span class="m1-name">AI voice &amp; deepfake defense</span><div class="m1-reel"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"></div></div>
+  </div>
+</section>
+
+<!-- V2 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 02</span><h2 style="margin-top:6px">4&times;2 poster grid (all videos visible at once)</h2></div><button class="pick">Pick V2</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>Eight content types.</h3></div><p>Every video front and center.</p></div>
+  <div class="m2">
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">01</span><span class="m2-name">Creator originals</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">02</span><span class="m2-name">Viral clip channels</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">03</span><span class="m2-name">Sports &amp; highlights</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">04</span><span class="m2-name">Live streams</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">05</span><span class="m2-name">TV &amp; film</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">06</span><span class="m2-name">Podcasts</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">07</span><span class="m2-name">Archives &amp; estates</span></div></div>
+    <div class="m2-card"><div class="m2-thumb"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"></div><div class="m2-body"><span class="m2-idx">08</span><span class="m2-name">AI &amp; deepfake</span></div></div>
+  </div>
+</section>
+
+<!-- V3 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 03</span><h2 style="margin-top:6px">Featured hero + 7 side tiles</h2></div><button class="pick">Pick V3</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>Every content type.</h3></div><p>One featured format, seven supporting.</p></div>
+  <div class="m3">
+    <div class="m3-hero"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy.gif"><div class="meta"><span class="idx">FEATURED &middot; 01</span><span class="name">Creator originals</span></div></div>
+    <div class="m3-side">
+      <div class="m3-tile"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"><span class="label">Viral clips</span></div>
+      <div class="m3-tile"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"><span class="label">Sports</span></div>
+      <div class="m3-tile"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"><span class="label">Live streams</span></div>
+      <div class="m3-tile"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"><span class="label">TV &amp; film</span></div>
+      <div class="m3-tile"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"><span class="label">Podcasts</span></div>
+      <div class="m3-tile"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"><span class="label">Archives</span></div>
+      <div class="m3-tile"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"><span class="label">AI &amp; deepfake</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- V4 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 04</span><h2 style="margin-top:6px">Sidebar tabs &mdash; click to preview each type</h2></div><button class="pick">Pick V4</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>Explore each format.</h3></div><p>Click a category to load the example.</p></div>
+  <div class="m4" id="m4">
+    <div class="m4-nav">
+      <div class="m4-nav-item active" data-i="0"><span class="idx">01</span><span class="name">Creator originals</span></div>
+      <div class="m4-nav-item" data-i="1"><span class="idx">02</span><span class="name">Viral clip channels</span></div>
+      <div class="m4-nav-item" data-i="2"><span class="idx">03</span><span class="name">Sports &amp; highlights</span></div>
+      <div class="m4-nav-item" data-i="3"><span class="idx">04</span><span class="name">Live streams &amp; replays</span></div>
+      <div class="m4-nav-item" data-i="4"><span class="idx">05</span><span class="name">TV, film &amp; documentary</span></div>
+      <div class="m4-nav-item" data-i="5"><span class="idx">06</span><span class="name">Podcasts &amp; interviews</span></div>
+      <div class="m4-nav-item" data-i="6"><span class="idx">07</span><span class="name">Archives &amp; estates</span></div>
+      <div class="m4-nav-item" data-i="7"><span class="idx">08</span><span class="name">AI voice &amp; deepfake defense</span></div>
+    </div>
+    <div class="m4-preview">
+      <div class="m4-video"><img id="m4-img" src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy.gif"></div>
+      <div class="m4-text"><span class="idx" id="m4-idx">01 &middot; FEATURED</span><h4 id="m4-name">Creator originals</h4><p id="m4-desc">iShowSpeed, MrBeast, and the full creator economy. Every re-upload, compilation, and foreign-language cut, claimed and monetized.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- V5 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 05</span><h2 style="margin-top:6px">Typography-first (giant type, no imagery)</h2></div><button class="pick">Pick V5</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>Everything.</h3></div><p>Typography-first. No images. Hover to reveal a video.</p></div>
+  <div class="m5">
+    <div class="m5-row"><span class="m5-idx">01</span><span class="m5-name">Creator originals</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">02</span><span class="m5-name">Viral clip channels</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">03</span><span class="m5-name">Sports &amp; highlights</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">04</span><span class="m5-name">Live streams &amp; replays</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">05</span><span class="m5-name">TV, film &amp; documentary</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">06</span><span class="m5-name">Podcasts &amp; interviews</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">07</span><span class="m5-name">Archives &amp; estates</span><span class="m5-arr">→</span></div>
+    <div class="m5-row"><span class="m5-idx">08</span><span class="m5-name">AI voice &amp; deepfake defense</span><span class="m5-arr">→</span></div>
+  </div>
+</section>
+
+<!-- V6 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 06</span><h2 style="margin-top:6px">Horizontal scroll carousel (TikTok-feed style)</h2></div><button class="pick">Pick V6</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>Scroll through.</h3></div><p>Swipe or scroll sideways. Vertical poster cards.</p></div>
+  <div class="m6-scroll">
+    <div class="m6-card"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif"><div class="meta"><span class="idx">01</span><span class="name">Creator originals</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"><div class="meta"><span class="idx">02</span><span class="name">Viral clip channels</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"><div class="meta"><span class="idx">03</span><span class="name">Sports &amp; highlights</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"><div class="meta"><span class="idx">04</span><span class="name">Live streams</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"><div class="meta"><span class="idx">05</span><span class="name">TV &amp; film</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"><div class="meta"><span class="idx">06</span><span class="name">Podcasts</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"><div class="meta"><span class="idx">07</span><span class="name">Archives</span></div></div>
+    <div class="m6-card"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"><div class="meta"><span class="idx">08</span><span class="name">AI &amp; deepfake</span></div></div>
+  </div>
+</section>
+
+<!-- V7 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 07</span><h2 style="margin-top:6px">Masonry mosaic (varied tile sizes)</h2></div><button class="pick">Pick V7</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>All content types.</h3></div><p>Pinterest-style mosaic. Featured types get more space.</p></div>
+  <div class="m7">
+    <div class="m7-tile big"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif"><div class="meta"><span class="idx">01</span><span class="name">Creator originals</span></div></div>
+    <div class="m7-tile tall"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"><div class="meta"><span class="idx">03</span><span class="name">Sports</span></div></div>
+    <div class="m7-tile"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"><div class="meta"><span class="idx">02</span><span class="name">Viral clips</span></div></div>
+    <div class="m7-tile"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"><div class="meta"><span class="idx">04</span><span class="name">Live streams</span></div></div>
+    <div class="m7-tile wide"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"><div class="meta"><span class="idx">05</span><span class="name">TV &amp; film</span></div></div>
+    <div class="m7-tile"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"><div class="meta"><span class="idx">06</span><span class="name">Podcasts</span></div></div>
+    <div class="m7-tile"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"><div class="meta"><span class="idx">07</span><span class="name">Archives</span></div></div>
+    <div class="m7-tile tall"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"><div class="meta"><span class="idx">08</span><span class="name">AI &amp; deepfake</span></div></div>
+  </div>
+</section>
+
+<!-- V8 -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 08</span><h2 style="margin-top:6px">Auto-scroll ticker (cinematic / constantly moving)</h2></div><button class="pick">Pick V8</button></div>
+  <div class="section-h"><div><div class="kicker">§ What we monetize</div><h3>Every format. Continuously.</h3></div><p>Auto-scrolling ticker. Feels like a live pipeline.</p></div>
+  <div class="m8-ticker">
+    <div class="m8-track">
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif"></div><div><span class="name">Creator originals</span><span class="idx">01 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"></div><div><span class="name">Viral clip channels</span><span class="idx">02 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"></div><div><span class="name">Sports &amp; highlights</span><span class="idx">03 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"></div><div><span class="name">Live streams</span><span class="idx">04 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"></div><div><span class="name">TV, film &amp; documentary</span><span class="idx">05 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"></div><div><span class="name">Podcasts &amp; interviews</span><span class="idx">06 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"></div><div><span class="name">Archives &amp; estates</span><span class="idx">07 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"></div><div><span class="name">AI &amp; deepfake</span><span class="idx">08 &middot; LIVE</span></div></div>
+      <!-- duplicate for seamless loop -->
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif"></div><div><span class="name">Creator originals</span><span class="idx">01 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif"></div><div><span class="name">Viral clip channels</span><span class="idx">02 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif"></div><div><span class="name">Sports &amp; highlights</span><span class="idx">03 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif"></div><div><span class="name">Live streams</span><span class="idx">04 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif"></div><div><span class="name">TV, film &amp; documentary</span><span class="idx">05 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/33FHzoB1q8DNvPLInN/giphy_s.gif"></div><div><span class="name">Podcasts &amp; interviews</span><span class="idx">06 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif"></div><div><span class="name">Archives &amp; estates</span><span class="idx">07 &middot; LIVE</span></div></div>
+      <div class="m8-item"><div class="thumb"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif"></div><div><span class="name">AI &amp; deepfake</span><span class="idx">08 &middot; LIVE</span></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.pick').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var n=btn.textContent.replace(/[^0-9]/g,'');
+    navigator.clipboard.writeText('Monetize V'+n).then(function(){
+      var orig=btn.textContent;btn.textContent='Copied — tell me "Monetize V'+n+'"';
+      setTimeout(function(){btn.textContent=orig},2400);
+    });
+  });
+});
+// V4 interactive tabs
+var m4data=[
+  {i:'01',n:'Creator originals',d:'iShowSpeed, MrBeast, and the full creator economy. Every re-upload, compilation, and foreign-language cut.',g:'HPIkHjaBxaP03mfF25'},
+  {i:'02',n:'Viral clip channels',d:'Fail compilations, meme reposts, aggregator channels. High-volume matching with human review.',g:'7TwwEsnNG73SCJd9sj'},
+  {i:'03',n:'Sports & highlights',d:'NBA, NFL, soccer, UFC — every unauthorized re-cut of game footage and commentary.',g:'HFpuvC5RH9jnkV8r4C'},
+  {i:'04',n:'Live streams & replays',d:'Twitch VODs, Kick streams, and the clip aftermath. The stream and the post-stream clips earn for the original streamer.',g:'KH7wWVCHFgcF5lZPAx'},
+  {i:'05',n:'TV, film & documentary',d:'From indie docs to studio back-catalogs, monitored at scale and cleared for monetization.',g:'0EaRdAcvzaUyMXFCMs'},
+  {i:'06',n:'Podcasts & interviews',d:'Long-form shows earning on every clip, reaction, and re-upload across the platform.',g:'33FHzoB1q8DNvPLInN'},
+  {i:'07',n:'Archives & estates',d:'Legacy libraries digitized, fingerprinted, and earning monthly from catalogs that had gone quiet.',g:'nCYvTZdcOAuOapyNjG'},
+  {i:'08',n:'AI voice & deepfake defense',d:'Detect and claim AI-cloned voices, synthetic likenesses, and unauthorized reanimations.',g:'ToMjGpJctqrZgKzX0wE'}
+];
+document.querySelectorAll('#m4 .m4-nav-item').forEach(function(item){
+  item.addEventListener('click',function(){
+    document.querySelectorAll('#m4 .m4-nav-item').forEach(function(x){x.classList.remove('active')});
+    item.classList.add('active');
+    var d=m4data[parseInt(item.dataset.i,10)];
+    document.getElementById('m4-img').src='https://media.giphy.com/media/'+d.g+'/giphy.gif';
+    document.getElementById('m4-idx').textContent=d.i+' · FEATURED';
+    document.getElementById('m4-name').textContent=d.n;
+    document.getElementById('m4-desc').textContent=d.d;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case study variants — pick one</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --accent:#4de5c4;--accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --img:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png');
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1100px circle at 10% 10%,rgba(77,229,196,0.22),transparent 55%),radial-gradient(900px circle at 90% 90%,rgba(31,197,163,0.18),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:18px}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.topbar{max-width:1400px;margin:0 auto;padding:32px 32px 12px;display:flex;justify-content:space-between;align-items:center}
+.topbar .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+h1.page-title{max-width:1400px;margin:16px auto 10px;padding:0 32px;font-size:2.4rem;font-weight:600;letter-spacing:-0.025em}
+.page-sub{max-width:1400px;margin:0 auto 56px;padding:0 32px;color:var(--text-mute);font-size:1.1rem;max-width:80ch}
+.variant-wrap{max-width:1400px;margin:0 auto;padding:56px 32px 40px;border-top:1px solid var(--line)}
+.variant-wrap:first-of-type{border-top:none}
+.variant-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;gap:20px;flex-wrap:wrap}
+.variant-head h2{font-size:1.6rem;font-weight:600;letter-spacing:-0.02em}
+.variant-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.variant-head .pick{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--accent);color:var(--accent);cursor:pointer;background:transparent;border-radius:3px;transition:all .2s ease}
+.variant-head .pick:hover{background:var(--accent);color:var(--bg)}
+
+/* ============ VARIANT 1 — current baseline (big image left) ============ */
+.v1-card{border:1px solid var(--line-strong);background:linear-gradient(135deg,var(--bg-lift),var(--bg-card));display:grid;grid-template-columns:1fr 1.1fr;gap:0;overflow:hidden;border-radius:4px}
+.v1-img{min-height:460px;background:linear-gradient(135deg,rgba(77,229,196,0.18),transparent 60%),var(--img) center top/cover;position:relative}
+.v1-img::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,20,24,0.4),rgba(15,20,24,0.7))}
+.v1-badge{position:absolute;top:20px;left:20px;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;padding:7px 13px;border:1px solid var(--accent-dim);background:rgba(15,20,24,0.65);backdrop-filter:blur(6px);color:var(--accent);z-index:1}
+.v1-body{padding:44px 40px;display:flex;flex-direction:column;gap:20px;justify-content:center}
+.v1-client{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent)}
+.v1-quote{font-size:1.4rem;font-weight:400;line-height:1.35;letter-spacing:-0.015em;color:var(--text)}
+.v1-meta{font-size:0.92rem;color:var(--text-mute);padding-top:16px;border-top:1px solid var(--line)}
+.v1-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:24px;border-top:1px solid var(--line)}
+.v1-stats .v{font-size:1.8rem;font-weight:500;color:var(--accent);letter-spacing:-0.02em}
+.v1-stats .l{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:6px}
+
+/* ============ VARIANT 2 — stats dominate (stat-first hero) ============ */
+.v2-card{border:1px solid var(--line-strong);background:var(--bg-card);padding:56px 48px;border-radius:4px;position:relative;overflow:hidden}
+.v2-card::before{content:"";position:absolute;inset:0;background:var(--img) right center/auto 100% no-repeat;opacity:0.22;filter:grayscale(0.2) saturate(1.2) hue-rotate(-10deg);mix-blend-mode:luminosity;pointer-events:none}
+.v2-card::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg-card) 40%, transparent 90%)}
+.v2-card > *{position:relative;z-index:1}
+.v2-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:40px}
+.v2-stats .v{font-size:clamp(2.6rem,5vw,4.2rem);font-weight:600;color:var(--accent);letter-spacing:-0.03em;line-height:0.95}
+.v2-stats .l{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute);margin-top:10px;max-width:18ch}
+.v2-title{font-size:clamp(1.75rem,3vw,2.6rem);font-weight:600;line-height:1.08;letter-spacing:-0.025em;margin-bottom:18px;max-width:22ch}
+.v2-quote{color:var(--text-mute);font-size:1.1rem;line-height:1.55;max-width:65ch;padding-top:24px;border-top:1px solid var(--line)}
+.v2-client{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-top:20px}
+
+/* ============ VARIANT 3 — magazine article feel ============ */
+.v3-card{background:var(--bg-card);border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.v3-masthead{padding:40px 40px 28px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);gap:24px;flex-wrap:wrap}
+.v3-issue{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mute)}
+.v3-issue strong{color:var(--accent)}
+.v3-pages{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--text-mute)}
+.v3-body{padding:44px 40px;display:grid;grid-template-columns:2fr 1fr;gap:48px}
+@media(max-width:760px){.v3-body{grid-template-columns:1fr}}
+.v3-main h3{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:500;line-height:1.1;letter-spacing:-0.025em;margin-bottom:22px}
+.v3-lede{font-size:1.1rem;color:var(--text-mute);line-height:1.6;margin-bottom:24px;max-width:55ch}
+.v3-lede::first-letter{font-size:3.6rem;font-weight:500;float:left;line-height:0.9;padding:6px 12px 0 0;color:var(--accent);font-family:var(--sans)}
+.v3-body p{color:var(--text-mute);line-height:1.65;margin-bottom:16px;max-width:55ch}
+.v3-side{display:flex;flex-direction:column;gap:16px}
+.v3-sidebar-img{aspect-ratio:3/4;background:var(--img) center top/cover;border:1px solid var(--line);border-radius:2px;position:relative}
+.v3-sidebar-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(15,20,24,0.65))}
+.v3-caption{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--text-mute);line-height:1.5;padding:10px 14px;background:rgba(77,229,196,0.06);border-left:2px solid var(--accent)}
+.v3-stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px 40px;border-top:1px solid var(--line);background:rgba(0,0,0,0.14)}
+.v3-stats-strip .v{font-size:1.35rem;font-weight:600;color:var(--accent);line-height:1;letter-spacing:-0.02em}
+.v3-stats-strip .l{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mute);margin-top:5px}
+
+/* ============ VARIANT 4 — minimal quote-first (no image, big type) ============ */
+.v4-card{padding:80px 60px;border:1px solid var(--line);border-radius:4px;background:linear-gradient(180deg,rgba(77,229,196,0.04),transparent 50%),var(--bg-card);text-align:left;position:relative}
+.v4-quote-mark{position:absolute;top:30px;left:50px;font-size:9rem;line-height:0.7;color:var(--accent);opacity:0.25;font-family:Georgia,serif;pointer-events:none;user-select:none}
+.v4-card .label{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
+.v4-quote{font-size:clamp(1.6rem,3.2vw,2.8rem);font-weight:400;line-height:1.22;letter-spacing:-0.02em;color:var(--text);max-width:26ch;margin-bottom:48px;position:relative;z-index:1}
+.v4-attrib{display:flex;align-items:center;gap:16px;padding-top:32px;border-top:1px solid var(--line);margin-bottom:48px}
+.v4-attrib-photo{width:56px;height:56px;border-radius:50%;background:var(--img) center top/cover;border:1.5px solid var(--accent);flex-shrink:0}
+.v4-attrib-meta{display:flex;flex-direction:column;gap:2px}
+.v4-attrib-name{font-size:1.05rem;font-weight:600;color:var(--text)}
+.v4-attrib-role{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)}
+.v4-stats{display:flex;gap:48px;flex-wrap:wrap}
+.v4-stat .v{font-size:2rem;font-weight:600;color:var(--accent);letter-spacing:-0.02em;line-height:1}
+.v4-stat .l{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:6px}
+
+/* ============ VARIANT 5 — case-study-as-dashboard ============ */
+.v5-card{border:1px solid var(--line-strong);background:var(--bg-card);border-radius:4px;overflow:hidden}
+.v5-chrome{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.2);font-family:var(--mono);font-size:11px;color:var(--text-mute)}
+.v5-dot{width:9px;height:9px;border-radius:50%;background:#ff5e5e}
+.v5-dot:nth-child(2){background:#ffbd44}
+.v5-dot:nth-child(3){background:#00ca4e}
+.v5-chrome .url{margin-left:12px}
+.v5-chrome .url span{color:var(--accent)}
+.v5-chrome .live{margin-left:auto;color:var(--accent);display:inline-flex;align-items:center;gap:6px;font-weight:500;letter-spacing:0.08em}
+.v5-chrome .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent-glow);animation:v5Blink 1.8s ease-in-out infinite}
+@keyframes v5Blink{0%,100%{opacity:1}50%{opacity:0.35}}
+.v5-body{padding:32px 40px;display:grid;grid-template-columns:220px 1fr;gap:36px}
+@media(max-width:860px){.v5-body{grid-template-columns:1fr}}
+.v5-side{display:flex;flex-direction:column;gap:16px}
+.v5-profile{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.v5-profile-img{width:100%;aspect-ratio:1;background:var(--img) center top/cover;border:1px solid var(--line);border-radius:3px}
+.v5-profile-name{font-size:1.05rem;font-weight:600}
+.v5-profile-role{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)}
+.v5-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.v5-tag{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;padding:3px 8px;border:1px solid var(--line);color:var(--text-mute);border-radius:2px}
+.v5-main{display:flex;flex-direction:column;gap:24px}
+.v5-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.v5-metric{padding:18px;border:1px solid var(--line);border-radius:3px;background:rgba(23,22,26,0.5)}
+.v5-metric .v{font-size:1.7rem;font-weight:600;color:var(--accent);letter-spacing:-0.02em;line-height:1}
+.v5-metric .l{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:6px}
+.v5-row{padding:18px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.v5-row:last-child{border-bottom:1px solid var(--line)}
+.v5-row .date{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mute);min-width:72px}
+.v5-row .title{font-size:0.97rem;color:var(--text)}
+.v5-row .pill{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;padding:3px 7px;background:rgba(77,229,196,0.12);color:var(--accent);border:1px solid rgba(77,229,196,0.3);border-radius:2px}
+
+/* ============ VARIANT 6 — horizontal film-strip timeline ============ */
+.v6-card{border:1px solid var(--line-strong);background:var(--bg-card);border-radius:4px;padding:44px 40px;display:flex;flex-direction:column;gap:36px}
+.v6-head{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.v6-head img{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;border:1.5px solid var(--accent)}
+.v6-head h3{font-size:1.5rem;font-weight:600;margin-bottom:2px}
+.v6-head .meta{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)}
+.v6-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;padding-top:20px}
+.v6-strip::before{content:"";position:absolute;top:30px;left:5%;right:5%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0.4}
+.v6-step{position:relative;padding:0 14px;text-align:center}
+.v6-step::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:var(--bg-card);border:2px solid var(--accent);z-index:1}
+.v6-step .v{font-size:1.9rem;font-weight:600;color:var(--accent);margin-top:42px;letter-spacing:-0.02em;line-height:1}
+.v6-step .l{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:8px}
+.v6-step .d{font-size:0.9rem;color:var(--text-mute);margin-top:10px;line-height:1.5}
+.v6-quote{font-size:1.15rem;color:var(--text-mute);font-style:italic;line-height:1.5;padding-left:24px;border-left:3px solid var(--accent);max-width:80ch}
+
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/" class="mark">rightset<sup style="font-size:8px;font-family:var(--mono)">®</sup></a>
+  <a href="/" class="back">← Back to home</a>
+</div>
+<h1 class="page-title">Case study section &mdash; pick a layout</h1>
+<p class="page-sub">Six treatments of the same content so you can choose. Hover each card. Tell me which variant number to ship and I&rsquo;ll swap it into the home page.</p>
+
+<!-- ========== VARIANT 1 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head">
+    <div><span class="tag">Variant 01</span> <h2 style="margin-top:6px">Big portrait + quote + stats (CURRENT)</h2></div>
+    <button class="pick">Pick V1</button>
+  </div>
+  <div class="v1-card">
+    <div class="v1-img"><span class="v1-badge">● CASE STUDY · FAMILY ESTATE</span></div>
+    <div class="v1-body">
+      <div class="v1-client">FAMILY ESTATE &middot; INTELLECTUAL PROPERTY OWNER</div>
+      <p class="v1-quote">&ldquo;Thousands of channels were using estate content without permission. Rightset took us from zero visibility to full control in under a year.&rdquo;</p>
+      <div class="v1-meta">Transforming digital legacy management &middot; 2023&ndash;2026</div>
+      <div class="v1-stats">
+        <div><div class="v">99.9%</div><div class="l">Claimed</div></div>
+        <div><div class="v">27K+</div><div class="l">Claims</div></div>
+        <div><div class="v">↑660%</div><div class="l">Revenue</div></div>
+        <div><div class="v">866+</div><div class="l">Licensed</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 2 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head">
+    <div><span class="tag">Variant 02</span> <h2 style="margin-top:6px">Stats-first hero (numbers dominate)</h2></div>
+    <button class="pick">Pick V2</button>
+  </div>
+  <div class="v2-card">
+    <div class="kicker">§ Featured case study</div>
+    <div class="v2-stats">
+      <div><div class="v">99.9%</div><div class="l">Content claimed from 27,000 videos</div></div>
+      <div><div class="v">↑660%</div><div class="l">Year-one revenue growth</div></div>
+      <div><div class="v">866+</div><div class="l">Licensed creator deals</div></div>
+      <div><div class="v">&lt;90d</div><div class="l">To first monthly payout</div></div>
+    </div>
+    <h3 class="v2-title">A family estate&rsquo;s 27,000 pirated videos, recovered.</h3>
+    <p class="v2-quote">&ldquo;Zero visibility to full control in under a year. Licensing ecosystem built. Sustainable revenue model we didn&rsquo;t have before.&rdquo;</p>
+    <div class="v2-client">Family estate &middot; intellectual property owner</div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 3 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head">
+    <div><span class="tag">Variant 03</span> <h2 style="margin-top:6px">Magazine feature (editorial long-read vibe)</h2></div>
+    <button class="pick">Pick V3</button>
+  </div>
+  <div class="v3-card">
+    <div class="v3-masthead">
+      <span class="v3-issue">Case study &middot; <strong>Issue 01</strong> &middot; Family Estate</span>
+      <span class="v3-pages">Pages 01-04 &middot; 12 min read</span>
+    </div>
+    <div class="v3-body">
+      <div class="v3-main">
+        <h3>The family estate that reclaimed a century of IP.</h3>
+        <p class="v3-lede">An estate sitting on 40 years of legacy material watched, helplessly, as thousands of third-party channels built audiences on top of the work. Then the metrics shifted.</p>
+        <p>When we started the engagement, <strong style="color:var(--text)">0%</strong> of the 27,000 unauthorized uploads were claimed. Eight months in, we were at 99.9% coverage, 866 licensed creator partnerships, and a monthly payout cycle the estate could forecast against.</p>
+        <p>The work wasn&rsquo;t a takedown sweep. It was infrastructure: audio-only Content ID, a dispute queue staffed 24/7, and a licensing ecosystem that turns fan channels into partners.</p>
+      </div>
+      <div class="v3-side">
+        <div class="v3-sidebar-img"></div>
+        <div class="v3-caption">&ldquo;We went from zero visibility to full control in under a year.&rdquo;<br><br>&mdash; Family estate, IP owner</div>
+      </div>
+    </div>
+    <div class="v3-stats-strip">
+      <div><div class="v">99.9%</div><div class="l">Claimed</div></div>
+      <div><div class="v">27K+</div><div class="l">Claims</div></div>
+      <div><div class="v">↑660%</div><div class="l">Revenue</div></div>
+      <div><div class="v">866+</div><div class="l">Licensed</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 4 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head">
+    <div><span class="tag">Variant 04</span> <h2 style="margin-top:6px">Minimal &mdash; quote-first, no portrait hero</h2></div>
+    <button class="pick">Pick V4</button>
+  </div>
+  <div class="v4-card">
+    <span class="v4-quote-mark">&ldquo;</span>
+    <div class="label">Case study · Family estate</div>
+    <p class="v4-quote">Zero visibility to full control in under a year. 27,000 videos claimed, a licensing ecosystem built, and a sustainable revenue model we didn&rsquo;t have before.</p>
+    <div class="v4-attrib">
+      <div class="v4-attrib-photo"></div>
+      <div class="v4-attrib-meta">
+        <span class="v4-attrib-name">Family estate</span>
+        <span class="v4-attrib-role">Intellectual property owner &middot; 2023–2026</span>
+      </div>
+    </div>
+    <div class="v4-stats">
+      <div class="v4-stat"><div class="v">99.9%</div><div class="l">Content claimed</div></div>
+      <div class="v4-stat"><div class="v">27K+</div><div class="l">Claims processed</div></div>
+      <div class="v4-stat"><div class="v">↑660%</div><div class="l">Revenue growth</div></div>
+      <div class="v4-stat"><div class="v">866+</div><div class="l">Licensed videos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 5 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head">
+    <div><span class="tag">Variant 05</span> <h2 style="margin-top:6px">Case-study-as-dashboard (matches product feel)</h2></div>
+    <button class="pick">Pick V5</button>
+  </div>
+  <div class="v5-card">
+    <div class="v5-chrome">
+      <span class="v5-dot"></span><span class="v5-dot"></span><span class="v5-dot"></span>
+      <span class="url">app.rightset.com<span>/case-studies/family-estate</span></span>
+      <span class="live">LIVE</span>
+    </div>
+    <div class="v5-body">
+      <div class="v5-side">
+        <div class="v5-profile">
+          <div class="v5-profile-img"></div>
+          <div>
+            <div class="v5-profile-name">Family estate</div>
+            <div class="v5-profile-role">IP owner</div>
+          </div>
+          <div class="v5-tags">
+            <span class="v5-tag">Estate</span>
+            <span class="v5-tag">Archive</span>
+            <span class="v5-tag">Legacy IP</span>
+          </div>
+        </div>
+      </div>
+      <div class="v5-main">
+        <div class="v5-metrics">
+          <div class="v5-metric"><div class="v">99.9%</div><div class="l">Claimed</div></div>
+          <div class="v5-metric"><div class="v">27K+</div><div class="l">Claims</div></div>
+          <div class="v5-metric"><div class="v">↑660%</div><div class="l">Revenue</div></div>
+          <div class="v5-metric"><div class="v">866+</div><div class="l">Licensed</div></div>
+        </div>
+        <div>
+          <div class="v5-row"><span class="date">2023 &middot; Q3</span><span class="title">Catalog onboarded &middot; 27K assets fingerprinted</span><span class="pill">COMPLETE</span></div>
+          <div class="v5-row"><span class="date">2024 &middot; Q1</span><span class="title">99.9% claim coverage achieved</span><span class="pill">COMPLETE</span></div>
+          <div class="v5-row"><span class="date">2024 &middot; Q2</span><span class="title">Licensing ecosystem launched (866 partners)</span><span class="pill">COMPLETE</span></div>
+          <div class="v5-row"><span class="date">2026</span><span class="title">660% YoY revenue growth, sustained monthly payouts</span><span class="pill">LIVE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 6 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head">
+    <div><span class="tag">Variant 06</span> <h2 style="margin-top:6px">Timeline strip (progression over time)</h2></div>
+    <button class="pick">Pick V6</button>
+  </div>
+  <div class="v6-card">
+    <div class="v6-head">
+      <img src="https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png" alt="">
+      <div>
+        <h3>Family estate &middot; from 0% to 99.9%</h3>
+        <span class="meta">Legacy IP &middot; 2023–2026 &middot; 12-month transformation</span>
+      </div>
+    </div>
+    <div class="v6-strip">
+      <div class="v6-step"><div class="v">0%</div><div class="l">Month 0</div><div class="d">27K pirated uploads, zero claimed.</div></div>
+      <div class="v6-step"><div class="v">30%</div><div class="l">Month 3</div><div class="d">Catalog fully fingerprinted and indexed.</div></div>
+      <div class="v6-step"><div class="v">85%</div><div class="l">Month 6</div><div class="d">Audio-only detection live, claims accelerating.</div></div>
+      <div class="v6-step"><div class="v">99.9%</div><div class="l">Month 12</div><div class="d">Full coverage. Monthly recurring revenue.</div></div>
+    </div>
+    <blockquote class="v6-quote">&ldquo;Zero visibility to full control in under a year. A sustainable revenue model we didn&rsquo;t have before.&rdquo;</blockquote>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.pick').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var n=btn.textContent.replace(/[^0-9]/g,'');
+    navigator.clipboard.writeText('Use Variant '+n).then(function(){
+      var orig=btn.textContent;
+      btn.textContent='Copied — tell me "V'+n+'"';
+      setTimeout(function(){btn.textContent=orig},2400);
+    });
+  });
+});
+</script>
+</body>
+</html>

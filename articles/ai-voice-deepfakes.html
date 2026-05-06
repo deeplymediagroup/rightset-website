@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI voice clones &amp; deepfakes — Rightset</title>
+<meta name="description" content="Synthetic-voice uploads are the fastest-growing category of unauthorized content. Here's how detection, disputes, and takedowns are evolving.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418; --bg-card:#151c22; --text:#f7f9f7; --text-mute:#c7ccc6;
+  --accent:#4de5c4; --warm:#ffb088; --sky:#7dd3fc;
+  --line:rgba(247,249,247,0.12); --line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif; --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:18.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(900px circle at 20% 15%,rgba(125,211,252,0.2),transparent 55%),radial-gradient(900px circle at 80% 85%,rgba(77,229,196,0.18),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:#6df0d4}
+.article-nav{max-width:900px;margin:0 auto;padding:32px 32px 0;display:flex;justify-content:space-between;align-items:center}
+.article-nav .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.article-nav .back{font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+.article-nav .back:hover{color:var(--accent)}
+article{max-width:760px;margin:0 auto;padding:80px 32px 120px}
+.article-meta{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sky);margin-bottom:20px;display:flex;gap:14px;align-items:center}
+.article-meta::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sky)}
+article h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:600;line-height:1.05;letter-spacing:-0.035em;margin-bottom:24px}
+article .lede{font-size:1.3rem;color:var(--text-mute);line-height:1.5;margin-bottom:56px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+article h2{font-size:1.85rem;font-weight:600;line-height:1.15;letter-spacing:-0.02em;margin:56px 0 16px}
+article h3{font-size:1.3rem;font-weight:600;margin:32px 0 10px}
+article p{margin-bottom:22px;color:var(--text-mute)}
+article strong{color:var(--text);font-weight:600}
+article ul{margin:0 0 24px 20px;color:var(--text-mute)}
+article ul li{margin-bottom:10px}
+article blockquote{border-left:3px solid var(--accent);padding:4px 0 4px 22px;margin:28px 0;font-size:1.15rem;color:var(--text);font-style:italic}
+.article-cta{margin-top:64px;padding:32px;border:1px solid var(--line-strong);border-radius:6px;background:var(--bg-card);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.article-cta p{margin:0;color:var(--text)}
+.article-cta a{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border:1px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;transition:all .3s ease}
+.article-cta a:hover{background:var(--accent);color:var(--bg)}
+</style>
+</head>
+<body>
+<div class="article-nav">
+  <a href="/" class="mark">rightset<sup>®</sup></a>
+  <a href="/#news" class="back">← Back to News Room</a>
+</div>
+<article>
+  <div class="article-meta"><span>POLICY</span><span>·</span><span>6 MIN READ</span><span>·</span><span>APR 2026</span></div>
+  <h1>AI voice clones, deepfakes &amp; the future of rights enforcement.</h1>
+  <p class="lede">Synthetic-voice uploads are the fastest-growing category of unauthorized content. Here's what we're seeing, and what the enforcement playbook looks like now.</p>
+
+  <p>Two years ago, fingerprinting was enough. Someone stole your content, the fingerprint matched, and the claim routed the revenue back. Then generative audio got good — and the ground shifted.</p>
+
+  <h2>The new category of theft</h2>
+  <p>An AI model clones a creator's voice from 30 seconds of training data. It reads a new script. The resulting audio is technically new — it doesn't match any reference fingerprint. But the audience hears the creator, and believes the creator said it. Views accrue to the uploader. Trust erodes for the original.</p>
+
+  <p>We see three common patterns:</p>
+  <ul>
+    <li><strong>Unauthorized reanimation:</strong> A public figure's voice reads content they never wrote.</li>
+    <li><strong>Fake interviews:</strong> Two cloned voices "interview" each other about current events.</li>
+    <li><strong>Synthetic overlays:</strong> A real video, a new AI-generated voiceover, usually in a different language.</li>
+  </ul>
+
+  <h2>Why Content ID misses them</h2>
+  <p>Content ID is a matching system. If the audio isn't in the reference library, it doesn't match. The tooling is evolving — YouTube rolled out an AI-specific detection feature in 2024, and voice-match research is improving — but enforcement is still case-by-case.</p>
+
+  <h2>How Rightset handles it</h2>
+  <h3>Pattern-based detection</h3>
+  <p>We run detection across known synthetic-voice artifacts — spectral patterns characteristic of TTS models, unusually clean prosody, known-model fingerprints. Candidates get flagged for human review.</p>
+
+  <h3>Human escalation</h3>
+  <p>Every flagged synthetic upload gets reviewed by our ops team. If it's unauthorized, we file a claim, a deepfake report, or a takedown depending on what the rightsholder wants and what the platform policy supports.</p>
+
+  <h3>Platform relationships</h3>
+  <p>YouTube's synthetic-content policies are changing fast. We keep direct lines open with trust &amp; safety teams so escalations move faster than the standard claim queue.</p>
+
+  <blockquote>Detection is a pattern-matching problem. Enforcement is a policy problem. You need both.</blockquote>
+
+  <h2>What rightsholders should do now</h2>
+  <ul>
+    <li><strong>Register voiceprint references</strong> if your platform supports it. YouTube's voice-similarity tools are still limited but improving.</li>
+    <li><strong>Document public statements.</strong> Deepfake enforcement is faster when the rightsholder can quickly point to where the "real" statement does or doesn't exist.</li>
+    <li><strong>Monitor continuously.</strong> Synthetic uploads spike around news cycles. A quarterly sweep is not enough.</li>
+  </ul>
+
+  <div class="article-cta">
+    <p><strong>Concerned about AI clones of your content?</strong> We can scan a sample and tell you what's out there.</p>
+    <a href="/#audit">Request audit →</a>
+  </div>
+</article>
+</body>
+</html>

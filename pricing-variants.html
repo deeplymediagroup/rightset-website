@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing variants — pick one</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --accent:#4de5c4;--accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1100px circle at 10% 10%,rgba(77,229,196,0.22),transparent 55%),radial-gradient(900px circle at 90% 90%,rgba(31,197,163,0.18),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.topbar{max-width:1400px;margin:0 auto;padding:32px 32px 12px;display:flex;justify-content:space-between;align-items:center}
+.topbar .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+h1.page-title{max-width:1400px;margin:16px auto 10px;padding:0 32px;font-size:2.4rem;font-weight:600;letter-spacing:-0.025em}
+.page-sub{max-width:1400px;margin:0 auto 56px;padding:0 32px;color:var(--text-mute);font-size:1.1rem;max-width:80ch}
+.variant-wrap{max-width:1400px;margin:0 auto;padding:56px 32px 40px;border-top:1px solid var(--line)}
+.variant-wrap:first-of-type{border-top:none}
+.variant-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;gap:20px;flex-wrap:wrap}
+.variant-head h2{font-size:1.6rem;font-weight:600;letter-spacing:-0.02em}
+.variant-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.variant-head .pick{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--accent);color:var(--accent);cursor:pointer;background:transparent;border-radius:3px;transition:all .2s ease}
+.variant-head .pick:hover{background:var(--accent);color:var(--bg)}
+
+.section-h{margin-bottom:32px}
+.section-h h3{font-size:clamp(2.4rem,4vw,3.6rem);font-weight:500;letter-spacing:-0.03em;line-height:1;margin-bottom:10px}
+.section-h p{color:var(--text-mute);max-width:60ch;font-size:1.05rem}
+
+/* ========= V1 — Current 3-card layout (baseline) ========= */
+.p1{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+@media(max-width:860px){.p1{grid-template-columns:1fr}}
+.p1-card{background:var(--bg-card);padding:40px 32px;display:flex;flex-direction:column;gap:20px;position:relative}
+.p1-card.featured{background:linear-gradient(180deg,rgba(77,229,196,0.08),rgba(77,229,196,0.02) 40%,var(--bg-card))}
+.p1-card.featured::before{content:"MOST COMMON";position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:9px;letter-spacing:0.14em;padding:5px 9px;background:var(--accent);color:var(--bg);border-radius:2px;font-weight:600}
+.p1-card h4{font-size:1.5rem;font-weight:600;letter-spacing:-0.015em}
+.p1-card .label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.p1-card .price{font-size:1.5rem;font-weight:600;color:var(--accent);padding:16px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line)}
+.p1-card .price span{font-family:var(--mono);font-size:11px;color:var(--text-mute);font-weight:400;letter-spacing:0.06em;margin-left:8px;text-transform:uppercase}
+.p1-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;flex:1}
+.p1-card li{color:var(--text-mute);font-size:0.95rem;padding-left:22px;position:relative;line-height:1.5}
+.p1-card li::before{content:"";position:absolute;left:0;top:8px;width:10px;height:2px;background:var(--accent)}
+.p1-card .cta{margin-top:6px;padding:14px 20px;border:1px solid var(--line-strong);color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;text-decoration:none;transition:all .3s ease}
+.p1-card.featured .cta{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+/* ========= V2 — Horizontal rows (no card grid) ========= */
+.p2{display:flex;flex-direction:column;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.p2-row{display:grid;grid-template-columns:200px 1fr 260px 160px;gap:32px;align-items:center;padding:32px;background:var(--bg-card);border-bottom:1px solid var(--line);transition:background .3s ease;position:relative}
+@media(max-width:860px){.p2-row{grid-template-columns:1fr;gap:16px}}
+.p2-row:last-child{border-bottom:none}
+.p2-row:hover{background:var(--bg-lift)}
+.p2-row.featured{background:linear-gradient(90deg,rgba(77,229,196,0.08),transparent)}
+.p2-name{display:flex;flex-direction:column;gap:6px}
+.p2-name .n{font-size:1.4rem;font-weight:600;letter-spacing:-0.015em}
+.p2-name .k{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.p2-desc{color:var(--text-mute);font-size:0.97rem;line-height:1.55}
+.p2-price{font-size:1.2rem;font-weight:600;color:var(--accent);letter-spacing:-0.01em}
+.p2-price span{display:block;font-family:var(--mono);font-size:10px;color:var(--text-mute);font-weight:400;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+.p2-cta{padding:12px 18px;border:1px solid var(--line-strong);color:var(--text);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;text-align:center;text-decoration:none;transition:all .3s ease}
+.p2-cta:hover{border-color:var(--accent);color:var(--accent)}
+.p2-row.featured .p2-cta{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+/* ========= V3 — Comparison table ========= */
+.p3{border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;background:var(--bg-card)}
+.p3-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr}
+@media(max-width:860px){.p3-grid{grid-template-columns:1fr}}
+.p3-cell{padding:20px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:0.95rem;color:var(--text-mute)}
+.p3-cell:last-child{border-right:none}
+.p3-head{background:rgba(0,0,0,0.18);border-bottom:1px solid var(--line-strong)}
+.p3-head.featured{background:linear-gradient(180deg,rgba(77,229,196,0.12),rgba(77,229,196,0.04))}
+.p3-head h4{font-size:1.25rem;font-weight:600;margin-bottom:4px}
+.p3-head .k{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
+.p3-head .price{font-size:1.8rem;font-weight:600;color:var(--accent);letter-spacing:-0.02em;line-height:1;margin-top:8px}
+.p3-head .price span{display:block;font-family:var(--mono);font-size:10px;color:var(--text-mute);font-weight:400;letter-spacing:0.08em;text-transform:uppercase;margin-top:6px}
+.p3-label{color:var(--text);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase}
+.p3-check{color:var(--accent);font-size:1.2rem;line-height:1}
+.p3-dash{color:var(--text-dim)}
+.p3-foot{background:rgba(0,0,0,0.1)}
+.p3-foot .p3-cell{padding:24px}
+.p3-foot a{display:inline-flex;padding:10px 16px;border:1px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all .2s ease}
+.p3-foot a.primary{background:var(--accent);color:var(--bg)}
+
+/* ========= V4 — Calculator / selector ========= */
+.p4{border:1px solid var(--line-strong);border-radius:4px;background:var(--bg-card);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:860px){.p4{grid-template-columns:1fr;padding:32px}}
+.p4-left h3{font-size:1.6rem;font-weight:600;margin-bottom:14px}
+.p4-question{font-size:1rem;color:var(--text);margin-bottom:8px;font-weight:500}
+.p4-choices{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.p4-choice{padding:16px 20px;border:1px solid var(--line);border-radius:3px;cursor:pointer;transition:all .2s ease;color:var(--text-mute);display:flex;align-items:center;gap:14px;font-size:0.98rem;background:transparent}
+.p4-choice:hover{border-color:var(--accent-dim);color:var(--text);background:rgba(77,229,196,0.03)}
+.p4-choice.active{border-color:var(--accent);background:rgba(77,229,196,0.08);color:var(--text)}
+.p4-choice .mark{width:16px;height:16px;border:1.5px solid var(--line-strong);border-radius:50%;flex-shrink:0;transition:border-color .2s ease;position:relative}
+.p4-choice.active .mark{border-color:var(--accent)}
+.p4-choice.active .mark::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
+.p4-right{display:flex;flex-direction:column;gap:20px;padding:32px;background:linear-gradient(180deg,rgba(77,229,196,0.06),transparent 60%,rgba(77,229,196,0.02));border:1px solid var(--accent-dim);border-radius:3px}
+.p4-result-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.p4-result-name{font-size:1.7rem;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+.p4-result-desc{color:var(--text-mute);font-size:0.97rem;line-height:1.55;padding-top:14px;border-top:1px solid var(--line)}
+.p4-result-price{font-size:1.4rem;color:var(--accent);font-weight:600;padding-top:14px;border-top:1px solid var(--line)}
+.p4-result-price span{display:block;font-family:var(--mono);font-size:10px;color:var(--text-mute);font-weight:400;margin-top:4px;letter-spacing:0.08em;text-transform:uppercase}
+.p4-result-cta{margin-top:auto;padding:14px 20px;background:var(--accent);color:var(--bg);font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;text-decoration:none;font-weight:500}
+
+/* ========= V5 — Tiered ladder ========= */
+.p5{display:grid;grid-template-columns:1fr;gap:16px}
+.p5-tier{border:1px solid var(--line-strong);border-radius:4px;background:var(--bg-card);padding:28px 32px;display:grid;grid-template-columns:auto 1fr auto auto;gap:32px;align-items:center;position:relative;transition:all .3s ease}
+@media(max-width:860px){.p5-tier{grid-template-columns:1fr;gap:16px}}
+.p5-tier:hover{border-color:var(--accent-dim);transform:translateX(4px)}
+.p5-tier.featured{border-color:var(--accent);background:linear-gradient(90deg,rgba(77,229,196,0.08),var(--bg-card) 40%)}
+.p5-tier-num{font-family:var(--mono);font-size:2.2rem;font-weight:600;color:var(--accent);line-height:1;letter-spacing:-0.02em;min-width:48px}
+.p5-tier-body h4{font-size:1.35rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px}
+.p5-tier-body .desc{color:var(--text-mute);font-size:0.95rem;line-height:1.5;max-width:50ch}
+.p5-tier-body .tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.p5-tier-body .tag{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;padding:3px 8px;border:1px solid var(--line);color:var(--text-mute);border-radius:2px}
+.p5-tier-price{font-size:1.25rem;font-weight:600;color:var(--accent);letter-spacing:-0.01em}
+.p5-tier-price span{display:block;font-family:var(--mono);font-size:10px;color:var(--text-mute);font-weight:400;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+.p5-tier-cta{padding:12px 18px;border:1px solid var(--line-strong);color:var(--text);font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all .2s ease;white-space:nowrap}
+.p5-tier-cta:hover{border-color:var(--accent);color:var(--accent)}
+.p5-tier.featured .p5-tier-cta{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/" class="mark">rightset<sup style="font-size:8px;font-family:var(--mono)">®</sup></a>
+  <a href="/" class="back">← Back to home</a>
+</div>
+<h1 class="page-title">Pricing section &mdash; pick a layout</h1>
+<p class="page-sub">Five ways to show the same three pricing models. Tell me the variant number you want shipped to the home page.</p>
+
+<!-- ========== VARIANT 1 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 01</span><h2 style="margin-top:6px">Three cards, featured middle (CURRENT)</h2></div><button class="pick">Pick V1</button></div>
+  <div class="section-h"><div class="kicker">§ Pricing</div><h3>Three ways to work with us.</h3></div>
+  <div class="p1">
+    <div class="p1-card featured">
+      <span class="label">01 &middot; Revenue share</span>
+      <h4>Most partners start here.</h4>
+      <p style="color:var(--text-mute);font-size:0.95rem;line-height:1.55">We earn a percentage of what we recover. If there&rsquo;s nothing to collect, you pay nothing.</p>
+      <div class="price">% of recovery<span>performance</span></div>
+      <ul><li>Catalog onboarding included</li><li>Full dashboard access</li><li>Human-reviewed disputes</li><li>Monthly payouts</li></ul>
+      <a href="#" class="cta">Book a demo →</a>
+    </div>
+    <div class="p1-card">
+      <span class="label">02 &middot; Flat service fee</span>
+      <h4>Larger catalogs, white-glove.</h4>
+      <p style="color:var(--text-mute);font-size:0.95rem;line-height:1.55">Fixed fee for onboarding and ongoing management. Preferred when volume is predictable.</p>
+      <div class="price">Custom<span>scoped</span></div>
+      <ul><li>Dedicated ops lead</li><li>Priority dispute queue</li><li>SSO, API, SLAs</li><li>White-glove digitization</li></ul>
+      <a href="#" class="cta">Talk to us →</a>
+    </div>
+    <div class="p1-card">
+      <span class="label">03 &middot; Monthly retainer</span>
+      <h4>High-volume auto-takedown.</h4>
+      <p style="color:var(--text-mute);font-size:0.95rem;line-height:1.55">Automated takedowns at scale without waiting on human review for every match.</p>
+      <div class="price">Monthly<span>volume-tiered</span></div>
+      <ul><li>Automated enforcement</li><li>AI-deepfake scanning</li><li>Takedown workflow</li><li>Weekly audit report</li></ul>
+      <a href="#" class="cta">Talk to us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 2 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 02</span><h2 style="margin-top:6px">Horizontal rows (one-per-row, scannable)</h2></div><button class="pick">Pick V2</button></div>
+  <div class="section-h"><div class="kicker">§ Pricing</div><h3>Three ways to work with us.</h3></div>
+  <div class="p2">
+    <div class="p2-row featured">
+      <div class="p2-name"><span class="k">01 &middot; Most common</span><span class="n">Revenue share</span></div>
+      <div class="p2-desc">We earn a percentage of what we recover. If there&rsquo;s nothing to collect, you pay nothing. No upfront fees. Monthly payouts from day one.</div>
+      <div class="p2-price">% of recovery<span>performance-based</span></div>
+      <a href="#" class="p2-cta">Book demo →</a>
+    </div>
+    <div class="p2-row">
+      <div class="p2-name"><span class="k">02</span><span class="n">Flat service fee</span></div>
+      <div class="p2-desc">Fixed fee for onboarding and ongoing management. Dedicated ops lead, priority dispute queue, SSO &amp; API.</div>
+      <div class="p2-price">Custom<span>scoped per catalog</span></div>
+      <a href="#" class="p2-cta">Talk to us →</a>
+    </div>
+    <div class="p2-row">
+      <div class="p2-name"><span class="k">03</span><span class="n">Monthly retainer</span></div>
+      <div class="p2-desc">Aggressive automated takedowns at scale. Brand-safety &amp; AI-deepfake scanning, platform escalation, weekly reports.</div>
+      <div class="p2-price">Monthly<span>volume-tiered</span></div>
+      <a href="#" class="p2-cta">Talk to us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 3 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 03</span><h2 style="margin-top:6px">Comparison table (feature-by-feature)</h2></div><button class="pick">Pick V3</button></div>
+  <div class="section-h"><div class="kicker">§ Pricing</div><h3>Compare our three models.</h3></div>
+  <div class="p3">
+    <div class="p3-grid">
+      <div class="p3-cell p3-head"><span class="k">&nbsp;</span><h4>&nbsp;</h4></div>
+      <div class="p3-cell p3-head featured"><span class="k">01 &middot; Most common</span><h4>Revenue share</h4><div class="price">% of recovery<span>performance</span></div></div>
+      <div class="p3-cell p3-head"><span class="k">02</span><h4>Flat service fee</h4><div class="price">Custom<span>scoped</span></div></div>
+      <div class="p3-cell p3-head"><span class="k">03</span><h4>Monthly retainer</h4><div class="price">Monthly<span>volume</span></div></div>
+
+      <div class="p3-cell p3-label">Upfront cost</div>
+      <div class="p3-cell">Zero</div>
+      <div class="p3-cell">Onboarding fee</div>
+      <div class="p3-cell">Monthly retainer</div>
+
+      <div class="p3-cell p3-label">Dashboard access</div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+
+      <div class="p3-cell p3-label">Human-reviewed disputes</div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+      <div class="p3-cell">Automated + escalation</div>
+
+      <div class="p3-cell p3-label">Dedicated ops lead</div>
+      <div class="p3-cell"><span class="p3-dash">—</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+
+      <div class="p3-cell p3-label">SSO / API / SLA</div>
+      <div class="p3-cell"><span class="p3-dash">—</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+
+      <div class="p3-cell p3-label">AI deepfake scanning</div>
+      <div class="p3-cell"><span class="p3-dash">—</span></div>
+      <div class="p3-cell">Add-on</div>
+      <div class="p3-cell"><span class="p3-check">●</span></div>
+    </div>
+    <div class="p3-grid p3-foot">
+      <div class="p3-cell"></div>
+      <div class="p3-cell"><a href="#" class="primary">Book demo →</a></div>
+      <div class="p3-cell"><a href="#">Talk to us →</a></div>
+      <div class="p3-cell"><a href="#">Talk to us →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 4 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 04</span><h2 style="margin-top:6px">Selector &mdash; answer 1 question, see your fit</h2></div><button class="pick">Pick V4</button></div>
+  <div class="section-h"><div class="kicker">§ Pricing</div><h3>Find the right model for your catalog.</h3></div>
+  <div class="p4">
+    <div class="p4-left">
+      <h3>What describes your catalog best?</h3>
+      <div class="p4-question">Select one:</div>
+      <div class="p4-choices" id="p4-choices">
+        <div class="p4-choice active" data-plan="rev"><span class="mark"></span>Individual creator, a handful of rightsholders, or an estate starting from zero.</div>
+        <div class="p4-choice" data-plan="flat"><span class="mark"></span>Multi-channel publisher, studio, or media company with predictable volume.</div>
+        <div class="p4-choice" data-plan="ret"><span class="mark"></span>High-volume enterprise needing automated takedowns at scale.</div>
+      </div>
+    </div>
+    <div class="p4-right">
+      <span class="p4-result-label" id="p4-label">01 &middot; Recommended</span>
+      <h4 class="p4-result-name" id="p4-name">Revenue share</h4>
+      <p class="p4-result-desc" id="p4-desc">We earn a percentage of what we recover. If there&rsquo;s nothing to collect, you pay nothing. Monthly payouts from day one.</p>
+      <div class="p4-result-price" id="p4-price">% of recovery<span>performance-based</span></div>
+      <a href="#" class="p4-result-cta">Book demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VARIANT 5 ========== -->
+<section class="variant-wrap">
+  <div class="variant-head"><div><span class="tag">Variant 05</span><h2 style="margin-top:6px">Ladder &mdash; stacked tiers with numbers</h2></div><button class="pick">Pick V5</button></div>
+  <div class="section-h"><div class="kicker">§ Pricing</div><h3>Three tiers. Match your volume.</h3></div>
+  <div class="p5">
+    <div class="p5-tier featured">
+      <div class="p5-tier-num">01</div>
+      <div class="p5-tier-body"><h4>Revenue share &middot; most common</h4><div class="desc">Performance-based. No upfront fees. Pay only on recovered revenue.</div><div class="tags"><span class="tag">No minimum</span><span class="tag">Monthly payouts</span><span class="tag">Full dashboard</span></div></div>
+      <div class="p5-tier-price">% of recovery<span>performance</span></div>
+      <a href="#" class="p5-tier-cta">Book demo →</a>
+    </div>
+    <div class="p5-tier">
+      <div class="p5-tier-num">02</div>
+      <div class="p5-tier-body"><h4>Flat service fee &middot; white-glove</h4><div class="desc">Fixed cost for larger catalogs with predictable volume. Dedicated ops lead and priority queue.</div><div class="tags"><span class="tag">SSO</span><span class="tag">API</span><span class="tag">SLA</span><span class="tag">Dedicated lead</span></div></div>
+      <div class="p5-tier-price">Custom<span>scoped</span></div>
+      <a href="#" class="p5-tier-cta">Talk to us →</a>
+    </div>
+    <div class="p5-tier">
+      <div class="p5-tier-num">03</div>
+      <div class="p5-tier-body"><h4>Monthly retainer &middot; high-volume auto-takedown</h4><div class="desc">Automated enforcement pipeline. AI deepfake scanning. Platform trust &amp; safety escalation.</div><div class="tags"><span class="tag">Auto-takedown</span><span class="tag">AI-deepfake</span><span class="tag">Weekly audit</span></div></div>
+      <div class="p5-tier-price">Monthly<span>volume-tiered</span></div>
+      <a href="#" class="p5-tier-cta">Talk to us →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.pick').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var n=btn.textContent.replace(/[^0-9]/g,'');
+    navigator.clipboard.writeText('Use Pricing V'+n).then(function(){
+      var orig=btn.textContent;btn.textContent='Copied — tell me "Pricing V'+n+'"';
+      setTimeout(function(){btn.textContent=orig},2400);
+    });
+  });
+});
+// V4 selector
+var plans={
+  rev:{label:'01 · Recommended',name:'Revenue share',desc:'We earn a percentage of what we recover. If there\u2019s nothing to collect, you pay nothing. Monthly payouts from day one.',price:'% of recovery<span>performance-based</span>'},
+  flat:{label:'02 · Recommended',name:'Flat service fee',desc:'Fixed fee for onboarding and ongoing management. Dedicated ops lead, priority dispute queue, SSO &amp; API access.',price:'Custom<span>scoped per catalog</span>'},
+  ret:{label:'03 · Recommended',name:'Monthly retainer',desc:'Automated enforcement pipeline at scale. AI deepfake scanning, brand-safety, platform trust &amp; safety escalation.',price:'Monthly<span>volume-tiered</span>'}
+};
+document.querySelectorAll('#p4-choices .p4-choice').forEach(function(c){
+  c.addEventListener('click',function(){
+    document.querySelectorAll('#p4-choices .p4-choice').forEach(function(x){x.classList.remove('active')});
+    c.classList.add('active');
+    var p=plans[c.dataset.plan];
+    document.getElementById('p4-label').textContent=p.label;
+    document.getElementById('p4-name').textContent=p.name;
+    document.getElementById('p4-desc').innerHTML=p.desc;
+    document.getElementById('p4-price').innerHTML=p.price;
+  });
+});
+</script>
+</body>
+</html>

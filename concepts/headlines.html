@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rightset — Headline Previews</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231a1a18'/%3E%3Cg transform='translate(50,50) rotate(-6)'%3E%3Cpath d='M0-38 L33-19 L33 19 L0 38 L-33 19 L-33-19Z' fill='none' stroke='%23f5f5f3' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M0-27 L23.4-13.5 L23.4 13.5 L0 27 L-23.4 13.5 L-23.4-13.5Z' fill='none' stroke='%23f5f5f3' stroke-width='4.5' stroke-linejoin='round'/%3E%3Cpath d='M0-17 L14.7-8.5 L14.7 8.5 L0 17 L-14.7 8.5 L-14.7-8.5Z' fill='none' stroke='%23f5f5f3' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M0-9 L7.8-4.5 L7.8 4.5 L0 9 L-7.8 4.5 L-7.8-4.5Z' fill='none' stroke='%23f5f5f3' stroke-width='3.5' stroke-linejoin='round'/%3E%3Ccircle cx='-1' cy='1' r='3.5' fill='%235eead4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RIGHTSET — HEADLINE PREVIEWS
+   Full V17 hero replica x10, headline text only changes.
+   ============================================================ */
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:         #0a0a0a;
+  --bg-card:    #111111;
+  --bg-lift:    #161616;
+  --text:       #f5f5f3;
+  --text-mute:  #8a8a85;
+  --text-dim:   #3a3a37;
+  --line:       rgba(245,245,243,0.08);
+  --line-strong:rgba(245,245,243,0.16);
+  --accent:     #5eead4;
+  --accent-dim: rgba(94,234,212,0.55);
+  --accent-glow:rgba(94,234,212,0.18);
+  --sans:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out:cubic-bezier(0.22, 1, 0.36, 1);
+  --max:1440px;
+  --pad-x:clamp(24px, 6vw, 120px);
+  --section-y:clamp(120px, 18vw, 240px);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  font-size:17px;
+  line-height:1.55;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  cursor:default;
+  position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(800px circle at 18% 22%, rgba(94,234,212,0.045), transparent 60%),
+    radial-gradient(700px circle at 82% 78%, rgba(94,234,212,0.035), transparent 60%);
+  animation:ambient 24s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes ambient{
+  0%{transform:translate(0,0)}
+  100%{transform:translate(-3%,2%)}
+}
+body::after{
+  content:"";position:fixed;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(94,234,212,0.22),transparent);
+  z-index:9995;pointer-events:none;
+  animation:pagescan 14s linear infinite;
+  opacity:0.45;
+}
+@keyframes pagescan{
+  0%{top:-2%}
+  100%{top:102%}
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+svg{display:block}
+::selection{background:var(--text);color:var(--bg)}
+
+/* Film grain overlay */
+.film-grain{
+  position:fixed;inset:0;z-index:9990;pointer-events:none;
+  opacity:0.032;
+  mix-blend-mode:overlay;
+}
+.film-grain svg{width:100%;height:100%}
+
+/* -----  BUTTONS  ----- */
+.btn{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:18px 28px;
+  font-family:var(--sans);
+  font-size:13px;font-weight:500;letter-spacing:-0.005em;
+  border:1px solid var(--line-strong);
+  background:transparent;color:var(--text);
+  position:relative;overflow:hidden;
+  transition:border-color .5s var(--ease),color .5s var(--ease),box-shadow .5s var(--ease),transform .4s var(--ease);
+  will-change:transform;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;
+  background:var(--accent);
+  transform:translateY(101%);
+  transition:transform .6s var(--ease);
+  z-index:-1;
+}
+.btn:hover::before{transform:translateY(0)}
+.btn:hover{color:var(--bg);border-color:var(--accent);box-shadow:0 0 30px var(--accent-glow)}
+.btn .arrow{display:inline-block;transition:transform .5s var(--ease)}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn-ghost{
+  display:inline-block;
+  font-size:13px;font-weight:400;letter-spacing:-0.005em;
+  color:var(--text);padding:18px 0;
+  border-bottom:1px solid var(--line-strong);
+  transition:border-color .3s var(--ease),color .3s var(--ease),transform .4s var(--ease);
+  will-change:transform;
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ============================================================
+   HERO SECTION (replicated x10)
+   ============================================================ */
+.hero{
+  min-height:100vh;
+  padding:120px var(--pad-x) clamp(60px, 8vw, 120px) var(--pad-x);
+  max-width:var(--max);margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+
+/* Cinematic backdrop */
+.hero-backdrop{
+  position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.hero-backdrop::before,
+.hero-backdrop::after{
+  content:"";position:absolute;
+  width:1200px;height:1200px;border-radius:50%;
+  filter:blur(180px);opacity:0.55;
+  animation:drift 22s ease-in-out infinite;
+  will-change:transform;
+}
+.hero-backdrop::before{
+  background:radial-gradient(circle,#26262320 0%,transparent 60%),radial-gradient(circle,#1e1e1c 0%,transparent 60%);
+  top:-300px;left:-200px;
+}
+.hero-backdrop::after{
+  background:radial-gradient(circle,var(--accent-glow) 0%,transparent 55%),radial-gradient(circle,#252521 0%,transparent 60%);
+  bottom:-400px;right:-300px;
+  animation-delay:-11s;
+  animation-duration:28s;
+  opacity:0.7;
+}
+@keyframes drift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  25%{transform:translate(140px,-90px) scale(1.1)}
+  50%{transform:translate(60px,80px) scale(0.96)}
+  75%{transform:translate(-100px,-40px) scale(1.05)}
+}
+
+/* Hero scanline */
+.hero-scanline{
+  position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--accent-dim) 50%,transparent 100%);
+  opacity:0.35;
+  z-index:1;pointer-events:none;
+  animation:scandown 9s linear infinite;
+  box-shadow:0 0 14px var(--accent-glow);
+}
+@keyframes scandown{
+  0%{top:-2%;opacity:0}
+  10%{opacity:0.5}
+  90%{opacity:0.5}
+  100%{top:102%;opacity:0}
+}
+
+/* Hero corner brackets */
+.hero-bracket{
+  position:absolute;width:24px;height:24px;
+  border:1px solid var(--accent-dim);
+  z-index:2;pointer-events:none;
+  opacity:0.8;
+}
+.hero-bracket.tl{top:120px;left:var(--pad-x);border-right:none;border-bottom:none}
+.hero-bracket.tr{top:120px;right:var(--pad-x);border-left:none;border-bottom:none}
+.hero-bracket.bl{bottom:clamp(60px, 8vw, 120px);left:var(--pad-x);border-right:none;border-top:none}
+.hero-bracket.br{bottom:clamp(60px, 8vw, 120px);right:var(--pad-x);border-left:none;border-top:none}
+
+/* REC dot */
+.hero-rec{
+  position:absolute;top:120px;right:calc(var(--pad-x) + 38px);
+  display:flex;align-items:center;gap:8px;z-index:3;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--text-mute);
+}
+.hero-rec::before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 10px var(--accent-glow);
+  animation:recblink 1.6s ease-in-out infinite;
+}
+@keyframes recblink{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.3;transform:scale(0.85)}
+}
+
+/* Ghost number */
+.hero-ghost{
+  position:absolute;
+  top:22%;right:-5%;
+  font-size:clamp(8rem, 22vw, 22rem);
+  font-weight:500;
+  letter-spacing:-0.06em;
+  line-height:0.85;
+  color:var(--text);
+  opacity:0.025;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:0;
+}
+
+/* Globe wrapper */
+.hero-globe-wrap{
+  position:absolute;
+  top:50%;
+  left:58%;
+  transform:translate(-50%, -50%);
+  width:min(820px, 72vw);
+  aspect-ratio:1;
+  pointer-events:none;
+  z-index:0;
+}
+.hero-globe{
+  width:100%; height:100%;
+  opacity:0.55;
+  animation: globeSpin 120s linear infinite;
+}
+@keyframes globeSpin{
+  0%   { transform:rotate(0deg); }
+  100% { transform:rotate(360deg); }
+}
+.hero-globe-wrap::after{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  border-radius:50%;
+  border:1px solid rgba(94,234,212,0.08);
+  box-shadow:0 0 80px rgba(94,234,212,0.06), inset 0 0 80px rgba(94,234,212,0.03);
+  animation: ringPulse 8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes ringPulse{
+  0%,100% { opacity:0.5; transform:scale(1); }
+  50%     { opacity:1;   transform:scale(1.02); }
+}
+.hero-globe-svg{ width:100%; height:100%; display:block; }
+
+/* Globe nodes and arcs */
+.globe-node{
+  animation: globeNodePulse 2.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.globe-node.n2{ animation-delay:0.3s; }
+.globe-node.n3{ animation-delay:0.6s; }
+.globe-node.n4{ animation-delay:0.9s; }
+.globe-node.n5{ animation-delay:1.2s; }
+.globe-node.n6{ animation-delay:1.5s; }
+.globe-node.n7{ animation-delay:0.4s; }
+.globe-node.n8{ animation-delay:0.8s; }
+.globe-node.n9{ animation-delay:1.1s; }
+.globe-node.n10{ animation-delay:1.6s; }
+@keyframes globeNodePulse {
+  0%,100% { opacity:0.25; }
+  50%     { opacity:1; }
+}
+.globe-sweep{ animation: globeSweepMove 9s linear infinite; }
+@keyframes globeSweepMove {
+  0%   { transform: translateX(0);   opacity:0; }
+  10%  { opacity:0.9; }
+  90%  { opacity:0.9; }
+  100% { transform: translateX(560px); opacity:0; }
+}
+.globe-arc{
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: globeArcDraw 5s ease-in-out infinite;
+}
+.globe-arc.a2{ animation-delay:1.2s; }
+.globe-arc.a3{ animation-delay:2.4s; }
+@keyframes globeArcDraw {
+  0%,100% { stroke-dashoffset: 120; opacity:0; }
+  20%     { opacity:0.55; }
+  50%     { stroke-dashoffset: 0; opacity:0.55; }
+  80%     { opacity:0; }
+}
+
+/* Particles */
+.hero-particles{
+  position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden;
+}
+.hero-particle{
+  position:absolute;
+  width:2px; height:2px;
+  background:var(--accent);
+  border-radius:50%;
+  opacity:0;
+  animation: particleFloat linear infinite;
+}
+@keyframes particleFloat{
+  0%   { transform:translateY(0) translateX(0);   opacity:0; }
+  10%  { opacity:0.6; }
+  90%  { opacity:0.6; }
+  100% { transform:translateY(-100vh) translateX(40px); opacity:0; }
+}
+
+/* Hero content */
+.hero-content{ position:relative; z-index:2; max-width:680px; }
+.hero-headline{
+  font-size:clamp(2.8rem, 5.2vw, 5.4rem);
+  font-weight:400;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  margin-bottom:36px;
+  position:relative;
+  color:var(--text);
+  text-wrap:balance;
+}
+.hero-sub{
+  font-size:clamp(1rem, 1.3vw, 1.25rem);
+  line-height:1.5;
+  color:var(--text-mute);
+  max-width:620px;
+  margin-bottom:48px;
+}
+.hero-sub strong{
+  display:block;
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:0.78em;
+  font-weight:500;
+  letter-spacing:0.02em;
+  color:var(--text);
+  text-transform:uppercase;
+}
+.hero-cta-row{
+  display:flex;align-items:center;gap:32px;
+}
+
+/* Data ticker */
+.hero-ticker{
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:36px;
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  z-index:1;
+  pointer-events:none;
+}
+.hero-ticker-track{
+  display:flex;
+  gap:48px;
+  white-space:nowrap;
+  animation: tickerScroll 40s linear infinite;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-mute);
+  line-height:36px;
+}
+@keyframes tickerScroll{
+  0%   { transform:translateX(0); }
+  100% { transform:translateX(-50%); }
+}
+.ticker-dot{
+  display:inline-block;
+  width:4px; height:4px;
+  background:var(--accent);
+  border-radius:50%;
+  margin:0 16px;
+  vertical-align:middle;
+  box-shadow:0 0 6px var(--accent-glow);
+}
+
+/* ============================================================
+   STICKY TOPBAR
+   ============================================================ */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:200;
+  padding:0 var(--pad-x);
+  display:flex;
+  align-items:center;
+  gap:24px;
+  height:52px;
+  background:rgba(10,10,10,0.88);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-bottom:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+.topbar-back{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--text-mute);
+  transition:color .3s var(--ease);
+  flex-shrink:0;
+  padding-right:20px;
+  border-right:1px solid var(--line);
+  margin-right:8px;
+}
+.topbar-back:hover{color:var(--accent)}
+.topbar-title{
+  color:var(--text);
+  font-weight:500;
+  flex-shrink:0;
+  padding-right:20px;
+  border-right:1px solid var(--line);
+  margin-right:8px;
+}
+.topbar-links{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+}
+.topbar-link{
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  width:32px;height:32px;
+  color:var(--text-mute);
+  border:1px solid transparent;
+  transition:color .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);
+}
+.topbar-link:hover{
+  color:var(--text);
+  border-color:var(--line-strong);
+}
+.topbar-link.active{
+  color:var(--accent);
+  border-color:var(--accent-dim);
+  background:rgba(94,234,212,0.06);
+}
+
+/* ============================================================
+   OPTION BADGE
+   ============================================================ */
+.option-badge{
+  position:absolute;
+  top:130px;
+  left:calc(var(--pad-x) + 38px);
+  z-index:10;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--text-mute);
+  display:flex;align-items:center;gap:10px;
+}
+.option-badge .current-tag{
+  color:var(--bg);
+  background:var(--accent);
+  padding:2px 8px;
+  font-size:9px;
+  letter-spacing:0.1em;
+}
+
+/* ============================================================
+   OPTION J — dashed note
+   ============================================================ */
+.angle-note{
+  margin-top:14px;
+  padding:10px 16px;
+  border:1px dashed var(--text-dim);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.06em;
+  color:var(--text-mute);
+  display:inline-block;
+}
+
+/* ============================================================
+   OPTION G — sub line 1 style
+   ============================================================ */
+.hero-sub-tagline{
+  font-size:clamp(0.95rem, 1.2vw, 1.15rem);
+  line-height:1.45;
+  color:var(--text-mute);
+  font-style:italic;
+  opacity:0.75;
+  margin-bottom:16px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:960px){
+  .hero-globe-wrap{ width:140vw; left:50%; }
+  .hero-globe{ opacity:0.2 !important; }
+  .hero-content{ max-width:100%; }
+  .hero-particles{ display:none; }
+  .hero-ticker{ display:none; }
+}
+@media(max-width:640px){
+  .hero-rec{display:none}
+  .topbar{font-size:10px;gap:12px;padding:0 16px}
+  .topbar-title{display:none}
+  .topbar-link{width:28px;height:28px}
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+  .hero-globe{opacity:0.55 !important}
+  .hero-ticker-track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- FILM GRAIN -->
+<div class="film-grain" aria-hidden="true">
+  <svg width="100%" height="100%">
+    <filter id="grain-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain-filter)"/>
+  </svg>
+</div>
+
+<!-- STICKY TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="topbar-back">&larr; Back to Concepts</a>
+  <span class="topbar-title">Headline Previews</span>
+  <div class="topbar-links">
+    <a href="#a" class="topbar-link active" data-target="a">A</a>
+    <a href="#b" class="topbar-link" data-target="b">B</a>
+    <a href="#c" class="topbar-link" data-target="c">C</a>
+    <a href="#d" class="topbar-link" data-target="d">D</a>
+    <a href="#e" class="topbar-link" data-target="e">E</a>
+    <a href="#f" class="topbar-link" data-target="f">F</a>
+    <a href="#g" class="topbar-link" data-target="g">G</a>
+    <a href="#h" class="topbar-link" data-target="h">H</a>
+    <a href="#i" class="topbar-link" data-target="i">I</a>
+    <a href="#j" class="topbar-link" data-target="j">J</a>
+    <a href="#k" class="topbar-link" data-target="k">K</a>
+    <a href="#l" class="topbar-link" data-target="l">L</a>
+    <a href="#m" class="topbar-link" data-target="m">M</a>
+    <a href="#n" class="topbar-link" data-target="n">N</a>
+    <a href="#o" class="topbar-link" data-target="o">O</a>
+    <a href="#p" class="topbar-link" data-target="p">P</a>
+    <a href="#q" class="topbar-link" data-target="q">Q</a>
+    <a href="#r" class="topbar-link" data-target="r">R</a>
+    <a href="#s" class="topbar-link" data-target="s">S</a>
+  </div>
+</div>
+
+
+<!-- =====================================================
+     OPTION A — CURRENT
+     ===================================================== -->
+<section class="hero" id="a">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div>
+  <div class="hero-bracket tr"></div>
+  <div class="hero-bracket bl"></div>
+  <div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option A <span class="current-tag">CURRENT</span></div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;  bottom:0; animation-duration:18s; animation-delay:0s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:12%; bottom:0; animation-duration:22s; animation-delay:2s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:22%; bottom:0; animation-duration:16s; animation-delay:4s;  width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:35%; bottom:0; animation-duration:20s; animation-delay:1s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:45%; bottom:0; animation-duration:24s; animation-delay:6s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:55%; bottom:0; animation-duration:19s; animation-delay:3s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:65%; bottom:0; animation-duration:21s; animation-delay:8s;  width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:72%; bottom:0; animation-duration:17s; animation-delay:5s;  width:2.5px; height:2.5px;"></span>
+    <span class="hero-particle" style="left:82%; bottom:0; animation-duration:23s; animation-delay:10s; width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:90%; bottom:0; animation-duration:20s; animation-delay:7s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:8%;  bottom:0; animation-duration:25s; animation-delay:12s; width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:30%; bottom:0; animation-duration:18s; animation-delay:9s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:50%; bottom:0; animation-duration:22s; animation-delay:11s; width:2.5px; height:2.5px;"></span>
+    <span class="hero-particle" style="left:78%; bottom:0; animation-duration:19s; animation-delay:14s; width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:95%; bottom:0; animation-duration:21s; animation-delay:3s;  width:1.5px; height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true">
+  <div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-a" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#5eead4" stop-opacity="0.10"/>
+          <stop offset="55%"  stop-color="#5eead4" stop-opacity="0.025"/>
+          <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="globeSweepGrad-a" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#5eead4" stop-opacity="0"/>
+          <stop offset="50%"  stop-color="#5eead4" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+        </linearGradient>
+        <clipPath id="globeClip-a">
+          <circle cx="300" cy="300" r="240"/>
+        </clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-a)"/>
+      <circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22">
+        <ellipse cx="300" cy="300" rx="240" ry="40"/>
+        <ellipse cx="300" cy="300" rx="232" ry="100"/>
+        <ellipse cx="300" cy="300" rx="216" ry="160"/>
+        <ellipse cx="300" cy="300" rx="190" ry="210"/>
+      </g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18">
+        <ellipse cx="300" cy="300" rx="40"  ry="240"/>
+        <ellipse cx="300" cy="300" rx="100" ry="240"/>
+        <ellipse cx="300" cy="300" rx="160" ry="240"/>
+        <ellipse cx="300" cy="300" rx="210" ry="240"/>
+      </g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8">
+        <path class="globe-arc"    d="M210,180 Q290,110 380,155"/>
+        <path class="globe-arc a2" d="M180,300 Q300,230 445,265"/>
+        <path class="globe-arc a3" d="M260,405 Q330,475 395,385"/>
+      </g>
+      <g>
+        <circle class="globe-node"     cx="210" cy="180" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n2"  cx="380" cy="155" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n3"  cx="445" cy="265" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n4"  cx="180" cy="300" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n5"  cx="260" cy="405" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n6"  cx="395" cy="385" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n7"  cx="310" cy="225" r="2"   fill="#f5f5f3"/>
+        <circle class="globe-node n8"  cx="150" cy="370" r="2"   fill="#f5f5f3"/>
+        <circle class="globe-node n9"  cx="420" cy="440" r="2"   fill="#f5f5f3"/>
+        <circle class="globe-node n10" cx="340" cy="475" r="2"   fill="#f5f5f3"/>
+      </g>
+      <g clip-path="url(#globeClip-a)">
+        <rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-a)"/>
+      </g>
+    </svg>
+  </div>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Your content is everywhere.<br>Your revenue should be too.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row">
+      <a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a>
+      <a href="#" class="btn-ghost">How it works</a>
+    </div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true">
+    <div class="hero-ticker-track">
+      <span>content id &middot; active</span><span class="ticker-dot"></span>
+      <span>500,000+ claims monitored</span><span class="ticker-dot"></span>
+      <span>8B views/yr recovered</span><span class="ticker-dot"></span>
+      <span>scan region &middot; global</span><span class="ticker-dot"></span>
+      <span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span>
+      <span>payout cycle &middot; monthly</span><span class="ticker-dot"></span>
+      <span>200M watch-hours recaptured</span><span class="ticker-dot"></span>
+      <span>human review &middot; 24/7</span><span class="ticker-dot"></span>
+      <span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span>
+      <span>status &middot; operational</span><span class="ticker-dot"></span>
+      <span>content id &middot; active</span><span class="ticker-dot"></span>
+      <span>500,000+ claims monitored</span><span class="ticker-dot"></span>
+      <span>8B views/yr recovered</span><span class="ticker-dot"></span>
+      <span>scan region &middot; global</span><span class="ticker-dot"></span>
+      <span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span>
+      <span>payout cycle &middot; monthly</span><span class="ticker-dot"></span>
+      <span>200M watch-hours recaptured</span><span class="ticker-dot"></span>
+      <span>human review &middot; 24/7</span><span class="ticker-dot"></span>
+      <span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span>
+      <span>status &middot; operational</span><span class="ticker-dot"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================
+     OPTION B
+     ===================================================== -->
+<section class="hero" id="b">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div>
+  <div class="hero-bracket tr"></div>
+  <div class="hero-bracket bl"></div>
+  <div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option B</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;  bottom:0; animation-duration:18s; animation-delay:0s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:12%; bottom:0; animation-duration:22s; animation-delay:2s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:22%; bottom:0; animation-duration:16s; animation-delay:4s;  width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:35%; bottom:0; animation-duration:20s; animation-delay:1s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:45%; bottom:0; animation-duration:24s; animation-delay:6s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:55%; bottom:0; animation-duration:19s; animation-delay:3s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:65%; bottom:0; animation-duration:21s; animation-delay:8s;  width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:72%; bottom:0; animation-duration:17s; animation-delay:5s;  width:2.5px; height:2.5px;"></span>
+    <span class="hero-particle" style="left:82%; bottom:0; animation-duration:23s; animation-delay:10s; width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:90%; bottom:0; animation-duration:20s; animation-delay:7s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:8%;  bottom:0; animation-duration:25s; animation-delay:12s; width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:30%; bottom:0; animation-duration:18s; animation-delay:9s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:50%; bottom:0; animation-duration:22s; animation-delay:11s; width:2.5px; height:2.5px;"></span>
+    <span class="hero-particle" style="left:78%; bottom:0; animation-duration:19s; animation-delay:14s; width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:95%; bottom:0; animation-duration:21s; animation-delay:3s;  width:1.5px; height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true">
+  <div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-b" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-b" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-b"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-b)"/>
+      <circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-b)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-b)"/></g>
+    </svg>
+  </div>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Your content is on YouTube.<br>We make sure you get paid.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row">
+      <a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a>
+      <a href="#" class="btn-ghost">How it works</a>
+    </div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track">
+    <span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span>
+    <span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span>
+  </div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION C
+     ===================================================== -->
+<section class="hero" id="c">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option C</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-c" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-c" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-c"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-c)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-c)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-c)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Turn lost distribution<br>into revenue</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION D
+     ===================================================== -->
+<section class="hero" id="d">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option D</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-d" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-d" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-d"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-d)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-d)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-d)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Your content is everywhere.<br>Get paid for all of it.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION E
+     ===================================================== -->
+<section class="hero" id="e">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option E</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-e" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-e" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-e"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-e)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-e)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-e)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Turn lost distribution<br>into recurring revenue</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION F
+     ===================================================== -->
+<section class="hero" id="f">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option F</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-f" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-f" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-f"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-f)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-f)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-f)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Turn re-uploads<br>into a paycheck</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION G
+     ===================================================== -->
+<section class="hero" id="g">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option G</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-g" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-g"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-g)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-g)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-g)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Get paid for the views<br>you're already getting.</h1>
+    <p class="hero-sub-tagline">Your content is everywhere. Your paycheck should be too.</p>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION H
+     ===================================================== -->
+<section class="hero" id="h">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option H</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-h" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-h"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-h)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-h)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-h)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Fingerprint once.<br>Get paid forever.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION I
+     ===================================================== -->
+<section class="hero" id="i">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option I</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-i" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-i" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-i"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-i)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-i)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-i)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">IP protection<br>that pays you back</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- =====================================================
+     OPTION J
+     ===================================================== -->
+<section class="hero" id="j">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option J</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-j" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-j" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-j"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-j)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-j)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-j)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Protect your catalog.<br>Profit from every copy.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION K — Defend your IP
+     ============================================================ -->
+<section class="hero" id="k">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option K</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-k" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-k" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-k"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-k)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-k)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-k)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Defend your IP.<br>Collect your royalties.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION L — Every re-upload is revenue
+     ============================================================ -->
+<section class="hero" id="l">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option L</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-l" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-l" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-l"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-l)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-l)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-l)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Every re-upload is revenue<br>you're leaving on the table.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION M — You own the content
+     ============================================================ -->
+<section class="hero" id="m">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option M</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-m" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-m" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-m"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-m)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-m)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-m)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">You own the content.<br>We collect the check.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION N — They upload. You earn.
+     ============================================================ -->
+<section class="hero" id="n">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option N</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-n" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-n" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-n"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-n)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-n)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-n)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">They upload. You earn.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION O — Your views. Your money.
+     ============================================================ -->
+<section class="hero" id="o">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option O</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-o" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-o" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-o"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-o)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-o)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-o)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Your views. Your money.<br>We make it happen.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION P — Own what's yours (standalone)
+     ============================================================ -->
+<section class="hero" id="p">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option P</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-p" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-p" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-p"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-p)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-p)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-p)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Own what's yours.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION Q — Own what's yours + revenue line
+     ============================================================ -->
+<section class="hero" id="q">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option Q</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-q" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-q" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-q"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-q)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-q)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-q)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Own what's yours.<br>Get paid for every copy.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION R — Own what's yours + we handle the rest
+     ============================================================ -->
+<section class="hero" id="r">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option R</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-r" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-r" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-r"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-r)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-r)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-r)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Own what's yours.<br>We handle the rest.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+<!-- ============================================================
+     OPTION S — Own what's yours + earn from every view
+     ============================================================ -->
+<section class="hero" id="s">
+  <div class="hero-backdrop"></div>
+  <div class="hero-scanline"></div>
+  <div class="hero-bracket tl"></div><div class="hero-bracket tr"></div><div class="hero-bracket bl"></div><div class="hero-bracket br"></div>
+  <div class="hero-rec">rec</div>
+  <div class="hero-ghost">17</div>
+  <div class="option-badge">Option S</div>
+
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;bottom:0;animation-duration:18s;animation-delay:0s;width:2px;height:2px;"></span><span class="hero-particle" style="left:12%;bottom:0;animation-duration:22s;animation-delay:2s;width:3px;height:3px;"></span><span class="hero-particle" style="left:22%;bottom:0;animation-duration:16s;animation-delay:4s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:35%;bottom:0;animation-duration:20s;animation-delay:1s;width:2px;height:2px;"></span><span class="hero-particle" style="left:45%;bottom:0;animation-duration:24s;animation-delay:6s;width:3px;height:3px;"></span><span class="hero-particle" style="left:55%;bottom:0;animation-duration:19s;animation-delay:3s;width:2px;height:2px;"></span><span class="hero-particle" style="left:65%;bottom:0;animation-duration:21s;animation-delay:8s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:72%;bottom:0;animation-duration:17s;animation-delay:5s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:82%;bottom:0;animation-duration:23s;animation-delay:10s;width:2px;height:2px;"></span><span class="hero-particle" style="left:90%;bottom:0;animation-duration:20s;animation-delay:7s;width:3px;height:3px;"></span><span class="hero-particle" style="left:8%;bottom:0;animation-duration:25s;animation-delay:12s;width:1.5px;height:1.5px;"></span><span class="hero-particle" style="left:30%;bottom:0;animation-duration:18s;animation-delay:9s;width:2px;height:2px;"></span><span class="hero-particle" style="left:50%;bottom:0;animation-duration:22s;animation-delay:11s;width:2.5px;height:2.5px;"></span><span class="hero-particle" style="left:78%;bottom:0;animation-duration:19s;animation-delay:14s;width:2px;height:2px;"></span><span class="hero-particle" style="left:95%;bottom:0;animation-duration:21s;animation-delay:3s;width:1.5px;height:1.5px;"></span>
+  </div>
+
+  <div class="hero-globe-wrap" aria-hidden="true"><div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo-s" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5eead4" stop-opacity="0.10"/><stop offset="55%" stop-color="#5eead4" stop-opacity="0.025"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+        <linearGradient id="globeSweepGrad-s" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5eead4" stop-opacity="0"/><stop offset="50%" stop-color="#5eead4" stop-opacity="0.55"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></linearGradient>
+        <clipPath id="globeClip-s"><circle cx="300" cy="300" r="240"/></clipPath>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo-s)"/><circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22"><ellipse cx="300" cy="300" rx="240" ry="40"/><ellipse cx="300" cy="300" rx="232" ry="100"/><ellipse cx="300" cy="300" rx="216" ry="160"/><ellipse cx="300" cy="300" rx="190" ry="210"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18"><ellipse cx="300" cy="300" rx="40" ry="240"/><ellipse cx="300" cy="300" rx="100" ry="240"/><ellipse cx="300" cy="300" rx="160" ry="240"/><ellipse cx="300" cy="300" rx="210" ry="240"/></g>
+      <g fill="none" stroke="#5eead4" stroke-width="0.8"><path class="globe-arc" d="M210,180 Q290,110 380,155"/><path class="globe-arc a2" d="M180,300 Q300,230 445,265"/><path class="globe-arc a3" d="M260,405 Q330,475 395,385"/></g>
+      <g><circle class="globe-node" cx="210" cy="180" r="3.2" fill="#5eead4"/><circle class="globe-node n2" cx="380" cy="155" r="3.2" fill="#5eead4"/><circle class="globe-node n3" cx="445" cy="265" r="3.2" fill="#5eead4"/><circle class="globe-node n4" cx="180" cy="300" r="3.2" fill="#5eead4"/><circle class="globe-node n5" cx="260" cy="405" r="3.2" fill="#5eead4"/><circle class="globe-node n6" cx="395" cy="385" r="3.2" fill="#5eead4"/><circle class="globe-node n7" cx="310" cy="225" r="2" fill="#f5f5f3"/><circle class="globe-node n8" cx="150" cy="370" r="2" fill="#f5f5f3"/><circle class="globe-node n9" cx="420" cy="440" r="2" fill="#f5f5f3"/><circle class="globe-node n10" cx="340" cy="475" r="2" fill="#f5f5f3"/></g>
+      <g clip-path="url(#globeClip-s)"><rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad-s)"/></g>
+    </svg>
+  </div></div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">Own what's yours.<br>Earn from every view.</h1>
+    <p class="hero-sub">Rightset scans every corner of YouTube for re-uploads of your content &mdash; globally &mdash; claims the views, and pays you monthly. Content you already made. Revenue you already earned.</p>
+    <div class="hero-cta-row"><a href="#" class="btn">See what you're losing <span class="arrow">&rarr;</span></a><a href="#" class="btn-ghost">How it works</a></div>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track"><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span><span>content id &middot; active</span><span class="ticker-dot"></span><span>500,000+ claims monitored</span><span class="ticker-dot"></span><span>8B views/yr recovered</span><span class="ticker-dot"></span><span>scan region &middot; global</span><span class="ticker-dot"></span><span>pipeline &middot; 99.98% accuracy</span><span class="ticker-dot"></span><span>payout cycle &middot; monthly</span><span class="ticker-dot"></span><span>200M watch-hours recaptured</span><span class="ticker-dot"></span><span>human review &middot; 24/7</span><span class="ticker-dot"></span><span>25,000+ assets fingerprinted</span><span class="ticker-dot"></span><span>status &middot; operational</span><span class="ticker-dot"></span></div></div>
+</section>
+
+
+<!-- ============================================================
+     INTERSECTION OBSERVER — highlight active jump link
+     ============================================================ -->
+<script>
+(function(){
+  var sections = document.querySelectorAll('.hero[id]');
+  var links = document.querySelectorAll('.topbar-link');
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id = entry.target.getAttribute('id');
+        links.forEach(function(link){
+          if(link.getAttribute('data-target') === id){
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '-40% 0px -40% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function(section){
+    observer.observe(section);
+  });
+})();
+</script>
+
+</body>
+</html>

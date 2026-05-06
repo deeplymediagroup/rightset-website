@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Content ID actually works — Rightset</title>
+<meta name="description" content="A plain-English breakdown of YouTube's rights system, what it catches, what it misses, and where creators lose revenue in the gaps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418; --bg-card:#151c22; --text:#f7f9f7; --text-mute:#c7ccc6;
+  --accent:#4de5c4; --warm:#ffb088;
+  --line:rgba(247,249,247,0.12); --line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif; --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:18.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1000px circle at 15% 10%,rgba(77,229,196,0.2),transparent 55%),radial-gradient(800px circle at 85% 90%,rgba(125,211,252,0.15),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:#6df0d4}
+.article-nav{max-width:900px;margin:0 auto;padding:32px 32px 0;display:flex;justify-content:space-between;align-items:center}
+.article-nav .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.article-nav .mark sup{font-size:8px;font-family:var(--mono)}
+.article-nav .back{font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+.article-nav .back:hover{color:var(--accent)}
+article{max-width:760px;margin:0 auto;padding:80px 32px 120px}
+.article-meta{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;gap:14px}
+.article-meta::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:6px}
+article h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:600;line-height:1.05;letter-spacing:-0.035em;margin-bottom:24px}
+article .lede{font-size:1.3rem;color:var(--text-mute);line-height:1.5;margin-bottom:56px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+article h2{font-size:1.85rem;font-weight:600;line-height:1.15;letter-spacing:-0.02em;margin:56px 0 16px;color:var(--text)}
+article h3{font-size:1.3rem;font-weight:600;margin:32px 0 10px;color:var(--text)}
+article p{margin-bottom:22px;color:var(--text-mute)}
+article strong{color:var(--text);font-weight:600}
+article ul{margin:0 0 24px 20px;color:var(--text-mute)}
+article ul li{margin-bottom:8px}
+article blockquote{border-left:3px solid var(--accent);padding:4px 0 4px 22px;margin:28px 0;font-size:1.15rem;color:var(--text);font-style:italic}
+.article-cta{margin-top:64px;padding:32px;border:1px solid var(--line-strong);border-radius:6px;background:var(--bg-card);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.article-cta p{margin:0;color:var(--text)}
+.article-cta a{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border:1px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;transition:all .3s ease}
+.article-cta a:hover{background:var(--accent);color:var(--bg)}
+</style>
+</head>
+<body>
+<div class="article-nav">
+  <a href="/" class="mark">rightset<sup>®</sup></a>
+  <a href="/#news" class="back">← Back to News Room</a>
+</div>
+<article>
+  <div class="article-meta"><span>GUIDE</span><span>·</span><span>8 MIN READ</span><span>·</span><span>APR 2026</span></div>
+  <h1>How Content ID actually works (and where it leaks revenue).</h1>
+  <p class="lede">YouTube's Content ID is the most powerful rights-enforcement system in video — but it has blind spots. Here's what it catches, what it misses, and where creators quietly lose money every day.</p>
+
+  <p>If you've ever seen a clip of your own video on someone else's channel and wondered why nothing happened, you've hit the edges of Content ID. The system is remarkable — it scans billions of hours of video a year — but it was designed for rights holders with structured catalogs, not for the messy reality of how creators make content today.</p>
+
+  <h2>What Content ID is</h2>
+  <p>Content ID is YouTube's automated fingerprinting system. When a rightsholder submits reference files, the system generates a unique audio and video fingerprint and compares every new upload against that reference library. When there's a match, the rightsholder can <strong>claim</strong> the revenue, <strong>block</strong> the upload, or <strong>track</strong> it for analytics.</p>
+
+  <h2>What Content ID catches well</h2>
+  <ul>
+    <li><strong>Full re-uploads</strong> of your original content, even if re-encoded or slightly modified.</li>
+    <li><strong>Audio-only matches</strong> — someone lifts your soundtrack and overlays different visuals.</li>
+    <li><strong>Clips and compilations</strong> that use substantial portions of your reference file.</li>
+  </ul>
+
+  <h2>Where it misses (and revenue leaks)</h2>
+  <h3>1. Foreign-language overdubs</h3>
+  <p>A viral clip gets a Spanish, Tagalog, or Portuguese voiceover added, and the new audio confuses Content ID's audio matching. The video fingerprint usually still hits, but not always — and the lag can be days.</p>
+
+  <h3>2. Heavy edits and reaction videos</h3>
+  <p>When a reactor pauses your clip every few seconds and layers their own voice on top, the continuous audio fingerprint can get fragmented below the match threshold. The view count is real. The revenue routing is broken.</p>
+
+  <h3>3. AI-cloned voices and synthetic reanimations</h3>
+  <p>This is the fastest-growing blind spot. An AI-cloned voice reads your script. The audio is "new." The fingerprint doesn't match. But the audience is listening to <em>you</em>.</p>
+
+  <blockquote>The revenue exists — it just routes to the wrong channel.</blockquote>
+
+  <h2>Why most creators never close the gap</h2>
+  <p>Content ID works best for rights holders who have the engineering capacity to manage reference libraries, dispute queues, and platform relationships full-time. For creators and mid-size media companies, the operational load is too high for the reward — so the long tail of unmatched re-uploads just keeps earning for other people.</p>
+
+  <p>That's the gap Rightset was built to close. We handle the reference management, the Content ID integration, and the dispute queue, and we route the recovered revenue back to you monthly.</p>
+
+  <div class="article-cta">
+    <p><strong>See what you're losing.</strong> A free revenue audit takes about a week.</p>
+    <a href="/#audit">Request audit →</a>
+  </div>
+</article>
+</body>
+</html>

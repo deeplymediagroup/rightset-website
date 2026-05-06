@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>By the Numbers — 15 concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --accent:#4de5c4;--accent-bright:#6df0d4;--accent-deep:#1fc5a3;
+  --accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --warm:#ffb088;--warm-glow:rgba(255,176,136,0.22);
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --sans:'Geist',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(1100px circle at 10% 10%,rgba(77,229,196,0.14),transparent 55%),radial-gradient(900px circle at 90% 90%,rgba(31,197,163,0.10),transparent 55%)}
+a{color:var(--accent);text-decoration:none}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+
+.topbar{max-width:1400px;margin:0 auto;padding:32px 32px 12px;display:flex;justify-content:space-between;align-items:center}
+.topbar .mark{font-size:17px;font-weight:500;letter-spacing:-0.02em}
+.topbar .nav{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+.topbar .nav a{color:var(--text-mute)}
+.topbar .nav a.active{color:var(--accent)}
+h1.page-title{max-width:1400px;margin:16px auto 10px;padding:0 32px;font-size:2.4rem;font-weight:600;letter-spacing:-0.025em}
+.page-sub{max-width:80ch;margin:0 auto 40px;padding:0 32px;color:var(--text-mute);font-size:1.05rem}
+.page-sub + .page-sub{margin-top:-26px}
+
+.toc{max-width:1400px;margin:0 auto 64px;padding:0 32px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.toc a{background:var(--bg-card);padding:14px 16px;color:var(--text-mute);font-size:0.9rem;display:flex;gap:10px;align-items:baseline;transition:background .2s}
+.toc a:hover{background:var(--bg-lift);color:var(--text)}
+.toc a .n{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--accent);min-width:22px}
+
+.variant-wrap{max-width:1400px;margin:0 auto;padding:72px 32px 56px;border-top:1px solid var(--line)}
+.variant-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.variant-head h2{font-size:1.5rem;font-weight:600;letter-spacing:-0.02em}
+.variant-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+.variant-head .desc{color:var(--text-dim);font-size:0.9rem;max-width:48ch;font-family:var(--mono);letter-spacing:0.02em}
+
+/* shared stage — dark container that each variant sits in */
+.stage{background:#0c1014;border:1px solid var(--line);border-radius:6px;padding:56px 40px;position:relative;overflow:hidden}
+.stage .kicker{margin-bottom:18px}
+
+sup{font-size:0.45em;vertical-align:top;line-height:1;margin-left:0.1em;color:var(--accent-dim)}
+
+/* ================== V1 — Big hero number + satellites ================== */
+.v1-hero{text-align:center;padding:28px 0 44px}
+.v1-hero-lbl{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-mute);margin-bottom:18px}
+.v1-hero-num{font-size:clamp(5rem,14vw,12rem);font-weight:500;letter-spacing:-0.05em;line-height:0.9;background:linear-gradient(180deg,var(--text) 0%,var(--accent) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.v1-sats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);padding-top:32px}
+.v1-sats .sat{padding:0 24px;text-align:center;border-right:1px solid var(--line)}
+.v1-sats .sat:last-child{border-right:none}
+.v1-sats .n{font-size:2.2rem;font-weight:500;letter-spacing:-0.02em;color:var(--text);margin-bottom:6px}
+.v1-sats .l{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);line-height:1.4}
+
+/* ================== V2 — Full-bleed typography bands ================== */
+.v2-row{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:32px 0;border-bottom:1px solid var(--line);gap:32px}
+.v2-row:last-child{border-bottom:none}
+.v2-row.right{grid-template-columns:1fr 1fr;direction:rtl}
+.v2-row.right > *{direction:ltr}
+.v2-row .num{font-size:clamp(3rem,7vw,5.5rem);font-weight:500;letter-spacing:-0.04em;line-height:0.95;color:var(--text)}
+.v2-row .num em{font-style:normal;color:var(--accent)}
+.v2-row .lbl{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute);padding-bottom:14px;max-width:32ch}
+
+/* ================== V3 — Scorecard / prospectus ================== */
+.v3{font-family:var(--serif);border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong)}
+.v3 .row{display:grid;grid-template-columns:60px 1fr 260px;padding:22px 0;border-bottom:1px solid var(--line);gap:24px;align-items:baseline}
+.v3 .row:last-child{border-bottom:none}
+.v3 .idx{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;color:var(--text-dim)}
+.v3 .ttl{font-size:1.3rem;font-style:italic;color:var(--text)}
+.v3 .val{font-size:2rem;text-align:right;color:var(--accent);letter-spacing:-0.02em}
+.v3 .val sup{color:var(--accent-dim);font-size:0.5em}
+.v3-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim)}
+
+/* ================== V4 — Three-stat hero ================== */
+.v4{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:32px 0}
+.v4 .cell{text-align:center}
+.v4 .cell .num{font-size:clamp(4rem,9vw,7rem);font-weight:500;letter-spacing:-0.04em;line-height:0.95;color:var(--accent);margin-bottom:10px}
+.v4 .cell .lbl{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute);max-width:26ch;margin:0 auto}
+.v4 .divider{width:1px;background:var(--line);height:60%;align-self:center;justify-self:center;position:absolute}
+
+/* ================== V5 — Ticker-tape marquee ================== */
+.v5-wrap{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:20px 0;margin:24px 0;position:relative;mask-image:linear-gradient(90deg,transparent 0,black 6%,black 94%,transparent 100%)}
+.v5-track{display:flex;gap:60px;animation:v5scroll 30s linear infinite;width:max-content}
+@keyframes v5scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.v5-chip{display:inline-flex;align-items:baseline;gap:14px;white-space:nowrap}
+.v5-chip .n{font-size:2rem;font-weight:500;letter-spacing:-0.02em;color:var(--accent)}
+.v5-chip .l{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)}
+.v5-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow);animation:v5pulse 1.8s ease-in-out infinite}
+@keyframes v5pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ================== V6 — Live counter ================== */
+.v6{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+.v6-main{padding:20px 0}
+.v6-lbl{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.v6-lbl::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff6b6b;box-shadow:0 0 10px #ff6b6b;animation:v6pulse 1.2s ease-in-out infinite}
+@keyframes v6pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.v6-num{font-family:var(--mono);font-size:clamp(2.5rem,5vw,4.4rem);font-weight:500;letter-spacing:-0.03em;color:var(--accent);line-height:1}
+.v6-ticker{background:rgba(77,229,196,0.05);border:1px solid rgba(77,229,196,0.2);border-radius:4px;padding:16px 20px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--text-mute);display:flex;flex-direction:column;gap:10px;max-height:180px;overflow:hidden}
+.v6-ticker .line{display:flex;justify-content:space-between;animation:v6slide .4s ease}
+.v6-ticker .line .amt{color:var(--accent);font-weight:500}
+@keyframes v6slide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ================== V7 — Time cascade ================== */
+.v7{display:flex;flex-direction:column;gap:0}
+.v7 .row{display:grid;grid-template-columns:220px 1fr;padding:28px 0;border-top:1px dashed var(--line);align-items:baseline;gap:32px}
+.v7 .row:first-child{border-top:none}
+.v7 .row .cadence{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute)}
+.v7 .row .stat{font-size:clamp(2.5rem,5vw,4rem);font-weight:500;letter-spacing:-0.03em;line-height:1;color:var(--text)}
+.v7 .row .stat em{font-style:normal;color:var(--accent)}
+.v7 .row.hero .stat{font-size:clamp(3.5rem,7vw,5.5rem)}
+
+/* ================== V8 — Dashboard KPI tiles ================== */
+.v8{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.v8 .kpi{background:var(--bg-card);padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.v8 .kpi .top{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)}
+.v8 .kpi .val{font-size:2rem;font-weight:500;letter-spacing:-0.02em;color:var(--text);line-height:1}
+.v8 .kpi .val sup{color:var(--accent-dim);font-size:0.5em}
+.v8 .kpi .chg{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.04em}
+.v8 .kpi svg{display:block;width:100%;height:36px}
+.v8 .kpi .lbl{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--text-dim);line-height:1.4}
+
+/* ================== V9 — Split screen without/with ================== */
+.v9{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.v9 .col{padding:40px 32px;background:var(--bg-card);min-height:340px}
+.v9 .col.bad{background:rgba(255,107,107,0.04)}
+.v9 .col.good{background:linear-gradient(180deg,rgba(77,229,196,0.08),var(--bg-card) 70%)}
+.v9 .col .h{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px}
+.v9 .col.bad .h{color:#ff8e8e}
+.v9 .col.bad .h::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff6b6b}
+.v9 .col.good .h{color:var(--accent)}
+.v9 .col.good .h::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent-glow)}
+.v9 .col .row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px dashed var(--line);align-items:baseline;gap:16px}
+.v9 .col .row:last-child{border-bottom:none}
+.v9 .col .row .l{font-size:0.92rem;color:var(--text-mute)}
+.v9 .col .row .v{font-family:var(--mono);font-size:1.1rem;font-weight:500;color:var(--text-dim)}
+.v9 .col.good .row .v{color:var(--accent)}
+
+/* ================== V10 — Audience-filtered tabs ================== */
+.v10-tabs{display:flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:100px;margin-bottom:32px;width:max-content}
+.v10-tab{padding:10px 20px;font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);cursor:pointer;border-radius:100px;background:transparent;border:none;transition:all .2s}
+.v10-tab.active{background:var(--accent);color:var(--bg)}
+.v10-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding-top:12px}
+.v10-grid .cell{padding:24px 0;border-top:2px solid var(--accent-dim)}
+.v10-grid .cell .n{font-size:2.4rem;font-weight:500;letter-spacing:-0.03em;color:var(--text);margin-bottom:8px}
+.v10-grid .cell .n sup{color:var(--accent)}
+.v10-grid .cell .l{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);line-height:1.4}
+
+/* ================== V11 — Stat + micro-quote combo ================== */
+.v11{display:flex;flex-direction:column;gap:0}
+.v11 .row{display:grid;grid-template-columns:320px 1fr;padding:28px 0;border-top:1px solid var(--line);gap:40px;align-items:center}
+.v11 .row:first-child{border-top:none}
+.v11 .row .num{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.03em;color:var(--accent);line-height:1}
+.v11 .row .num sup{color:var(--accent-dim)}
+.v11 .row .num .sub{display:block;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:8px;font-weight:400}
+.v11 .row blockquote{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--text);line-height:1.5;padding-left:22px;border-left:2px solid var(--accent)}
+.v11 .row blockquote cite{display:block;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-style:normal;color:var(--text-dim);margin-top:10px}
+
+/* ================== V12 — Growth timeline ================== */
+.v12{position:relative;padding:20px 0}
+.v12-line{position:absolute;left:32px;right:32px;top:50%;height:1px;background:linear-gradient(90deg,var(--line),var(--accent) 50%,var(--accent-dim))}
+.v12-nodes{display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:1}
+.v12-node{text-align:center;padding:0 16px}
+.v12-node .dot{width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);margin:20px auto;position:relative}
+.v12-node.now .dot{background:var(--accent);box-shadow:0 0 16px var(--accent-glow)}
+.v12-node .year{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;color:var(--text-mute);margin-bottom:10px}
+.v12-node .stat{font-size:1.9rem;font-weight:500;letter-spacing:-0.02em;color:var(--text)}
+.v12-node .stat sup{color:var(--accent)}
+.v12-node .lbl{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-top:8px}
+.v12-node.future .stat{color:var(--accent-dim);font-style:italic}
+
+/* ================== V13 — Heat-map thumbnail grid ================== */
+.v13{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.v13-stats{display:flex;flex-direction:column;gap:20px}
+.v13-stats .row{padding:14px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;align-items:baseline}
+.v13-stats .row:last-child{border-bottom:none}
+.v13-stats .l{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)}
+.v13-stats .v{font-size:1.6rem;font-weight:500;color:var(--accent)}
+.v13-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(8,24px);gap:3px;border:1px solid var(--line);padding:8px;border-radius:4px;background:rgba(0,0,0,0.2)}
+.v13-grid .cell{background:rgba(77,229,196,0.05);border-radius:2px;transition:all .4s}
+.v13-grid .cell.h1{background:rgba(77,229,196,0.15)}
+.v13-grid .cell.h2{background:rgba(77,229,196,0.35)}
+.v13-grid .cell.h3{background:rgba(77,229,196,0.6)}
+.v13-grid .cell.h4{background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+
+/* ================== V14 — Orbital / radial ================== */
+.v14{position:relative;height:520px;display:flex;align-items:center;justify-content:center}
+.v14-center{width:140px;height:140px;border-radius:50%;border:1px dashed var(--line-strong);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(77,229,196,0.12),transparent 70%);position:absolute;z-index:2}
+.v14-center .c-num{font-family:var(--sans);font-size:2.2rem;font-weight:500;color:var(--accent);letter-spacing:-0.02em;line-height:1}
+.v14-center .c-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute);margin-top:6px}
+.v14-ring{position:absolute;border:1px dashed var(--line);border-radius:50%}
+.v14-ring.r1{width:320px;height:320px}
+.v14-ring.r2{width:480px;height:480px}
+.v14-orbit{position:absolute;width:180px;text-align:center}
+.v14-orbit .n{font-size:1.5rem;font-weight:500;color:var(--text);letter-spacing:-0.02em}
+.v14-orbit .n sup{color:var(--accent)}
+.v14-orbit .l{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute);margin-top:4px}
+.v14-o1{top:8%;left:50%;transform:translateX(-50%)}
+.v14-o2{top:50%;right:0;transform:translateY(-50%)}
+.v14-o3{bottom:8%;left:50%;transform:translateX(-50%)}
+.v14-o4{top:50%;left:0;transform:translateY(-50%)}
+.v14-o5{top:18%;right:14%}
+.v14-o6{bottom:18%;left:14%}
+
+/* ================== V15 — Receipt / invoice ================== */
+.v15{max-width:680px;margin:0 auto;border:1px solid var(--line);padding:36px;background:rgba(0,0,0,0.25);border-radius:3px;font-family:var(--mono)}
+.v15-head{display:flex;justify-content:space-between;padding-bottom:18px;border-bottom:1px dashed var(--line);margin-bottom:18px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mute)}
+.v15 .row{display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;border-bottom:1px dashed var(--line);font-size:0.92rem}
+.v15 .row:last-of-type{border-bottom:2px solid var(--line-strong)}
+.v15 .row .l{color:var(--text-mute);letter-spacing:0.04em}
+.v15 .row .v{color:var(--text);letter-spacing:0.02em}
+.v15 .row .v strong{color:var(--accent);font-family:var(--sans);font-weight:500;font-size:1.05rem}
+.v15-total{display:flex;justify-content:space-between;margin-top:18px;padding-top:4px;font-size:0.9rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute)}
+.v15-total strong{color:var(--accent);font-family:var(--sans);font-size:1.6rem;letter-spacing:-0.02em}
+
+@media(max-width:860px){
+  .v1-sats{grid-template-columns:repeat(2,1fr)}
+  .v1-sats .sat{border-right:none;border-bottom:1px solid var(--line);padding:20px 0}
+  .v4{grid-template-columns:1fr}
+  .v6{grid-template-columns:1fr}
+  .v8{grid-template-columns:1fr}
+  .v9{grid-template-columns:1fr}
+  .v10-grid{grid-template-columns:1fr}
+  .v11 .row{grid-template-columns:1fr;gap:16px}
+  .v12-nodes{grid-template-columns:1fr}
+  .v13{grid-template-columns:1fr}
+  .v14{height:auto;display:block}
+  .v14-center,.v14-ring,.v14-orbit{position:relative;margin:12px auto;top:auto;left:auto;right:auto;bottom:auto;transform:none;display:block}
+  .v14-ring{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="mark">rightset <sup style="font-size:0.5em;color:var(--accent)">®</sup></a>
+  <div class="nav">
+    <a href="index.html">← Home</a>
+    <a href="numbers-variants.html" class="active">Numbers</a>
+    <a href="howitworks-variants.html">How it works</a>
+  </div>
+</div>
+
+<h1 class="page-title">By the Numbers — 15 concepts</h1>
+<p class="page-sub">Scroll through all 15. Each uses the same underlying stats so you're comparing <em>visual approach</em>, not data. Tell me which 2-3 resonate and I'll polish the winners into the real site.</p>
+
+<div class="toc">
+  <a href="#v1"><span class="n">01</span>Hero + satellites</a>
+  <a href="#v2"><span class="n">02</span>Typography bands</a>
+  <a href="#v3"><span class="n">03</span>Scorecard / prospectus</a>
+  <a href="#v4"><span class="n">04</span>Three-stat hero</a>
+  <a href="#v5"><span class="n">05</span>Ticker marquee</a>
+  <a href="#v6"><span class="n">06</span>Live counter</a>
+  <a href="#v7"><span class="n">07</span>Time cascade</a>
+  <a href="#v8"><span class="n">08</span>Dashboard KPI tiles</a>
+  <a href="#v9"><span class="n">09</span>Without vs With</a>
+  <a href="#v10"><span class="n">10</span>Audience tabs</a>
+  <a href="#v11"><span class="n">11</span>Stat + quote combo</a>
+  <a href="#v12"><span class="n">12</span>Growth timeline</a>
+  <a href="#v13"><span class="n">13</span>Heat-map grid</a>
+  <a href="#v14"><span class="n">14</span>Orbital / radial</a>
+  <a href="#v15"><span class="n">15</span>Receipt / invoice</a>
+</div>
+
+<!-- V1 Hero + satellites -->
+<section class="variant-wrap" id="v1">
+  <div class="variant-head">
+    <h2>01 · Big hero + satellites</h2>
+    <span class="tag">EDITORIAL · FOCAL</span>
+    <span class="desc">One hero number dominates. Four satellites supply credibility below.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <div class="v1-hero">
+      <div class="v1-hero-lbl">Returned to creators + rightsholders · yearly</div>
+      <div class="v1-hero-num">$1M<sup>+</sup></div>
+    </div>
+    <div class="v1-sats">
+      <div class="sat"><div class="n">8B<sup>+</sup></div><div class="l">views monetized / yr</div></div>
+      <div class="sat"><div class="n">500K<sup>+</sup></div><div class="l">videos claimed</div></div>
+      <div class="sat"><div class="n">25K<sup>+</sup></div><div class="l">assets fingerprinted</div></div>
+      <div class="sat"><div class="n">99.98%</div><div class="l">match accuracy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V2 Typography bands -->
+<section class="variant-wrap" id="v2">
+  <div class="variant-head">
+    <h2>02 · Full-bleed typography bands</h2>
+    <span class="tag">MAGAZINE · ANNUAL-REPORT</span>
+    <span class="desc">Alternating rows, huge display numerals. Feels like a prospectus.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <h3 style="font-size:clamp(2rem,4vw,3rem);font-weight:500;letter-spacing:-0.02em;line-height:1;margin-bottom:24px">Recovery, at scale.</h3>
+    <div class="v2-row"><div class="num"><em>8B</em><sup>+</sup></div><div class="lbl">Views monetized every year across the catalogs we manage</div></div>
+    <div class="v2-row right"><div class="lbl">Returned to creators + rightsholders from previously unclaimed distribution</div><div class="num">$<em>1M</em><sup>+</sup></div></div>
+    <div class="v2-row"><div class="num"><em>500K</em><sup>+</sup></div><div class="lbl">Active videos claimed on YouTube right now</div></div>
+    <div class="v2-row right"><div class="lbl">Assets fingerprinted and earning globally</div><div class="num"><em>25K</em><sup>+</sup></div></div>
+    <div class="v2-row"><div class="num"><em>99.98</em><sup>%</sup></div><div class="lbl">Content ID accuracy · 24/7 human-reviewed</div></div>
+  </div>
+</section>
+
+<!-- V3 Scorecard -->
+<section class="variant-wrap" id="v3">
+  <div class="variant-head">
+    <h2>03 · Scorecard / prospectus</h2>
+    <span class="tag">INSTITUTIONAL · SERIF</span>
+    <span class="desc">Reads like a financial filing. Gravitas over flash.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <div class="v3-top"><span>Rightset · fiscal summary</span><span>FY '26 · running totals</span></div>
+    <div class="v3">
+      <div class="row"><div class="idx">01.</div><div class="ttl">Views monetized · annual</div><div class="val">8,000,000,000<sup>+</sup></div></div>
+      <div class="row"><div class="idx">02.</div><div class="ttl">Returned to rightsholders · annual</div><div class="val">$1,000,000<sup>+</sup></div></div>
+      <div class="row"><div class="idx">03.</div><div class="ttl">Watch-hours recaptured off-channel</div><div class="val">200,000,000<sup>+</sup></div></div>
+      <div class="row"><div class="idx">04.</div><div class="ttl">Videos actively claimed</div><div class="val">500,000<sup>+</sup></div></div>
+      <div class="row"><div class="idx">05.</div><div class="ttl">Assets fingerprinted in catalog</div><div class="val">25,000<sup>+</sup></div></div>
+      <div class="row"><div class="idx">06.</div><div class="ttl">Content ID match accuracy</div><div class="val">99.98%</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V4 Three-stat hero -->
+<section class="variant-wrap" id="v4">
+  <div class="variant-head">
+    <h2>04 · Three-stat hero (less is more)</h2>
+    <span class="tag">MINIMAL · HIGH-IMPACT</span>
+    <span class="desc">Cut to 3 numbers. Everything gets a full breath.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <div class="v4">
+      <div class="cell"><div class="num">8B<sup>+</sup></div><div class="lbl">views monetized every year</div></div>
+      <div class="cell"><div class="num">$1M<sup>+</sup></div><div class="lbl">returned to rightsholders</div></div>
+      <div class="cell"><div class="num">99.98%</div><div class="lbl">content ID match accuracy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V5 Ticker -->
+<section class="variant-wrap" id="v5">
+  <div class="variant-head">
+    <h2>05 · Ticker-tape marquee</h2>
+    <span class="tag">MOTION · STOCK-EXCHANGE</span>
+    <span class="desc">Horizontal scrolling loop. Pairs well with the logo marquee.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · live tape</div>
+    <div class="v5-wrap">
+      <div class="v5-track">
+        <span class="v5-chip"><span class="dot"></span><span class="n">8B+</span><span class="l">views monetized / yr</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">$1M+</span><span class="l">returned annually</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">500K+</span><span class="l">videos claimed</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">25K+</span><span class="l">assets fingerprinted</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">200M+</span><span class="l">watch-hours recaptured</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">99.98%</span><span class="l">match accuracy</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">8B+</span><span class="l">views monetized / yr</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">$1M+</span><span class="l">returned annually</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">500K+</span><span class="l">videos claimed</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">25K+</span><span class="l">assets fingerprinted</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">200M+</span><span class="l">watch-hours recaptured</span></span>
+        <span class="v5-chip"><span class="dot"></span><span class="n">99.98%</span><span class="l">match accuracy</span></span>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-top:12px">Live · updated monthly · FY '26 running totals</p>
+  </div>
+</section>
+
+<!-- V6 Live counter -->
+<section class="variant-wrap" id="v6">
+  <div class="variant-head">
+    <h2>06 · Live counter + flashing events</h2>
+    <span class="tag">URGENCY · REAL-TIME</span>
+    <span class="desc">Big number ticks up in real time. Event feed pulses beside it.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · live</div>
+    <div class="v6">
+      <div class="v6-main">
+        <div class="v6-lbl">Recovered · this year · ticking up</div>
+        <div class="v6-num" id="v6n">$1,284,016</div>
+        <p style="color:var(--text-mute);font-size:0.95rem;margin-top:14px">Every claim confirmed. Every payout cleared. Across every catalog we manage.</p>
+      </div>
+      <div class="v6-ticker" id="v6t">
+        <div class="line"><span>@clips-central · match confirmed</span><span class="amt">+$842</span></div>
+        <div class="line"><span>@reaction-hub · claim paid</span><span class="amt">+$124</span></div>
+        <div class="line"><span>@compilation-x · match confirmed</span><span class="amt">+$1,212</span></div>
+        <div class="line"><span>@speaker-fans-es · claim paid</span><span class="amt">+$412</span></div>
+        <div class="line"><span>@viral-cut · match confirmed</span><span class="amt">+$311</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V7 Time cascade -->
+<section class="variant-wrap" id="v7">
+  <div class="variant-head">
+    <h2>07 · Time cascade</h2>
+    <span class="tag">RHYTHM · VELOCITY</span>
+    <span class="desc">Same number, smaller and smaller time windows. Builds emotional velocity.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · the pace</div>
+    <div class="v7">
+      <div class="row hero"><div class="cadence">Every year</div><div class="stat"><em>8,000,000,000</em><sup>+</sup> views monetized</div></div>
+      <div class="row"><div class="cadence">Every month</div><div class="stat"><em>670M</em><sup>+</sup> views</div></div>
+      <div class="row"><div class="cadence">Every day</div><div class="stat"><em>22M</em><sup>+</sup> views</div></div>
+      <div class="row"><div class="cadence">Every hour</div><div class="stat"><em>912K</em><sup>+</sup> views</div></div>
+      <div class="row"><div class="cadence">Every minute</div><div class="stat"><em>15,200</em><sup>+</sup> views</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V8 Dashboard KPI tiles -->
+<section class="variant-wrap" id="v8">
+  <div class="variant-head">
+    <h2>08 · Dashboard-native KPI tiles</h2>
+    <span class="tag">PRODUCT-CONSISTENT</span>
+    <span class="desc">Matches the dashboard's KPI visual. Reinforces "it looks like this in your account."</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <div class="v8">
+      <div class="kpi">
+        <div class="top"><span>REVENUE RETURNED · YTD</span><span>↗ +18%</span></div>
+        <div class="val">$1M<sup>+</sup></div>
+        <svg viewBox="0 0 200 36" preserveAspectRatio="none"><defs><linearGradient id="g8a" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#4de5c4" stop-opacity=".3"/><stop offset="100%" stop-color="#4de5c4" stop-opacity="0"/></linearGradient></defs><path d="M0,28 L30,22 L60,18 L90,14 L120,10 L150,8 L180,4 L200,2 L200,36 L0,36 Z" fill="url(#g8a)"/><path d="M0,28 L30,22 L60,18 L90,14 L120,10 L150,8 L180,4 L200,2" fill="none" stroke="#4de5c4" stroke-width="1.5"/></svg>
+        <div class="lbl">Paid to creators, media, estates</div>
+      </div>
+      <div class="kpi">
+        <div class="top"><span>VIEWS MONETIZED · YTD</span><span>↗ +12%</span></div>
+        <div class="val">8B<sup>+</sup></div>
+        <svg viewBox="0 0 200 36" preserveAspectRatio="none"><path d="M0,30 L30,24 L60,24 L90,20 L120,14 L150,16 L180,10 L200,6" fill="none" stroke="#4de5c4" stroke-width="1.5"/></svg>
+        <div class="lbl">Across every catalog we manage</div>
+      </div>
+      <div class="kpi">
+        <div class="top"><span>MATCH ACCURACY</span><span>↗ stable</span></div>
+        <div class="val">99.98%</div>
+        <svg viewBox="0 0 200 36" preserveAspectRatio="none"><path d="M0,8 L30,10 L60,6 L90,8 L120,5 L150,7 L180,6 L200,6" fill="none" stroke="#4de5c4" stroke-width="1.5"/></svg>
+        <div class="lbl">Content ID · human-reviewed disputes</div>
+      </div>
+      <div class="kpi">
+        <div class="top"><span>ASSETS IN CATALOG</span><span>↗ +214 / wk</span></div>
+        <div class="val">25K<sup>+</sup></div>
+        <svg viewBox="0 0 200 36" preserveAspectRatio="none"><path d="M0,32 L30,28 L60,22 L90,22 L120,16 L150,12 L180,8 L200,6" fill="none" stroke="#4de5c4" stroke-width="1.5"/></svg>
+        <div class="lbl">Fingerprinted and earning globally</div>
+      </div>
+      <div class="kpi">
+        <div class="top"><span>VIDEOS CLAIMED · LIVE</span><span>↗ daily</span></div>
+        <div class="val">500K<sup>+</sup></div>
+        <svg viewBox="0 0 200 36" preserveAspectRatio="none"><path d="M0,26 L30,20 L60,24 L90,14 L120,18 L150,10 L180,12 L200,6" fill="none" stroke="#4de5c4" stroke-width="1.5"/></svg>
+        <div class="lbl">Active claims on YouTube right now</div>
+      </div>
+      <div class="kpi">
+        <div class="top"><span>WATCH-HOURS RECAPTURED</span><span>↗ +24%</span></div>
+        <div class="val">200M<sup>+</sup></div>
+        <svg viewBox="0 0 200 36" preserveAspectRatio="none"><path d="M0,30 L30,28 L60,22 L90,18 L120,16 L150,10 L180,8 L200,4" fill="none" stroke="#4de5c4" stroke-width="1.5"/></svg>
+        <div class="lbl">Off-channel engagement reclaimed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V9 Without vs With -->
+<section class="variant-wrap" id="v9">
+  <div class="variant-head">
+    <h2>09 · Without Rightset vs With Rightset</h2>
+    <span class="tag">EMOTIONAL · CONTRAST</span>
+    <span class="desc">Shows the delta viscerally. The red column is the pain point.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <div class="v9">
+      <div class="col bad">
+        <div class="h">Without Rightset</div>
+        <div class="row"><span class="l">Views you're losing per year</span><span class="v">8B+</span></div>
+        <div class="row"><span class="l">Revenue going elsewhere</span><span class="v">$1M+</span></div>
+        <div class="row"><span class="l">Re-uploads you don't see</span><span class="v">500K+</span></div>
+        <div class="row"><span class="l">Watch-time recaptured</span><span class="v">0</span></div>
+        <div class="row"><span class="l">Visibility into claims</span><span class="v">none</span></div>
+        <div class="row"><span class="l">Monthly payouts</span><span class="v">—</span></div>
+      </div>
+      <div class="col good">
+        <div class="h">With Rightset</div>
+        <div class="row"><span class="l">Views monetized / yr</span><span class="v">8B+</span></div>
+        <div class="row"><span class="l">Returned to you</span><span class="v">$1M+</span></div>
+        <div class="row"><span class="l">Claims running right now</span><span class="v">500K+</span></div>
+        <div class="row"><span class="l">Watch-hours reclaimed</span><span class="v">200M+</span></div>
+        <div class="row"><span class="l">Claim visibility</span><span class="v">real-time</span></div>
+        <div class="row"><span class="l">Monthly payouts</span><span class="v">direct deposit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V10 Audience tabs -->
+<section class="variant-wrap" id="v10">
+  <div class="variant-head">
+    <h2>10 · Audience-filtered tabs</h2>
+    <span class="tag">PERSONALIZED · INTERACTIVE</span>
+    <span class="desc">Numbers recompute per audience. "Click your type" personalizes the proof.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · pick your profile</div>
+    <div class="v10-tabs" id="v10-tabs">
+      <button class="v10-tab active" data-v10="creators">Creators</button>
+      <button class="v10-tab" data-v10="brands">Brands &amp; Media</button>
+      <button class="v10-tab" data-v10="estates">Estates &amp; Archives</button>
+    </div>
+    <div class="v10-grid" id="v10-grid">
+      <div class="cell"><div class="n">$420K<sup>+</sup></div><div class="l">returned to creators / yr</div></div>
+      <div class="cell"><div class="n">180K<sup>+</sup></div><div class="l">re-uploads claimed</div></div>
+      <div class="cell"><div class="n">98%</div><div class="l">of creators kept on auto-renewal</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V11 Stat + quote -->
+<section class="variant-wrap" id="v11">
+  <div class="variant-head">
+    <h2>11 · Stat paired with client quote</h2>
+    <span class="tag">PROOF · HUMAN</span>
+    <span class="desc">Each number earns credibility by being contextualized by someone who felt it.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · in their words</div>
+    <div class="v11">
+      <div class="row">
+        <div class="num">$1M<sup>+</sup><span class="sub">Returned / year</span></div>
+        <blockquote>"We got back revenue from a catalog we literally forgot existed. First month alone paid for two years of hosting."<cite>— Documentary archive · 1,200 hrs of footage</cite></blockquote>
+      </div>
+      <div class="row">
+        <div class="num">99.98%<span class="sub">Match accuracy</span></div>
+        <blockquote>"Other services flagged our own clips. Rightset's disputes are reviewed by humans — zero bad claims in 18 months."<cite>— Creator · 2.4M subs</cite></blockquote>
+      </div>
+      <div class="row">
+        <div class="num">500K<sup>+</sup><span class="sub">Videos claimed</span></div>
+        <blockquote>"I could see every foreign-language re-upload of my episodes in real time. That never existed before."<cite>— Podcast network · weekly show</cite></blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V12 Growth timeline -->
+<section class="variant-wrap" id="v12">
+  <div class="variant-head">
+    <h2>12 · Growth timeline</h2>
+    <span class="tag">TRAJECTORY · MOMENTUM</span>
+    <span class="desc">Shows that you're growing. Implies future upside.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · growth</div>
+    <div class="v12">
+      <div class="v12-line"></div>
+      <div class="v12-nodes">
+        <div class="v12-node"><div class="year">2022</div><div class="dot"></div><div class="stat">$200K<sup>+</sup></div><div class="lbl">recovered</div></div>
+        <div class="v12-node"><div class="year">2024</div><div class="dot"></div><div class="stat">$600K<sup>+</sup></div><div class="lbl">recovered</div></div>
+        <div class="v12-node now"><div class="year">Today</div><div class="dot"></div><div class="stat">$1M<sup>+</sup></div><div class="lbl">recovered / yr</div></div>
+        <div class="v12-node future"><div class="year">2027</div><div class="dot"></div><div class="stat">$2M<sup>+</sup></div><div class="lbl">trajectory</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V13 Heat map -->
+<section class="variant-wrap" id="v13">
+  <div class="variant-head">
+    <h2>13 · Heat-map of claim density</h2>
+    <span class="tag">DATA-VIZ · SPATIAL</span>
+    <span class="desc">Visualizes coverage. Bright cells = active claims. Stats on the left anchor it.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · claim density</div>
+    <div class="v13">
+      <div class="v13-stats">
+        <div class="row"><span class="l">Views monetized / yr</span><span class="v">8B+</span></div>
+        <div class="row"><span class="l">Returned to rightsholders</span><span class="v">$1M+</span></div>
+        <div class="row"><span class="l">Videos actively claimed</span><span class="v">500K+</span></div>
+        <div class="row"><span class="l">Assets fingerprinted</span><span class="v">25K+</span></div>
+        <div class="row"><span class="l">Match accuracy</span><span class="v">99.98%</span></div>
+      </div>
+      <div class="v13-grid" id="v13-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- V14 Orbital -->
+<section class="variant-wrap" id="v14">
+  <div class="variant-head">
+    <h2>14 · Orbital / radial layout</h2>
+    <span class="tag">DISTINCTIVE · RISKY</span>
+    <span class="desc">Stats orbit the brand mark. Distinctive but polarizing — worth trying.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers · in orbit</div>
+    <div class="v14">
+      <div class="v14-ring r2"></div>
+      <div class="v14-ring r1"></div>
+      <div class="v14-center">
+        <div style="text-align:center">
+          <div class="c-num">$1M<sup>+</sup></div>
+          <div class="c-lbl">returned / yr</div>
+        </div>
+      </div>
+      <div class="v14-orbit v14-o1"><div class="n">8B<sup>+</sup></div><div class="l">views monetized / yr</div></div>
+      <div class="v14-orbit v14-o2"><div class="n">500K<sup>+</sup></div><div class="l">videos claimed</div></div>
+      <div class="v14-orbit v14-o3"><div class="n">25K<sup>+</sup></div><div class="l">assets fingerprinted</div></div>
+      <div class="v14-orbit v14-o4"><div class="n">200M<sup>+</sup></div><div class="l">watch-hrs recaptured</div></div>
+      <div class="v14-orbit v14-o5"><div class="n">99.98%</div><div class="l">match accuracy</div></div>
+      <div class="v14-orbit v14-o6"><div class="n">24/7</div><div class="l">human-reviewed ops</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- V15 Receipt -->
+<section class="variant-wrap" id="v15">
+  <div class="variant-head">
+    <h2>15 · Receipt / invoice aesthetic</h2>
+    <span class="tag">ON-BRAND · PAYOUT-THEMED</span>
+    <span class="desc">Reads like your monthly statement. Ties to the "monthly payout" story.</span>
+  </div>
+  <div class="stage">
+    <div class="kicker">§ By the numbers</div>
+    <div class="v15">
+      <div class="v15-head"><span>Rightset · running statement</span><span>FY '26</span></div>
+      <div class="row"><span class="l">Views monetized · yr</span><span class="v"><strong>8,000,000,000</strong>+</span></div>
+      <div class="row"><span class="l">Watch-hrs recaptured</span><span class="v"><strong>200,000,000</strong>+</span></div>
+      <div class="row"><span class="l">Videos actively claimed</span><span class="v"><strong>500,000</strong>+</span></div>
+      <div class="row"><span class="l">Assets fingerprinted</span><span class="v"><strong>25,000</strong>+</span></div>
+      <div class="row"><span class="l">Content ID match accuracy</span><span class="v"><strong>99.98</strong>%</span></div>
+      <div class="v15-total"><span>Total returned · yearly</span><strong>$1,000,000+</strong></div>
+    </div>
+  </div>
+</section>
+
+<div style="max-width:1400px;margin:64px auto 80px;padding:48px 32px;border-top:1px solid var(--line);text-align:center">
+  <p style="color:var(--text-mute);font-size:1.05rem;margin-bottom:14px">Seen them all? Tell me which 2–3 variants to polish into the real homepage.</p>
+  <a href="howitworks-variants.html" style="font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);padding:12px 20px;border:1px solid var(--accent);border-radius:3px;display:inline-block">Next → How it works (15 variants)</a>
+</div>
+
+<script>
+// V6 — live counter ticker-up + rotating event feed
+(function(){
+  var el=document.getElementById('v6n'); if(!el) return;
+  var n=1284016;
+  setInterval(function(){ n += Math.floor(Math.random()*60)+20; el.textContent='$'+n.toLocaleString(); },900);
+  var events=[
+    ['@clips-central','match confirmed', 842],
+    ['@reaction-hub','claim paid', 124],
+    ['@compilation-x','match confirmed', 1212],
+    ['@speaker-fans-es','claim paid', 412],
+    ['@viral-cut','match confirmed', 311],
+    ['@podcast-fans','claim paid', 238],
+    ['@archive-drops','match confirmed', 684]
+  ];
+  var tkr=document.getElementById('v6t'); if(!tkr) return;
+  setInterval(function(){
+    var e=events[Math.floor(Math.random()*events.length)];
+    var row=document.createElement('div'); row.className='line';
+    row.innerHTML='<span>'+e[0]+' · '+e[1]+'</span><span class="amt">+$'+e[2]+'</span>';
+    tkr.insertBefore(row,tkr.firstChild);
+    if(tkr.children.length>5) tkr.removeChild(tkr.lastChild);
+  },1800);
+})();
+
+// V10 — audience tab switching
+(function(){
+  var data={
+    creators:[['$420K+','returned to creators / yr'],['180K+','re-uploads claimed'],['98%','of creators on auto-renewal']],
+    brands:[['$450K+','returned to brands + media / yr'],['280K+','enterprise claims running'],['99.98%','match accuracy · SLA-backed']],
+    estates:[['$130K+','returned to estates + archives'],['14K+','legacy assets fingerprinted'],['$40K','avg annual recovery / estate']]
+  };
+  var tabs=document.querySelectorAll('.v10-tab'), grid=document.getElementById('v10-grid');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      tabs.forEach(function(x){x.classList.remove('active')}); t.classList.add('active');
+      var d=data[t.dataset.v10];
+      grid.innerHTML=d.map(function(r){return '<div class="cell"><div class="n">'+r[0]+'</div><div class="l">'+r[1]+'</div></div>'}).join('');
+    });
+  });
+})();
+
+// V13 — heat-map grid with randomized density
+(function(){
+  var g=document.getElementById('v13-grid'); if(!g) return;
+  var cells=12*8;
+  var html='';
+  for(var i=0;i<cells;i++){
+    var r=Math.random();
+    var cls='cell';
+    if(r>0.93) cls+=' h4';
+    else if(r>0.82) cls+=' h3';
+    else if(r>0.65) cls+=' h2';
+    else if(r>0.4) cls+=' h1';
+    html+='<div class="'+cls+'"></div>';
+  }
+  g.innerHTML=html;
+  // animate: swap one cell's class every 400ms
+  setInterval(function(){
+    var all=g.querySelectorAll('.cell');
+    var one=all[Math.floor(Math.random()*all.length)];
+    one.className='cell h'+(1+Math.floor(Math.random()*4));
+  },420);
+})();
+</script>
+
+</body>
+</html>

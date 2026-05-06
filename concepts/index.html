@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rightset V17 — Concepts & Headlines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--bg-card:#111111;--text:#f5f5f3;--text-mute:#8a8a85;
+  --accent:#5eead4;--line:rgba(245,245,243,0.08);--line-strong:rgba(245,245,243,0.16);
+  --sans:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.gallery{max-width:1100px;margin:0 auto;padding:80px 40px 120px}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:300;letter-spacing:-0.04em;margin-bottom:8px}
+.sub{color:var(--text-mute);font-size:1rem;margin-bottom:60px;max-width:600px}
+.back{
+  display:inline-block;margin-bottom:40px;font-family:var(--mono);font-size:11px;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute);
+  text-decoration:none;transition:color .2s;
+}
+.back:hover{color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:48px}
+.card{
+  background:var(--bg-card);border:1px solid var(--line-strong);
+  text-decoration:none;color:var(--text);
+  transition:all .35s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden;
+}
+.card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 40px rgba(94,234,212,0.08)}
+.card-swatch{height:140px;width:100%;position:relative;overflow:hidden}
+.card-swatch-label{
+  position:absolute;bottom:10px;left:14px;
+  font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.7);text-shadow:0 1px 4px rgba(0,0,0,0.5);
+}
+.card-body{padding:18px 20px}
+.card-name{font-size:1rem;font-weight:500;margin-bottom:4px}
+.card-desc{font-size:0.85rem;color:var(--text-mute);line-height:1.45}
+.card-arrow{
+  position:absolute;top:16px;right:16px;
+  font-size:1rem;color:rgba(255,255,255,0.5);
+  opacity:0;transition:opacity .3s;
+}
+.card:hover .card-arrow{opacity:1}
+.section-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text-mute);margin-bottom:16px;
+}
+.original-note{
+  font-family:var(--mono);font-size:11px;color:var(--text-mute);
+  margin-bottom:48px;padding:16px 20px;border:1px solid var(--line-strong);
+  background:var(--bg-card);display:inline-block;
+}
+.original-note a{color:var(--accent);text-decoration:none}
+.original-note a:hover{text-decoration:underline}
+
+/* ----- Headline comparison section ----- */
+.hl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-bottom:48px}
+.hl-card{
+  background:var(--bg-card);border:1px solid var(--line-strong);
+  padding:32px 28px 28px;position:relative;
+  transition:all .35s cubic-bezier(0.16,1,0.3,1);
+}
+.hl-card:hover{border-color:var(--accent);box-shadow:0 12px 40px rgba(94,234,212,0.08);transform:translateY(-4px)}
+a.hl-card{text-decoration:none;color:inherit;display:block;cursor:pointer}
+.hl-card.current{border-color:var(--accent);border-width:2px}
+.hl-card.current::after{
+  content:'CURRENT';position:absolute;top:12px;right:14px;
+  font-family:var(--mono);font-size:9px;letter-spacing:0.12em;
+  color:var(--accent);background:rgba(94,234,212,0.1);padding:3px 8px;border-radius:3px;
+}
+.hl-num{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-mute);margin-bottom:16px;display:block;
+}
+.hl-h1{
+  font-family:var(--sans);
+  font-size:clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight:400;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  background:linear-gradient(160deg, var(--text) 30%, var(--accent) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:12px;
+}
+.hl-sub{
+  font-size:0.85rem;color:var(--text-mute);line-height:1.45;
+  font-family:var(--sans);
+}
+.hl-note{
+  font-family:var(--mono);font-size:10px;color:var(--text-mute);
+  margin-top:12px;padding-top:10px;border-top:1px solid var(--line);
+  opacity:0.7;
+}
+</style>
+</head>
+<body>
+<div class="gallery">
+  <a href="../index.html" class="back">&larr; Back to V17</a>
+  <h1>V17 Concepts & Options</h1>
+  <p class="sub">Color palettes, headline options, and CTA copy for the V17 site. All variants are fully up-to-date with the live design.</p>
+  <div class="section-label">&sect; Color Palettes</div>
+  <div class="grid">
+    <a href="../index.html" class="card" style="border-color:var(--accent);border-width:2px">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#0a0a0a,#5eead4)">
+        <span class="card-swatch-label">#0a0a0a &rarr; #5eead4</span>
+        <span class="card-arrow" style="opacity:1;color:var(--accent)">LIVE</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Original — Teal & Black</div>
+        <div class="card-desc">The current live design. Sharp teal accent on pure black. Technical, precise, authoritative.</div>
+      </div>
+    </a>
+    <a href="v1-blue-slate.html" class="card">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#0f1923,#2196F3)">
+        <span class="card-swatch-label">#0f1923 &rarr; #2196F3</span>
+        <span class="card-arrow">&nearr;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Tech Blue & Slate</div>
+        <div class="card-desc">Cool steel blue on deep charcoal. Modern tech aesthetic. Clean, corporate, trustworthy.</div>
+      </div>
+    </a>
+    <a href="v5-black-blue.html" class="card">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#0a0a0a,#2196F3)">
+        <span class="card-swatch-label">#0a0a0a &rarr; #2196F3</span>
+        <span class="card-arrow">&nearr;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Black & Tech Blue</div>
+        <div class="card-desc">V17's true black base with a sharp blue accent. Clean, technical, and closer to the live dark mode.</div>
+      </div>
+    </a>
+    <a href="v2-gold.html" class="card">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#1a1714,#c8a45a)">
+        <span class="card-swatch-label">#1a1714 &rarr; #c8a45a</span>
+        <span class="card-arrow">&nearr;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Blue & Aged Gold</div>
+        <div class="card-desc">Warm gold accent on dark earth tone. Premium, financial, legacy feel.</div>
+      </div>
+    </a>
+    <a href="v3-indigo.html" class="card">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#1a1c20,#6C5CE7)">
+        <span class="card-swatch-label">#1a1c20 &rarr; #6C5CE7</span>
+        <span class="card-arrow">&nearr;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Indigo-Teal & Ash</div>
+        <div class="card-desc">Electric indigo on cool ash. Creative, bold, digital-forward.</div>
+      </div>
+    </a>
+    <a href="v4-coral.html" class="card">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#1f1a18,#FF6B6B)">
+        <span class="card-swatch-label">#1f1a18 &rarr; #FF6B6B</span>
+        <span class="card-arrow">&nearr;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Coral & Warm Ash</div>
+        <div class="card-desc">Energetic coral on warm charcoal. Approachable, vibrant, creator-friendly.</div>
+      </div>
+    </a>
+    <a href="v6-black-orange.html" class="card">
+      <div class="card-swatch" style="background:linear-gradient(135deg,#0a0a0a,#FF7A00)">
+        <span class="card-swatch-label">#0a0a0a &rarr; #FF7A00</span>
+        <span class="card-arrow">&nearr;</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Black & True Orange</div>
+        <div class="card-desc">V17's true black base with a clean orange accent. Sharper, warmer, and less pink than the coral variant.</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- ===== HEADLINE OPTIONS ===== -->
+  <div class="section-label" style="margin-top:60px">&sect; Headline Options</div>
+  <p class="sub" style="margin-bottom:32px">Click any card to see the full hero visual preview with that headline.</p>
+
+  <div class="hl-grid">
+
+    <!-- Option A (former headline) -->
+    <a href="headlines.html#a" class="hl-card">
+      <span class="hl-num">Option A</span>
+      <div class="hl-h1">Your content is everywhere.<br>Your revenue should be too.</div>
+    </a>
+
+    <!-- Option B -->
+    <a href="headlines.html#b" class="hl-card">
+      <span class="hl-num">Option B</span>
+      <div class="hl-h1">Your content is on YouTube.<br>We make sure you get paid.</div>
+    </a>
+
+    <!-- Option C -->
+    <a href="headlines.html#c" class="hl-card">
+      <span class="hl-num">Option C</span>
+      <div class="hl-h1">Turn lost distribution<br>into revenue</div>
+    </a>
+
+    <!-- Option D -->
+    <a href="headlines.html#d" class="hl-card">
+      <span class="hl-num">Option D</span>
+      <div class="hl-h1">Your content is everywhere.<br>Get paid for all of it.</div>
+    </a>
+
+    <!-- Option E -->
+    <a href="headlines.html#e" class="hl-card">
+      <span class="hl-num">Option E</span>
+      <div class="hl-h1">Turn lost distribution<br>into recurring revenue</div>
+    </a>
+
+    <!-- Option F -->
+    <a href="headlines.html#f" class="hl-card">
+      <span class="hl-num">Option F</span>
+      <div class="hl-h1">Turn re-uploads<br>into a paycheck</div>
+    </a>
+
+    <!-- Option G -->
+    <a href="headlines.html#g" class="hl-card">
+      <span class="hl-num">Option G</span>
+      <div class="hl-h1">Get paid for the views<br>you're already getting.</div>
+      <div class="hl-sub">Sub: Your content is everywhere. Your paycheck should be too.</div>
+    </a>
+
+    <!-- CURRENT — Option H -->
+    <a href="headlines.html#h" class="hl-card current">
+      <span class="hl-num">Current &mdash; Option H</span>
+      <div class="hl-h1">Fingerprint once.<br>Get paid forever.</div>
+    </a>
+
+    <!-- Option I -->
+    <a href="headlines.html#i" class="hl-card">
+      <span class="hl-num">Option I</span>
+      <div class="hl-h1">IP protection<br>that pays you back</div>
+    </a>
+
+    <!-- Option J -->
+    <a href="headlines.html#j" class="hl-card">
+      <span class="hl-num">Option J</span>
+      <div class="hl-h1">Protect your catalog.<br>Profit from every copy.</div>
+    </a>
+
+    <!-- Option K -->
+    <a href="headlines.html#k" class="hl-card">
+      <span class="hl-num">Option K</span>
+      <div class="hl-h1">Defend your IP.<br>Collect your royalties.</div>
+    </a>
+
+    <!-- Option L -->
+    <a href="headlines.html#l" class="hl-card">
+      <span class="hl-num">Option L</span>
+      <div class="hl-h1">Every re-upload is revenue<br>you're leaving on the table.</div>
+    </a>
+
+    <!-- Option M -->
+    <a href="headlines.html#m" class="hl-card">
+      <span class="hl-num">Option M</span>
+      <div class="hl-h1">You own the content.<br>We collect the check.</div>
+    </a>
+
+    <!-- Option N -->
+    <a href="headlines.html#n" class="hl-card">
+      <span class="hl-num">Option N</span>
+      <div class="hl-h1">They upload. You earn.</div>
+    </a>
+
+    <!-- Option O -->
+    <a href="headlines.html#o" class="hl-card">
+      <span class="hl-num">Option O</span>
+      <div class="hl-h1">Your views. Your money.<br>We make it happen.</div>
+    </a>
+
+    <!-- Option P -->
+    <a href="headlines.html#p" class="hl-card">
+      <span class="hl-num">Option P</span>
+      <div class="hl-h1">Own what's yours.</div>
+    </a>
+
+    <!-- Option Q -->
+    <a href="headlines.html#q" class="hl-card">
+      <span class="hl-num">Option Q</span>
+      <div class="hl-h1">Own what's yours.<br>Get paid for every copy.</div>
+    </a>
+
+    <!-- Option R -->
+    <a href="headlines.html#r" class="hl-card">
+      <span class="hl-num">Option R</span>
+      <div class="hl-h1">Own what's yours.<br>We handle the rest.</div>
+    </a>
+
+    <!-- Option S -->
+    <a href="headlines.html#s" class="hl-card">
+      <span class="hl-num">Option S</span>
+      <div class="hl-h1">Own what's yours.<br>Earn from every view.</div>
+    </a>
+
+  </div>
+
+  <!-- ===== BOTTOM CTA COPY OPTIONS ===== -->
+  <div class="section-label" style="margin-top:60px">&sect; Bottom CTA Copy Options</div>
+  <p class="sub" style="margin-bottom:32px">Click any card to see the full audit section with that copy variation.</p>
+
+  <div class="hl-grid">
+
+    <a href="cta-options.html#a" class="hl-card current">
+      <span class="hl-num">Current &mdash; Option A</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">See what<br>you're losing.</div>
+      <div class="hl-sub">Free audit angle</div>
+    </a>
+
+    <a href="cta-options.html#b" class="hl-card">
+      <span class="hl-num">Option B</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Find out what your<br>catalog is worth.</div>
+      <div class="hl-sub">Discovery / valuation angle</div>
+    </a>
+
+    <a href="cta-options.html#c" class="hl-card">
+      <span class="hl-num">Option C</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Your content is already earning.<br>Just not for you.</div>
+      <div class="hl-sub">Pain point angle</div>
+    </a>
+
+    <a href="cta-options.html#d" class="hl-card">
+      <span class="hl-num">Option D</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Send us one link.<br>We'll do the rest.</div>
+      <div class="hl-sub">Ease / simplicity angle</div>
+    </a>
+
+    <a href="cta-options.html#e" class="hl-card">
+      <span class="hl-num">Option E</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Turn your back-catalog<br>into a monthly check.</div>
+      <div class="hl-sub">Revenue angle</div>
+    </a>
+
+    <a href="cta-options.html#f" class="hl-card">
+      <span class="hl-num">Option F</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">We scan. We claim.<br>You get paid.</div>
+      <div class="hl-sub">Process / clarity angle</div>
+    </a>
+
+    <a href="cta-options.html#g" class="hl-card">
+      <span class="hl-num">Option G</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Stop leaving money<br>on the table.</div>
+      <div class="hl-sub">Urgency / loss aversion angle</div>
+    </a>
+
+    <a href="cta-options.html#h" class="hl-card">
+      <span class="hl-num">Option H</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Let us show you<br>what you're missing.</div>
+      <div class="hl-sub">Curiosity / soft-sell angle</div>
+    </a>
+
+    <a href="cta-options.html#i" class="hl-card">
+      <span class="hl-num">Option I</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Your content<br>deserves protection.</div>
+      <div class="hl-sub">Protection angle</div>
+    </a>
+
+    <a href="cta-options.html#j" class="hl-card">
+      <span class="hl-num">Option J</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Your content.<br>Your rules.</div>
+      <div class="hl-sub">Control / ownership angle</div>
+    </a>
+
+    <a href="cta-options.html#k" class="hl-card">
+      <span class="hl-num">Option K</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Turn unauthorized distribution<br>into licensed growth.</div>
+      <div class="hl-sub">Licensing / growth angle</div>
+    </a>
+
+    <a href="cta-options.html#l" class="hl-card">
+      <span class="hl-num">Option L</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">See everywhere<br>your content lives.</div>
+      <div class="hl-sub">Visibility / data angle</div>
+    </a>
+
+    <a href="cta-options.html#m" class="hl-card">
+      <span class="hl-num">Option M</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Your IP is being used<br>without permission.</div>
+      <div class="hl-sub">IP enforcement angle</div>
+    </a>
+
+    <a href="cta-options.html#n" class="hl-card">
+      <span class="hl-num">Option N</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Managing rights at scale<br>shouldn't be this hard.</div>
+      <div class="hl-sub">Scale / enterprise angle</div>
+    </a>
+
+    <a href="cta-options.html#o" class="hl-card">
+      <span class="hl-num">Option O</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">That catalog isn't<br>collecting dust.</div>
+      <div class="hl-sub">Dormant catalog angle</div>
+    </a>
+
+    <a href="cta-options.html#p" class="hl-card">
+      <span class="hl-num">Option P</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Curious how far your<br>content has spread?</div>
+      <div class="hl-sub">Curiosity / soft-sell angle</div>
+    </a>
+
+    <a href="cta-options.html#q" class="hl-card">
+      <span class="hl-num">Option Q</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Think of us as your<br>rights department.</div>
+      <div class="hl-sub">Partnership angle</div>
+    </a>
+
+    <a href="cta-options.html#r" class="hl-card">
+      <span class="hl-num">Option R</span>
+      <div class="hl-h1" style="font-size:clamp(1.2rem, 2.5vw, 1.8rem)">Protect it. License it.<br>Profit from it.</div>
+      <div class="hl-sub">Hybrid / balanced angle</div>
+    </a>
+
+  </div>
+</div>
+</body>
+</html>

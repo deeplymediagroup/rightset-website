@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GIF picker — Rightset "Every content type"</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418; --card:#151c22; --text:#f7f9f7; --mute:#c7ccc6; --accent:#4de5c4;
+  --warm:#ffb088; --line:rgba(247,249,247,0.15);
+  --sans:-apple-system,'Geist',sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.5;padding:48px 32px 120px}
+h1{font-size:2.2rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+.sub{color:var(--mute);margin-bottom:48px;max-width:70ch;font-size:1.1rem}
+.sub code{background:var(--card);padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:0.9rem;color:var(--accent)}
+.row{margin-bottom:64px;border-top:1px solid var(--line);padding-top:32px}
+.row-head{display:flex;gap:16px;align-items:baseline;margin-bottom:20px;flex-wrap:wrap}
+.row h2{font-size:1.5rem;font-weight:600;letter-spacing:-0.01em}
+.row .idx{font-family:var(--mono);font-size:0.85rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase}
+.row .hint{font-size:0.95rem;color:var(--mute);margin-left:auto;font-family:var(--mono)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:all .2s ease;cursor:pointer;display:flex;flex-direction:column}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 30px -10px rgba(77,229,196,0.2)}
+.thumb{aspect-ratio:16/9;background:#000;position:relative;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.meta{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.meta .id{font-family:var(--mono);font-size:10px;color:var(--mute);user-select:all;word-break:break-all}
+.meta button{font-family:var(--mono);font-size:10px;padding:4px 10px;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:3px;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase}
+.meta button:hover{background:var(--accent);color:var(--bg)}
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;background:var(--accent);color:var(--bg);border-radius:4px;font-family:var(--mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;opacity:0;transform:translateY(20px);transition:all .3s ease;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.instructions{background:linear-gradient(135deg,rgba(77,229,196,0.1),rgba(125,211,252,0.08));border:1px solid rgba(77,229,196,0.3);padding:24px 28px;border-radius:6px;margin-bottom:48px}
+.instructions h3{margin-bottom:8px;color:var(--accent);font-size:1rem;font-family:var(--mono);letter-spacing:0.1em;text-transform:uppercase}
+.instructions p{color:var(--mute);font-size:0.95rem;margin-bottom:4px}
+.instructions strong{color:var(--text)}
+</style>
+</head>
+<body>
+<h1>GIF picker &mdash; expanded options</h1>
+<p class="sub">
+  <strong>Locked in:</strong> Row 01 iShowSpeed, Row 03 NBA, Row 04 streamer, Row 08 AI waveform.<br>
+  <strong>Open:</strong> Row 02 viral (20+ new options), Row 05 TV/film (20+ new options), Row 06 podcasts, Row 07 archives.
+</p>
+<div class="instructions">
+  <h3>Important constraint — be straight</h3>
+  <p><strong>Alan Watts, Jim Rohn, Zig Ziglar, Tom Bilyeu, Lewis Howes, Ed Mylett, Huberman, Lex Fridman</strong> — none of these have meaningful clips on Giphy. These speakers/hosts don't get memed, so there's nothing to grab.</p>
+  <p><strong>Two paths to get real footage of them:</strong></p>
+  <p><strong>(a)</strong> Point me at specific YouTube clips you want (e.g. "that 10-second piece from Impact Theory ep 234 where Tom says X"), and I'll convert them to short muted MP4s hosted in the repo. Works for Impact Theory, Lewis Howes, DoC, Alan Watts, Jim Rohn &mdash; anything on YouTube.</p>
+  <p><strong>(b)</strong> Use Giphy-available substitutes for now (Diary of a CEO / Joe Rogan have clips; Alan Watts has one philosophy clip).</p>
+  <p>Tell me which and I'll run it. In the meantime, the rows below show what's actually available.</p>
+</div>
+
+<div class="instructions">
+  <h3>How to use this</h3>
+  <p><strong>1.</strong> Scroll through each of the 8 categories below.</p>
+  <p><strong>2.</strong> Hover any card to preview the full animated clip.</p>
+  <p><strong>3.</strong> For each row, click <strong>COPY ID</strong> on the one you want (or just tell me e.g. <code>Row 1: HPIkHjaBxaP03mfF25</code>).</p>
+  <p><strong>4.</strong> Send me your 8 picks and I'll wire them up and redeploy.</p>
+</div>
+
+<!-- ROW 01 — CREATOR ORIGINALS -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">01</span>
+    <h2>Creator originals</h2>
+    <span class="hint">e.g. iShowSpeed, MrBeast, creator reaction clips</span>
+  </div>
+  <div class="grid" data-row="1">
+    <!-- iShowSpeed -->
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy_s.gif" data-anim="https://media.giphy.com/media/HPIkHjaBxaP03mfF25/giphy.gif"></div><div class="meta"><span class="id">HPIkHjaBxaP03mfF25</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/VVopR7BMf4PSJGQwgq/giphy_s.gif" data-anim="https://media.giphy.com/media/VVopR7BMf4PSJGQwgq/giphy.gif"></div><div class="meta"><span class="id">VVopR7BMf4PSJGQwgq</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/9bEoD5RFGaSYeFrlVQ/giphy_s.gif" data-anim="https://media.giphy.com/media/9bEoD5RFGaSYeFrlVQ/giphy.gif"></div><div class="meta"><span class="id">9bEoD5RFGaSYeFrlVQ</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/vYd0nImci8nleLroNF/giphy_s.gif" data-anim="https://media.giphy.com/media/vYd0nImci8nleLroNF/giphy.gif"></div><div class="meta"><span class="id">vYd0nImci8nleLroNF</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/BAAcwL9XNi79jKmP05/giphy_s.gif" data-anim="https://media.giphy.com/media/BAAcwL9XNi79jKmP05/giphy.gif"></div><div class="meta"><span class="id">BAAcwL9XNi79jKmP05</span><button>Copy ID</button></div></div>
+    <!-- MrBeast -->
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/NWSl8nIRd82IbH4UpU/giphy_s.gif" data-anim="https://media.giphy.com/media/NWSl8nIRd82IbH4UpU/giphy.gif"></div><div class="meta"><span class="id">NWSl8nIRd82IbH4UpU</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/Ko261YbCdpOSVgOsaq/giphy_s.gif" data-anim="https://media.giphy.com/media/Ko261YbCdpOSVgOsaq/giphy.gif"></div><div class="meta"><span class="id">Ko261YbCdpOSVgOsaq</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/eIhedUADRJYLrA433d/giphy_s.gif" data-anim="https://media.giphy.com/media/eIhedUADRJYLrA433d/giphy.gif"></div><div class="meta"><span class="id">eIhedUADRJYLrA433d (current)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 02 — VIRAL CLIPS -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">02</span>
+    <h2>Viral clip channels</h2>
+    <span class="hint">compilations, memes, fails, TikTok-style</span>
+  </div>
+  <div class="grid" data-row="2">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy_s.gif" data-anim="https://media.giphy.com/media/7TwwEsnNG73SCJd9sj/giphy.gif"></div><div class="meta"><span class="id">7TwwEsnNG73SCJd9sj (Friday Fail — LOCKED)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3ohzdOTQloNHvuDFGE/giphy_s.gif" data-anim="https://media.giphy.com/media/3ohzdOTQloNHvuDFGE/giphy.gif"></div><div class="meta"><span class="id">3ohzdOTQloNHvuDFGE (sport fail dunk)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/p9TjJSUK4Rl40gbf9K/giphy_s.gif" data-anim="https://media.giphy.com/media/p9TjJSUK4Rl40gbf9K/giphy.gif"></div><div class="meta"><span class="id">p9TjJSUK4Rl40gbf9K (FailArmy)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/urqT04R2Dgend0hsYc/giphy_s.gif" data-anim="https://media.giphy.com/media/urqT04R2Dgend0hsYc/giphy.gif"></div><div class="meta"><span class="id">urqT04R2Dgend0hsYc (daily dose)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/4mOe4FmYpwCbyblY1k/giphy_s.gif" data-anim="https://media.giphy.com/media/4mOe4FmYpwCbyblY1k/giphy.gif"></div><div class="meta"><span class="id">4mOe4FmYpwCbyblY1k (MrBeast)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/sGrKpvsskUUhmd5Z1d/giphy_s.gif" data-anim="https://media.giphy.com/media/sGrKpvsskUUhmd5Z1d/giphy.gif"></div><div class="meta"><span class="id">sGrKpvsskUUhmd5Z1d (MrBeast)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/NWSl8nIRd82IbH4UpU/giphy_s.gif" data-anim="https://media.giphy.com/media/NWSl8nIRd82IbH4UpU/giphy.gif"></div><div class="meta"><span class="id">NWSl8nIRd82IbH4UpU (MrBeast thumbnail)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/Ko261YbCdpOSVgOsaq/giphy_s.gif" data-anim="https://media.giphy.com/media/Ko261YbCdpOSVgOsaq/giphy.gif"></div><div class="meta"><span class="id">Ko261YbCdpOSVgOsaq (MrBeast run)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/WWjT8UY3Ib4wE/giphy_s.gif" data-anim="https://media.giphy.com/media/WWjT8UY3Ib4wE/giphy.gif"></div><div class="meta"><span class="id">WWjT8UY3Ib4wE (Dude Perfect)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3oEjI7gTy94zmnBIcw/giphy_s.gif" data-anim="https://media.giphy.com/media/3oEjI7gTy94zmnBIcw/giphy.gif"></div><div class="meta"><span class="id">3oEjI7gTy94zmnBIcw (Dude Perfect)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/iSehjCAmmAezKTVh2E/giphy_s.gif" data-anim="https://media.giphy.com/media/iSehjCAmmAezKTVh2E/giphy.gif"></div><div class="meta"><span class="id">iSehjCAmmAezKTVh2E (Dude Perfect clickbait)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/xVXk3GrCatUSwP3rST/giphy_s.gif" data-anim="https://media.giphy.com/media/xVXk3GrCatUSwP3rST/giphy.gif"></div><div class="meta"><span class="id">xVXk3GrCatUSwP3rST (Dobrik/HotOnes)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/RjW7Lxa5j7XR6Ip4fJ/giphy_s.gif" data-anim="https://media.giphy.com/media/RjW7Lxa5j7XR6Ip4fJ/giphy.gif"></div><div class="meta"><span class="id">RjW7Lxa5j7XR6Ip4fJ (Druski reaction)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/s5wFafpHxqKbIEERl9/giphy_s.gif" data-anim="https://media.giphy.com/media/s5wFafpHxqKbIEERl9/giphy.gif"></div><div class="meta"><span class="id">s5wFafpHxqKbIEERl9 (iShowSpeed try not to laugh)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/xTiTnmAZ9mG0T3vhyE/giphy_s.gif" data-anim="https://media.giphy.com/media/xTiTnmAZ9mG0T3vhyE/giphy.gif"></div><div class="meta"><span class="id">xTiTnmAZ9mG0T3vhyE (AFV fail)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/XGhGacEaO9PQ1Kgck3/giphy_s.gif" data-anim="https://media.giphy.com/media/XGhGacEaO9PQ1Kgck3/giphy.gif"></div><div class="meta"><span class="id">XGhGacEaO9PQ1Kgck3 (AFV magic)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/141jCUvsrLMm0o/giphy_s.gif" data-anim="https://media.giphy.com/media/141jCUvsrLMm0o/giphy.gif"></div><div class="meta"><span class="id">141jCUvsrLMm0o (dashcam drift)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/jiASfAhR74xhPfdG8F/giphy_s.gif" data-anim="https://media.giphy.com/media/jiASfAhR74xhPfdG8F/giphy.gif"></div><div class="meta"><span class="id">jiASfAhR74xhPfdG8F (WRC rally)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/9Pbt6IMK5g2hquWKNI/giphy_s.gif" data-anim="https://media.giphy.com/media/9Pbt6IMK5g2hquWKNI/giphy.gif"></div><div class="meta"><span class="id">9Pbt6IMK5g2hquWKNI (TikTok dance)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3K0JyaSZQJa6HIy3gU/giphy_s.gif" data-anim="https://media.giphy.com/media/3K0JyaSZQJa6HIy3gU/giphy.gif"></div><div class="meta"><span class="id">3K0JyaSZQJa6HIy3gU (TikTok 67)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/KIqHhQ1TLTEbu/giphy_s.gif" data-anim="https://media.giphy.com/media/KIqHhQ1TLTEbu/giphy.gif"></div><div class="meta"><span class="id">KIqHhQ1TLTEbu (reaction facepalm)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/MRkpVP3l64lEL2CRpB/giphy_s.gif" data-anim="https://media.giphy.com/media/MRkpVP3l64lEL2CRpB/giphy.gif"></div><div class="meta"><span class="id">MRkpVP3l64lEL2CRpB (stupid game)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/xTiTnooneW4SYfch8Y/giphy_s.gif" data-anim="https://media.giphy.com/media/xTiTnooneW4SYfch8Y/giphy.gif"></div><div class="meta"><span class="id">xTiTnooneW4SYfch8Y (retro fail)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 03 — SPORTS -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">03</span>
+    <h2>Sports &amp; highlights</h2>
+    <span class="hint">real NBA / NFL / soccer game footage</span>
+  </div>
+  <div class="grid" data-row="3">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif" data-anim="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy.gif"></div><div class="meta"><span class="id">HFpuvC5RH9jnkV8r4C</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3o85xBLLBcH9jZrNN6/giphy_s.gif" data-anim="https://media.giphy.com/media/3o85xBLLBcH9jZrNN6/giphy.gif"></div><div class="meta"><span class="id">3o85xBLLBcH9jZrNN6</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/l49JWhDsKVHrS8zHa/giphy_s.gif" data-anim="https://media.giphy.com/media/l49JWhDsKVHrS8zHa/giphy.gif"></div><div class="meta"><span class="id">l49JWhDsKVHrS8zHa</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/wKpKtyLEXSNt5p7KTx/giphy_s.gif" data-anim="https://media.giphy.com/media/wKpKtyLEXSNt5p7KTx/giphy.gif"></div><div class="meta"><span class="id">wKpKtyLEXSNt5p7KTx</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/l3q2MYT8EKtJZO848/giphy_s.gif" data-anim="https://media.giphy.com/media/l3q2MYT8EKtJZO848/giphy.gif"></div><div class="meta"><span class="id">l3q2MYT8EKtJZO848</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/TjAcxImn74uoDYVxFl/giphy_s.gif" data-anim="https://media.giphy.com/media/TjAcxImn74uoDYVxFl/giphy.gif"></div><div class="meta"><span class="id">TjAcxImn74uoDYVxFl (Messi)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/RMytx3W1vmUEoHpb41/giphy_s.gif" data-anim="https://media.giphy.com/media/RMytx3W1vmUEoHpb41/giphy.gif"></div><div class="meta"><span class="id">RMytx3W1vmUEoHpb41 (Hazard)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/443Dgdy2iANyX67pwh/giphy_s.gif" data-anim="https://media.giphy.com/media/443Dgdy2iANyX67pwh/giphy.gif"></div><div class="meta"><span class="id">443Dgdy2iANyX67pwh (NFL)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/l3q2BhukQ7kNkDj9u/giphy_s.gif" data-anim="https://media.giphy.com/media/l3q2BhukQ7kNkDj9u/giphy.gif"></div><div class="meta"><span class="id">l3q2BhukQ7kNkDj9u (current)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 04 — LIVE STREAMS -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">04</span>
+    <h2>Live streams &amp; replays</h2>
+    <span class="hint">Twitch / Kick / streamer webcam vibes</span>
+  </div>
+  <div class="grid" data-row="4">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/o7oXD2AMD4V6GJaRhR/giphy_s.gif" data-anim="https://media.giphy.com/media/o7oXD2AMD4V6GJaRhR/giphy.gif"></div><div class="meta"><span class="id">o7oXD2AMD4V6GJaRhR</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/u7Bh699n8ZHyV6kgvc/giphy_s.gif" data-anim="https://media.giphy.com/media/u7Bh699n8ZHyV6kgvc/giphy.gif"></div><div class="meta"><span class="id">u7Bh699n8ZHyV6kgvc</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/7wOfqvn6AtCOhvovPk/giphy_s.gif" data-anim="https://media.giphy.com/media/7wOfqvn6AtCOhvovPk/giphy.gif"></div><div class="meta"><span class="id">7wOfqvn6AtCOhvovPk (Asmongold)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/cHsocIym0jrdLADJL8/giphy_s.gif" data-anim="https://media.giphy.com/media/cHsocIym0jrdLADJL8/giphy.gif"></div><div class="meta"><span class="id">cHsocIym0jrdLADJL8</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif" data-anim="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy.gif"></div><div class="meta"><span class="id">KH7wWVCHFgcF5lZPAx (esports)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/eJQsGJdrSBr2TCU8mT/giphy_s.gif" data-anim="https://media.giphy.com/media/eJQsGJdrSBr2TCU8mT/giphy.gif"></div><div class="meta"><span class="id">eJQsGJdrSBr2TCU8mT</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/c5skRQb3BXp8RwKGKW/giphy_s.gif" data-anim="https://media.giphy.com/media/c5skRQb3BXp8RwKGKW/giphy.gif"></div><div class="meta"><span class="id">c5skRQb3BXp8RwKGKW (current)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 05 — TV FILM DOC -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">05</span>
+    <h2>TV, film &amp; documentary</h2>
+    <span class="hint">cinematic scenes, classic film</span>
+  </div>
+  <div class="grid" data-row="5">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/5GbOdLJAuMjFC/giphy_s.gif" data-anim="https://media.giphy.com/media/5GbOdLJAuMjFC/giphy.gif"></div><div class="meta"><span class="id">5GbOdLJAuMjFC (Sunset Blvd close-up)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/eIUjcBEV7kfTShtbqZ/giphy_s.gif" data-anim="https://media.giphy.com/media/eIUjcBEV7kfTShtbqZ/giphy.gif"></div><div class="meta"><span class="id">eIUjcBEV7kfTShtbqZ (Sunset Blvd classic)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/iiFtxcwuwiAYU/giphy_s.gif" data-anim="https://media.giphy.com/media/iiFtxcwuwiAYU/giphy.gif"></div><div class="meta"><span class="id">iiFtxcwuwiAYU (Ten Commandments)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/xUA7aUMBY7LhxHE6Aw/giphy_s.gif" data-anim="https://media.giphy.com/media/xUA7aUMBY7LhxHE6Aw/giphy.gif"></div><div class="meta"><span class="id">xUA7aUMBY7LhxHE6Aw (Bette Davis classic)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/S2fW94PjE4JiM/giphy_s.gif" data-anim="https://media.giphy.com/media/S2fW94PjE4JiM/giphy.gif"></div><div class="meta"><span class="id">S2fW94PjE4JiM (Humphrey Bogart)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/r4YkgRTohTWiA/giphy_s.gif" data-anim="https://media.giphy.com/media/r4YkgRTohTWiA/giphy.gif"></div><div class="meta"><span class="id">r4YkgRTohTWiA (Casablanca)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/YkhCjDZhqBDTW6OBv8/giphy_s.gif" data-anim="https://media.giphy.com/media/YkhCjDZhqBDTW6OBv8/giphy.gif"></div><div class="meta"><span class="id">YkhCjDZhqBDTW6OBv8 (TCM Hitchcock)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/2xPScYLermUuoCusDx/giphy_s.gif" data-anim="https://media.giphy.com/media/2xPScYLermUuoCusDx/giphy.gif"></div><div class="meta"><span class="id">2xPScYLermUuoCusDx (Kubrick 70s)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/PH3G9sMZObmqQ/giphy_s.gif" data-anim="https://media.giphy.com/media/PH3G9sMZObmqQ/giphy.gif"></div><div class="meta"><span class="id">PH3G9sMZObmqQ (Fellini/Mastroianni)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/46gMxIAlDbunpTjTTH/giphy_s.gif" data-anim="https://media.giphy.com/media/46gMxIAlDbunpTjTTH/giphy.gif"></div><div class="meta"><span class="id">46gMxIAlDbunpTjTTH (Tarantino 90s)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/FHuZdKSmwSIGk/giphy_s.gif" data-anim="https://media.giphy.com/media/FHuZdKSmwSIGk/giphy.gif"></div><div class="meta"><span class="id">FHuZdKSmwSIGk (Scorsese WolfOfWallSt)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/VhiyxEPvZYa3toYDbI/giphy_s.gif" data-anim="https://media.giphy.com/media/VhiyxEPvZYa3toYDbI/giphy.gif"></div><div class="meta"><span class="id">VhiyxEPvZYa3toYDbI (variety studio)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/kMeriAth0OagyhOUsP/giphy_s.gif" data-anim="https://media.giphy.com/media/kMeriAth0OagyhOUsP/giphy.gif"></div><div class="meta"><span class="id">kMeriAth0OagyhOUsP (actor thinking)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/BUBSLOHN6kMtOD5XRZ/giphy_s.gif" data-anim="https://media.giphy.com/media/BUBSLOHN6kMtOD5XRZ/giphy.gif"></div><div class="meta"><span class="id">BUBSLOHN6kMtOD5XRZ (actor thinking 2)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/Cx7VuExVnETdVyW53g/giphy_s.gif" data-anim="https://media.giphy.com/media/Cx7VuExVnETdVyW53g/giphy.gif"></div><div class="meta"><span class="id">Cx7VuExVnETdVyW53g (actor pause)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/1nCfZ1mDXGcyk/giphy_s.gif" data-anim="https://media.giphy.com/media/1nCfZ1mDXGcyk/giphy.gif"></div><div class="meta"><span class="id">1nCfZ1mDXGcyk (Breaking Bad)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/F0XZAk7YuiIEg/giphy_s.gif" data-anim="https://media.giphy.com/media/F0XZAk7YuiIEg/giphy.gif"></div><div class="meta"><span class="id">F0XZAk7YuiIEg (Mad Men)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/tO9vL6yCvyVjMPZkcG/giphy_s.gif" data-anim="https://media.giphy.com/media/tO9vL6yCvyVjMPZkcG/giphy.gif"></div><div class="meta"><span class="id">tO9vL6yCvyVjMPZkcG (Sopranos Tony)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/g4ybJJL9Sw7mg/giphy_s.gif" data-anim="https://media.giphy.com/media/g4ybJJL9Sw7mg/giphy.gif"></div><div class="meta"><span class="id">g4ybJJL9Sw7mg (Attenborough doc)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/EmiWEW9smopiQVM1P2/giphy_s.gif" data-anim="https://media.giphy.com/media/EmiWEW9smopiQVM1P2/giphy.gif"></div><div class="meta"><span class="id">EmiWEW9smopiQVM1P2 (NatGeo Bertie Gregory)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/11C6Hp7Pzlp6qQ/giphy_s.gif" data-anim="https://media.giphy.com/media/11C6Hp7Pzlp6qQ/giphy.gif"></div><div class="meta"><span class="id">11C6Hp7Pzlp6qQ (PBS Attenborough)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif" data-anim="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy.gif"></div><div class="meta"><span class="id">0EaRdAcvzaUyMXFCMs (current/keep)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 06 — PODCASTS -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">06</span>
+    <h2>Podcasts &amp; interviews</h2>
+    <span class="hint">podcast mic, two-person interview</span>
+  </div>
+  <div class="grid" data-row="6">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/cIovnRrfafDYQB8Fh4/giphy_s.gif" data-anim="https://media.giphy.com/media/cIovnRrfafDYQB8Fh4/giphy.gif"></div><div class="meta"><span class="id">cIovnRrfafDYQB8Fh4 (Diary of a CEO)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/XiXj6pYhlowpqLt6Zi/giphy_s.gif" data-anim="https://media.giphy.com/media/XiXj6pYhlowpqLt6Zi/giphy.gif"></div><div class="meta"><span class="id">XiXj6pYhlowpqLt6Zi (Diary of a CEO)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/CoDlc0WWnkOwLyBQFF/giphy_s.gif" data-anim="https://media.giphy.com/media/CoDlc0WWnkOwLyBQFF/giphy.gif"></div><div class="meta"><span class="id">CoDlc0WWnkOwLyBQFF (Diary of a CEO)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/zAjXIQ66bent27T4t8/giphy_s.gif" data-anim="https://media.giphy.com/media/zAjXIQ66bent27T4t8/giphy.gif"></div><div class="meta"><span class="id">zAjXIQ66bent27T4t8 (Joe Rogan FullMag)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/21lCU1verYspO/giphy_s.gif" data-anim="https://media.giphy.com/media/21lCU1verYspO/giphy.gif"></div><div class="meta"><span class="id">21lCU1verYspO (Joe Rogan powerful)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/dN3VNW17k8Ezb4f5a5/giphy_s.gif" data-anim="https://media.giphy.com/media/dN3VNW17k8Ezb4f5a5/giphy.gif"></div><div class="meta"><span class="id">dN3VNW17k8Ezb4f5a5 (Joe Rogan long)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3KaX9pm2TMBYQ/giphy_s.gif" data-anim="https://media.giphy.com/media/3KaX9pm2TMBYQ/giphy.gif"></div><div class="meta"><span class="id">3KaX9pm2TMBYQ (Rogan interview)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/L4aOzQ1b9kitjRRXTk/giphy_s.gif" data-anim="https://media.giphy.com/media/L4aOzQ1b9kitjRRXTk/giphy.gif"></div><div class="meta"><span class="id">L4aOzQ1b9kitjRRXTk (Joe Rogan)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/j2ReTdBtw0FSuieWSC/giphy_s.gif" data-anim="https://media.giphy.com/media/j2ReTdBtw0FSuieWSC/giphy.gif"></div><div class="meta"><span class="id">j2ReTdBtw0FSuieWSC (Joe Rogan)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/6u2FfrG9IY0FCS07fw/giphy_s.gif" data-anim="https://media.giphy.com/media/6u2FfrG9IY0FCS07fw/giphy.gif"></div><div class="meta"><span class="id">6u2FfrG9IY0FCS07fw (Segura/Kreischer)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 07 — ARCHIVES -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">07</span>
+    <h2>Archives &amp; estates</h2>
+    <span class="hint">vintage speeches, legacy footage, Alan Watts / MLK feel</span>
+  </div>
+  <div class="grid" data-row="7">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/cMKJb3fQZ4rpm/giphy_s.gif" data-anim="https://media.giphy.com/media/cMKJb3fQZ4rpm/giphy.gif"></div><div class="meta"><span class="id">cMKJb3fQZ4rpm (MLK last speech)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif" data-anim="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy.gif"></div><div class="meta"><span class="id">nCYvTZdcOAuOapyNjG (Lincoln Memorial)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/A5Suw3scltI8dVmKc5/giphy_s.gif" data-anim="https://media.giphy.com/media/A5Suw3scltI8dVmKc5/giphy.gif"></div><div class="meta"><span class="id">A5Suw3scltI8dVmKc5 (Orson Welles)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/d6FK5qREqLhbS2nBHc/giphy_s.gif" data-anim="https://media.giphy.com/media/d6FK5qREqLhbS2nBHc/giphy.gif"></div><div class="meta"><span class="id">d6FK5qREqLhbS2nBHc (vintage archive)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/2rAHHROadaC2xi7mI2/giphy_s.gif" data-anim="https://media.giphy.com/media/2rAHHROadaC2xi7mI2/giphy.gif"></div><div class="meta"><span class="id">2rAHHROadaC2xi7mI2 (retro found footage)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/8GoLxUfWwkB21exhPz/giphy_s.gif" data-anim="https://media.giphy.com/media/8GoLxUfWwkB21exhPz/giphy.gif"></div><div class="meta"><span class="id">8GoLxUfWwkB21exhPz (MLK I Have a Dream)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3o6wrFGJnucPdeeEfK/giphy_s.gif" data-anim="https://media.giphy.com/media/3o6wrFGJnucPdeeEfK/giphy.gif"></div><div class="meta"><span class="id">3o6wrFGJnucPdeeEfK (MLK)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3JXHIyfTzKmcisqzn4/giphy_s.gif" data-anim="https://media.giphy.com/media/3JXHIyfTzKmcisqzn4/giphy.gif"></div><div class="meta"><span class="id">3JXHIyfTzKmcisqzn4 (current)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<!-- ROW 08 — AI / DEEPFAKE -->
+<section class="row">
+  <div class="row-head">
+    <span class="idx">08</span>
+    <h2>AI voice &amp; deepfake defense</h2>
+    <span class="hint">AI generation, deepfake, synthetic video demos</span>
+  </div>
+  <div class="grid" data-row="8">
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/SujqZOyWH8K5gFqJri/giphy_s.gif" data-anim="https://media.giphy.com/media/SujqZOyWH8K5gFqJri/giphy.gif"></div><div class="meta"><span class="id">SujqZOyWH8K5gFqJri (face detect scan)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/5WKYsCs2Zi5SJH0l9A/giphy_s.gif" data-anim="https://media.giphy.com/media/5WKYsCs2Zi5SJH0l9A/giphy.gif"></div><div class="meta"><span class="id">5WKYsCs2Zi5SJH0l9A (face detect)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/uMueJhzK6SmOpKOTiZ/giphy_s.gif" data-anim="https://media.giphy.com/media/uMueJhzK6SmOpKOTiZ/giphy.gif"></div><div class="meta"><span class="id">uMueJhzK6SmOpKOTiZ (AI slop detected)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/IIPLnQ4jtFdJQsU6vf/giphy_s.gif" data-anim="https://media.giphy.com/media/IIPLnQ4jtFdJQsU6vf/giphy.gif"></div><div class="meta"><span class="id">IIPLnQ4jtFdJQsU6vf (AI detected)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif" data-anim="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy.gif"></div><div class="meta"><span class="id">ToMjGpJctqrZgKzX0wE (gen waveform)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/jN46Y9IQRjqog/giphy_s.gif" data-anim="https://media.giphy.com/media/jN46Y9IQRjqog/giphy.gif"></div><div class="meta"><span class="id">jN46Y9IQRjqog (kidmograph loop)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/welsOIrujw7nS384Ny/giphy_s.gif" data-anim="https://media.giphy.com/media/welsOIrujw7nS384Ny/giphy.gif"></div><div class="meta"><span class="id">welsOIrujw7nS384Ny (oscilloscope)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/uXCOkx1OLSJPMnNQSw/giphy_s.gif" data-anim="https://media.giphy.com/media/uXCOkx1OLSJPMnNQSw/giphy.gif"></div><div class="meta"><span class="id">uXCOkx1OLSJPMnNQSw (RunwayML gen2)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/dPjD487YzkwFjLR97x/giphy_s.gif" data-anim="https://media.giphy.com/media/dPjD487YzkwFjLR97x/giphy.gif"></div><div class="meta"><span class="id">dPjD487YzkwFjLR97x (real Macron deepfake)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/WX1Ur5LsSTVmW1jEqH/giphy_s.gif" data-anim="https://media.giphy.com/media/WX1Ur5LsSTVmW1jEqH/giphy.gif"></div><div class="meta"><span class="id">WX1Ur5LsSTVmW1jEqH (deepfake)</span><button>Copy ID</button></div></div>
+    <div class="card"><div class="thumb"><img data-still="https://media.giphy.com/media/3o7aCSdTCEbMneRMmk/giphy_s.gif" data-anim="https://media.giphy.com/media/3o7aCSdTCEbMneRMmk/giphy.gif"></div><div class="meta"><span class="id">3o7aCSdTCEbMneRMmk (VHS glitch)</span><button>Copy ID</button></div></div>
+  </div>
+</section>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+// Load stills, swap on hover
+document.querySelectorAll('.thumb img').forEach(function(img){
+  img.src = img.dataset.still;
+  var card = img.closest('.card');
+  card.addEventListener('mouseenter', function(){ img.src = img.dataset.anim; });
+  card.addEventListener('mouseleave', function(){ img.src = img.dataset.still; });
+});
+// Copy to clipboard
+var toast = document.getElementById('toast');
+document.querySelectorAll('.card').forEach(function(card){
+  card.addEventListener('click', function(e){
+    var id = card.querySelector('.id').textContent.replace(/\s*\(.+?\)$/,'').trim();
+    navigator.clipboard.writeText(id).then(function(){
+      toast.textContent = 'Copied: ' + id;
+      toast.classList.add('show');
+      setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+    });
+  });
+});
+</script>
+</body>
+</html>

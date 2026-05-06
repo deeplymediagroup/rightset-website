@@ -1615,12 +1615,15 @@ footer .f-meta{
 }
 .testi-card:hover{border-color:var(--line-strong);transform:translateY(-4px)}
 .testi-mark{
-  font-family:var(--mono);
-  font-size:48px;
-  line-height:1;
+  font-family:'Geist', Georgia, serif;
+  font-size:74px;
+  line-height:0.7;
+  font-weight:600;
   color:var(--accent);
-  opacity:0.6;
+  opacity:0.85;
   margin-bottom:20px;
+  letter-spacing:-0.04em;
+  display:block;
 }
 .testi-quote{
   font-size:1.05rem;
@@ -3897,63 +3900,6 @@ document.addEventListener('DOMContentLoaded',function(){
   .scan-line, .scan-reticle .ring, .scan-pulse{ animation:none; }
 }
 </style>
-<!-- =====================================================
-     03b. LIVE MONITORING — control-room section
-     ===================================================== -->
-<section class="monitor-section reveal">
-  <div class="monitor-head">
-    <div class="kicker">Live monitoring</div>
-    <h2 class="h1">Your content has a fingerprint.<br>We watch for it.</h2>
-    <p class="body-lg">We find every match. You decide what happens next: leave the upload up and earn, or block it entirely.</p>
-  </div>
-
-  <div class="monitor-frame">
-    <!-- chrome bar -->
-    <div class="monitor-chrome">
-      <span class="md red"></span>
-      <span class="md yellow"></span>
-      <span class="md green"></span>
-      <span class="chrome-title">rightset · live monitoring · region: global</span>
-      <span class="chrome-status"><span class="live-dot"></span>LIVE</span>
-    </div>
-
-    <div class="monitor-body">
-      <!-- left: asset grid -->
-      <div class="monitor-grid-wrap">
-        <div class="monitor-label">
-          <span>CONTENT LIBRARY · 996 ASSETS</span>
-          <span id="scanPct">SCANNING · 00%</span>
-        </div>
-        <div class="asset-grid" id="assetGrid" aria-hidden="true"></div>
-      </div>
-
-      <!-- right: log stream -->
-      <div class="monitor-log">
-        <div class="monitor-label">
-          <span>EVENT LOG · REAL-TIME</span>
-        </div>
-        <div class="log-stream" id="logStream"></div>
-      </div>
-    </div>
-
-    <!-- footer stats -->
-    <div class="monitor-stats">
-      <div class="ms-cell">
-        <div class="ms-lbl">Matches today</div>
-        <div class="ms-val accent" id="msMatches">12,847</div>
-      </div>
-      <div class="ms-cell">
-        <div class="ms-lbl">Claims processed</div>
-        <div class="ms-val" id="msClaims">30,142</div>
-      </div>
-      <div class="ms-cell">
-        <div class="ms-lbl">Recovered this month</div>
-        <div class="ms-val" id="msPaid">$128,490</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <div class="hairline"></div>
 
 <!-- =====================================================
@@ -4286,6 +4232,65 @@ document.addEventListener('DOMContentLoaded',function(){
 <div class="hairline"></div>
 
 <!-- =====================================================
+     03b. LIVE MONITORING — control-room section
+     ===================================================== -->
+<section class="monitor-section reveal">
+  <div class="monitor-head">
+    <div class="kicker">Live monitoring</div>
+    <h2 class="h1">Your content has a fingerprint.<br>We watch for it.</h2>
+    <p class="body-lg">We find every match. You decide what happens next: leave the upload up and earn, or block it entirely.</p>
+  </div>
+
+  <div class="monitor-frame">
+    <!-- chrome bar -->
+    <div class="monitor-chrome">
+      <span class="md red"></span>
+      <span class="md yellow"></span>
+      <span class="md green"></span>
+      <span class="chrome-title">rightset · live monitoring · region: global</span>
+      <span class="chrome-status"><span class="live-dot"></span>LIVE</span>
+    </div>
+
+    <div class="monitor-body">
+      <!-- left: asset grid -->
+      <div class="monitor-grid-wrap">
+        <div class="monitor-label">
+          <span>CONTENT LIBRARY · 996 ASSETS</span>
+          <span id="scanPct">SCANNING · 00%</span>
+        </div>
+        <div class="asset-grid" id="assetGrid" aria-hidden="true"></div>
+      </div>
+
+      <!-- right: log stream -->
+      <div class="monitor-log">
+        <div class="monitor-label">
+          <span>EVENT LOG · REAL-TIME</span>
+        </div>
+        <div class="log-stream" id="logStream"></div>
+      </div>
+    </div>
+
+    <!-- footer stats -->
+    <div class="monitor-stats">
+      <div class="ms-cell">
+        <div class="ms-lbl">Matches today</div>
+        <div class="ms-val accent" id="msMatches">12,847</div>
+      </div>
+      <div class="ms-cell">
+        <div class="ms-lbl">Claims processed</div>
+        <div class="ms-val" id="msClaims">30,142</div>
+      </div>
+      <div class="ms-cell">
+        <div class="ms-lbl">Recovered this month</div>
+        <div class="ms-val" id="msPaid">$128,490</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- =====================================================
      04. BY THE NUMBERS — display-type stats
      ===================================================== -->
 <section id="numbers" class="numbers reveal">
@@ -4401,7 +4406,7 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
   <div class="testi-grid">
     <div class="testi-card">
-      <div class="testi-mark">"</div>
+      <div class="testi-mark" aria-hidden="true">&ldquo;</div>
       <p class="testi-quote">PLACEHOLDER TEXT ONLY — 27,000 videos of estate content were being uploaded by thousands of channels we didn&rsquo;t own. Rightset took us from 0% claimed to 99.9% claimed and built a licensing ecosystem where creators can engage with the archive properly. A 660% revenue lift in the first year.</p>
       <div class="testi-meta-row">
         <div class="testi-avatar" style="background-image:url('https://mindsetdrm.com/lovable-uploads/bc4f51e9-4d69-4861-952c-094cb60fbf09.png')"></div>
@@ -4412,7 +4417,7 @@ document.addEventListener('DOMContentLoaded',function(){
       </div>
     </div>
     <div class="testi-card">
-      <div class="testi-mark">"</div>
+      <div class="testi-mark" aria-hidden="true">&ldquo;</div>
       <p class="testi-quote">PLACEHOLDER TEXT ONLY — My clips were everywhere except my own channel. Rightset surfaces every unauthorized re-upload, auto-claims the ones that match, and the dispute team handles the edge cases. I finally get paid for the views I was already getting.</p>
       <div class="testi-meta-row">
         <div class="testi-avatar" style="background-image:url('https://mindsetdrm.com/lovable-uploads/4b375f9c-1e1d-4a7d-b34a-b1b7a7a98ee6.png')"></div>
@@ -4423,7 +4428,7 @@ document.addEventListener('DOMContentLoaded',function(){
       </div>
     </div>
     <div class="testi-card">
-      <div class="testi-mark">"</div>
+      <div class="testi-mark" aria-hidden="true">&ldquo;</div>
       <p class="testi-quote">PLACEHOLDER TEXT ONLY — We have four decades of material earning for everyone except us. Rightset fingerprinted the full catalog, cleaned up the back-catalog, and set up a monthly payout we can forecast against. Zero takedown forms on our end.</p>
       <div class="testi-meta-row">
         <div class="testi-avatar" style="background-image:url('https://mindsetdrm.com/lovable-uploads/9a04e358-ac60-49f2-a128-fc6b630d19fd.png')"></div>

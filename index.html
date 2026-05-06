@@ -3884,30 +3884,98 @@ document.addEventListener('DOMContentLoaded',function(){
 .deepfake-thumb{
   position:relative;
   aspect-ratio:16/9;
-  background:var(--bg-lift);
+  background:
+    radial-gradient(120% 80% at 50% 110%, rgba(77,229,196,0.18), transparent 60%),
+    radial-gradient(90% 70% at 50% -10%, rgba(125,211,252,0.10), transparent 55%),
+    linear-gradient(180deg, #11181e 0%, #0a1115 100%);
   border:1px solid var(--line);
   border-radius:6px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:var(--mono);
-  font-size:13px;
-  color:var(--text-dim);
-  letter-spacing:0.05em;
   overflow:hidden;
 }
-.deepfake-thumb.removed::after{
+/* shared inner layout for both thumbs */
+.thumb-figure{
+  position:absolute;
+  left:50%;
+  top:46%;
+  transform:translate(-50%,-50%);
+  width:38%;
+  max-width:160px;
+  opacity:0.85;
+  filter:drop-shadow(0 4px 18px rgba(0,0,0,0.5));
+}
+.thumb-channel{
+  position:absolute;
+  top:12px;
+  left:14px;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  color:var(--text-mute);
+  background:rgba(10,15,18,0.55);
+  padding:4px 8px;
+  border-radius:3px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+}
+.thumb-channel .verified{
+  color:var(--accent);
+}
+.thumb-duration{
+  position:absolute;
+  bottom:12px;
+  right:12px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:#fff;
+  background:rgba(0,0,0,0.78);
+  padding:3px 7px;
+  border-radius:3px;
+}
+.thumb-title{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:38px;
+  font-family:var(--sans);
+  font-size:clamp(13px, 1.6vw, 18px);
+  font-weight:700;
+  line-height:1.12;
+  letter-spacing:-0.01em;
+  color:#fff;
+  text-shadow:0 2px 12px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9);
+  text-transform:uppercase;
+}
+/* "removed" diagonal stripes + red tint */
+.deepfake-thumb.removed::before{
   content:"";
   position:absolute;
   inset:0;
-  background:repeating-linear-gradient(
-    45deg,
-    transparent 0,
-    transparent 14px,
-    rgba(255,98,98,0.05) 14px,
-    rgba(255,98,98,0.05) 28px
-  );
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 14px, rgba(255,98,98,0.08) 14px, rgba(255,98,98,0.08) 28px),
+    rgba(20,8,8,0.35);
   pointer-events:none;
+  z-index:2;
+}
+.thumb-stamp{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(-12deg);
+  font-family:var(--mono);
+  font-size:clamp(13px, 1.7vw, 19px);
+  font-weight:700;
+  letter-spacing:0.18em;
+  color:#ff8e8e;
+  border:2.5px solid #ff8e8e;
+  padding:6px 14px;
+  border-radius:4px;
+  background:rgba(20,8,8,0.55);
+  z-index:3;
+  white-space:nowrap;
+  text-shadow:0 2px 10px rgba(0,0,0,0.7);
+  box-shadow:0 4px 24px rgba(255,98,98,0.25);
 }
 .deepfake-meta{
   font-family:var(--mono);
@@ -3942,16 +4010,58 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="deepfake-compare">
     <div class="deepfake-card">
       <span class="deepfake-tag authentic">Authentic</span>
-      <div class="deepfake-thumb">Real video thumbnail</div>
+      <div class="deepfake-thumb">
+        <svg class="thumb-figure" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="dfHead" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#4de5c4" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#1fc5a3" stop-opacity="0.85"/>
+            </linearGradient>
+            <linearGradient id="dfBody" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#4de5c4" stop-opacity="0.25"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="74" r="30" fill="url(#dfHead)"/>
+          <path d="M30 200 Q30 122 100 122 Q170 122 170 200 Z" fill="url(#dfBody)"/>
+          <rect x="92" y="108" width="16" height="22" rx="7" fill="#0f1418" opacity="0.85"/>
+          <line x1="100" y1="130" x2="100" y2="160" stroke="#0f1418" stroke-width="3" opacity="0.7"/>
+        </svg>
+        <span class="thumb-channel">@rightsholder · <span class="verified">✓</span></span>
+        <span class="thumb-title">The morning routine that<br>built a 9-figure business</span>
+        <span class="thumb-duration">14:32</span>
+      </div>
       <div class="deepfake-meta">
         <strong>Original upload</strong>
-        From rightsholder's channel
+        Posted by verified channel<br>
+        4.2M views · 2 yrs on YouTube
       </div>
     </div>
     <div class="deepfake-vs">VS</div>
     <div class="deepfake-card">
       <span class="deepfake-tag removed">AI-generated · Removed</span>
-      <div class="deepfake-thumb removed">Near-identical AI thumbnail</div>
+      <div class="deepfake-thumb removed">
+        <svg class="thumb-figure" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="dfHead2" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#4de5c4" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#1fc5a3" stop-opacity="0.85"/>
+            </linearGradient>
+            <linearGradient id="dfBody2" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#4de5c4" stop-opacity="0.25"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="74" r="30" fill="url(#dfHead2)"/>
+          <path d="M30 200 Q30 122 100 122 Q170 122 170 200 Z" fill="url(#dfBody2)"/>
+          <rect x="92" y="108" width="16" height="22" rx="7" fill="#0f1418" opacity="0.85"/>
+          <line x1="100" y1="130" x2="100" y2="160" stroke="#0f1418" stroke-width="3" opacity="0.7"/>
+        </svg>
+        <span class="thumb-channel">@rightsholder.real · new</span>
+        <span class="thumb-title">The morning routine that<br>built a 9-figure business</span>
+        <span class="thumb-duration">14:32</span>
+        <span class="thumb-stamp">REMOVED</span>
+      </div>
       <div class="deepfake-meta">
         <strong>Synthetic audio detected</strong>
         Channel age: 4 days<br>

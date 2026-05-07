@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rightset — Live Monitoring restructure (preview 3)</title>
+<style>
+:root{
+  --bg:#0a0f12;
+  --bg-card:#0e1418;
+  --bg-lift:#11181d;
+  --text:#e9efe7;
+  --text-mute:#9aa6a4;
+  --text-dim:#5a6b6b;
+  --line:#1c252a;
+  --line-strong:#243036;
+  --accent:#4de5c4;
+  --accent-glow:rgba(77,229,196,0.45);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;
+  --max:1440px;
+  --pad-x:clamp(20px,4vw,64px);
+  --section-y:clamp(56px,7vw,100px);
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+.page-header{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:64px var(--pad-x) 24px;
+}
+.page-header .eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:18px;
+}
+.page-header h1{
+  font-size:clamp(2.4rem,4.5vw,3.5rem);
+  font-weight:500;letter-spacing:-0.025em;line-height:1.05;
+  margin-bottom:18px;
+}
+.page-header p{color:var(--text-mute);max-width:720px}
+.divider{
+  max-width:var(--max);margin:0 auto;padding:0 var(--pad-x);
+  border-top:1px solid var(--line);
+}
+
+/* ===== Live Monitoring section (preview 3 layout) ===== */
+.m3-section{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:var(--section-y) var(--pad-x);
+}
+.m3-head{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:60px;
+  align-items:end;
+  margin-bottom:56px;
+}
+.m3-head .kicker{
+  font-family:var(--mono);font-size:0.72rem;font-weight:500;
+  line-height:1;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-mute);
+  display:inline-flex;align-items:center;
+  margin-bottom:18px;
+}
+.m3-head .kicker::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 8px var(--accent-glow);
+  margin-right:10px;
+  animation:m3blink 3s ease-in-out infinite;
+}
+@keyframes m3blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.m3-head h2{
+  font-size:clamp(2.5rem,5.5vw,5rem);
+  font-weight:500;line-height:1.0;letter-spacing:-0.035em;
+}
+.m3-head p{color:var(--text-mute);font-size:1.05rem;line-height:1.6}
+@media(max-width:860px){.m3-head{grid-template-columns:1fr;gap:24px}}
+
+/* Frame: vertical stack of chrome / body / footer-stats */
+.m3-frame{
+  position:relative;
+  border:1px solid var(--line-strong);
+  background:
+    linear-gradient(180deg,rgba(94,234,212,0.02),transparent 30%),
+    var(--bg-card);
+  overflow:hidden;
+  min-height:560px;
+  display:flex;
+  flex-direction:column;
+}
+.m3-frame::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(94,234,212,0.025) 3px,rgba(94,234,212,0.025) 4px);
+  pointer-events:none;z-index:1;
+}
+.m3-frame::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  box-shadow:0 0 10px var(--accent-glow);
+  animation:m3scan 3.2s linear infinite;
+  z-index:3;
+}
+@keyframes m3scan{0%{transform:translateY(0)}100%{transform:translateY(560px)}}
+
+/* Chrome bar (full width across the top) */
+.m3-chrome{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-mute);
+  position:relative;z-index:2;
+  background:rgba(0,0,0,0.4);
+}
+.m3-chrome .md{width:9px;height:9px;border-radius:50%;background:var(--text-dim)}
+.m3-chrome .md.red{background:#ff5f56}
+.m3-chrome .md.yellow{background:#ffbd2e}
+.m3-chrome .md.green{background:#27c93f}
+.m3-chrome .chrome-title{margin-left:8px;color:var(--text);text-transform:lowercase;letter-spacing:0.08em}
+.m3-chrome .chrome-status{margin-left:auto;display:flex;gap:8px;align-items:center;color:var(--accent);font-weight:600}
+.m3-chrome .live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:m3blink 1.4s ease-in-out infinite}
+
+/* Body: ~50/50 split, left has stats-row + asset grid, right has full-height log */
+.m3-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;  /* nearly half-and-half vertical split */
+  flex:1;
+  position:relative;z-index:2;
+}
+.m3-left{
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid var(--line);
+}
+.m3-stats-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+.m3-stats-row .ms-cell{
+  padding:22px 24px;
+}
+.m3-stats-row .ms-cell:first-child{
+  border-right:1px solid var(--line);
+}
+.m3-grid-wrap{
+  flex:1;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+}
+.m3-log{
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* Shared label */
+.m3-label{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--text-mute);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;
+}
+
+/* Asset grid (CONTENT LIBRARY) */
+.asset-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:4px;
+  flex:1;
+}
+.asset-cell{
+  aspect-ratio:1/1;
+  background:rgba(245,245,243,0.04);
+  border:1px solid var(--line);
+  position:relative;
+  transition:background 0.4s,border-color 0.4s;
+}
+.asset-cell.idle{background:rgba(245,245,243,0.03)}
+.asset-cell.scanning{background:rgba(94,234,212,0.08);border-color:rgba(94,234,212,0.2)}
+.asset-cell.match{
+  background:var(--accent);border-color:var(--accent);
+  box-shadow:0 0 8px var(--accent-glow);
+  animation:m3matchFlash 1.6s ease-out;
+}
+@keyframes m3matchFlash{
+  0%{transform:scale(0.6);background:#fff}
+  20%{transform:scale(1.15);background:var(--accent)}
+  100%{transform:scale(1);background:var(--accent)}
+}
+
+/* Event log */
+.log-stream{
+  flex:1;
+  font-family:var(--mono);font-size:10px;
+  line-height:1.8;color:var(--text-mute);
+  letter-spacing:0.04em;overflow:hidden;
+  position:relative;
+  margin-top:0;
+  mask-image:linear-gradient(180deg,black 0%,black 78%,transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg,black 0%,black 78%,transparent 100%);
+}
+.log-stream .log-line{
+  display:flex;gap:12px;padding:2px 0;
+  opacity:0;transform:translateY(-8px);
+  animation:m3logIn 0.5s var(--ease-out) forwards;
+}
+@keyframes m3logIn{0%{opacity:0;transform:translateY(-8px)}100%{opacity:1;transform:translateY(0)}}
+.log-stream .log-ts{color:var(--text-dim);min-width:60px}
+.log-stream .log-tag{min-width:52px;font-weight:600}
+.log-stream .log-tag.match{color:var(--accent)}
+.log-stream .log-tag.claim{color:#c6b4ff}
+.log-stream .log-tag.paid{color:#a8e6a3}
+.log-stream .log-tag.scan{color:var(--text-mute)}
+.log-stream .log-asset{color:var(--text);min-width:110px}
+.log-stream .log-ch{color:var(--text-mute);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.log-stream .log-amt{color:var(--text);text-align:right;min-width:60px}
+
+/* Footer: Recovered this month, full width */
+.m3-stats-bottom{
+  display:grid;
+  grid-template-columns:1fr;
+  border-top:1px solid var(--line);
+  position:relative;z-index:2;
+}
+.m3-stats-bottom .ms-cell{
+  padding:24px 28px;
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:24px;
+}
+
+/* Stat cell typography */
+.ms-cell{position:relative}
+.ms-cell .ms-lbl{
+  font-family:var(--mono);font-size:9px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-mute);
+  margin-bottom:8px;
+}
+.ms-cell .ms-val{
+  font-size:clamp(1.4rem,2.2vw,2rem);
+  font-weight:500;letter-spacing:-0.02em;
+  color:var(--text);font-family:var(--mono);
+}
+.ms-cell .ms-val.accent{color:var(--accent);text-shadow:0 0 12px var(--accent-glow)}
+
+@media(max-width:860px){
+  .m3-body{grid-template-columns:1fr}
+  .m3-left{border-right:none;border-bottom:1px solid var(--line)}
+  .asset-grid{grid-template-columns:repeat(10,1fr)}
+}
+
+.footer-note{
+  max-width:var(--max);margin:0 auto;
+  padding:48px var(--pad-x) 80px;
+  font-family:var(--mono);font-size:12px;letter-spacing:0.04em;
+  color:var(--text-dim);text-align:center;
+}
+.footer-note a{color:var(--accent);border-bottom:1px solid rgba(77,229,196,0.4)}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="eyebrow">Preview 3 · internal</div>
+  <h1>Live Monitoring — restructured layout</h1>
+  <p>Same animations as the live site, but the picture is sliced almost vertically in half. Matches today + claims processed sit on top of the content library on the left, the event log runs full-height on the right, and recovered this month is a full-width footer cell.</p>
+</header>
+
+<div class="divider"></div>
+
+<section class="m3-section">
+  <div class="m3-head">
+    <div>
+      <div class="kicker">Live monitoring</div>
+      <h2>Your content has a fingerprint.<br>We watch for it.</h2>
+    </div>
+    <p>We find every match. You decide what happens next: leave the upload up and earn, or block it entirely.</p>
+  </div>
+
+  <div class="m3-frame">
+    <!-- chrome -->
+    <div class="m3-chrome">
+      <span class="md red"></span>
+      <span class="md yellow"></span>
+      <span class="md green"></span>
+      <span class="chrome-title">rightset · live monitoring · region: global</span>
+      <span class="chrome-status"><span class="live-dot"></span>LIVE</span>
+    </div>
+
+    <!-- body: 50/50 split -->
+    <div class="m3-body">
+      <!-- LEFT: stats row + content library -->
+      <div class="m3-left">
+        <div class="m3-stats-row">
+          <div class="ms-cell">
+            <div class="ms-lbl">Matches today</div>
+            <div class="ms-val accent" id="msMatches">12,847</div>
+          </div>
+          <div class="ms-cell">
+            <div class="ms-lbl">Claims processed</div>
+            <div class="ms-val" id="msClaims">30,142</div>
+          </div>
+        </div>
+        <div class="m3-grid-wrap">
+          <div class="m3-label">
+            <span>CONTENT LIBRARY · 996 ASSETS</span>
+            <span id="scanPct">SCANNING · 00%</span>
+          </div>
+          <div class="asset-grid" id="assetGrid" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: full-height event log -->
+      <div class="m3-log">
+        <div class="m3-label">
+          <span>EVENT LOG · REAL-TIME</span>
+        </div>
+        <div class="log-stream" id="logStream"></div>
+      </div>
+    </div>
+
+    <!-- footer: recovered this month, full width -->
+    <div class="m3-stats-bottom">
+      <div class="ms-cell">
+        <div class="ms-lbl">Recovered this month</div>
+        <div class="ms-val" id="msPaid">$128,490</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-note">
+  Preview 3 — isolated layout exploration for live monitoring. Live site at <a href="/">/</a> still uses the original 1.4fr / 1fr split with stats footer.
+</div>
+
+<script>
+// Same monitoring engine as the live site — duplicated here so this preview
+// is fully self-contained.
+(function monitor(){
+  var grid = document.getElementById('assetGrid');
+  var log  = document.getElementById('logStream');
+  var pctEl = document.getElementById('scanPct');
+  var msM = document.getElementById('msMatches');
+  var msC = document.getElementById('msClaims');
+  var msP = document.getElementById('msPaid');
+  if (!grid || !log) return;
+
+  var total = 96;
+  for (var i = 0; i < total; i++){
+    var c = document.createElement('div');
+    c.className = 'asset-cell idle';
+    grid.appendChild(c);
+  }
+  var cells = grid.querySelectorAll('.asset-cell');
+
+  setInterval(function(){
+    var i = Math.floor(Math.random() * cells.length);
+    var cell = cells[i];
+    cell.classList.remove('idle','match');
+    cell.classList.add('scanning');
+    setTimeout(function(){
+      cell.classList.remove('scanning');
+      if (Math.random() > 0.55) cell.classList.add('match');
+      else                      cell.classList.add('idle');
+    }, 600 + Math.random()*700);
+    setTimeout(function(){
+      cell.classList.remove('match');
+      cell.classList.add('idle');
+    }, 2600 + Math.random()*1800);
+  }, 180);
+
+  var channels = [
+    'ClipDaily','ViralFeed_ES','HighlightHub','ReactorX','NewsRewind','FanEdits01',
+    'GlobalClips','SportsWorld','PodcastClips','ViralCut_EN','DocArchive','StreamCut',
+    'TopMoments','FailVault','InterviewCuts','LiveRecap','AudioLibrary','CatalogWake'
+  ];
+  var assets = [
+    'OG-8419-TALK','MSC-0022-TRK','SPT-6610-HLT','PDC-1298-EP','DOC-4401-FT','LIV-9983-RPL',
+    'VRL-3301-CLP','CRT-7722-ORG','AI-0083-VCL','ARC-5519-TAPE'
+  ];
+  var tags = [['MATCH','match'],['CLAIM','claim'],['PAID','paid'],['SCAN','scan']];
+
+  function fmtTime(){var d=new Date();return d.toISOString().slice(11,19);}
+  function pushLog(){
+    var t = tags[Math.floor(Math.random() * tags.length)];
+    var ch = channels[Math.floor(Math.random() * channels.length)];
+    var asset = assets[Math.floor(Math.random() * assets.length)];
+    var amt = '$' + (Math.random() * 480 + 12).toFixed(2);
+    var line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML =
+      '<span class="log-ts">' + fmtTime() + '</span>' +
+      '<span class="log-tag ' + t[1] + '">' + t[0] + '</span>' +
+      '<span class="log-asset">' + asset + '</span>' +
+      '<span class="log-ch">@' + ch + '</span>' +
+      '<span class="log-amt">' + (t[0]==='SCAN' ? '—' : amt) + '</span>';
+    log.appendChild(line);
+    while (log.children.length > 18) log.removeChild(log.firstChild);
+  }
+  for (var j = 0; j < 10; j++) pushLog();
+  setInterval(pushLog, 1200);
+
+  var mCount = 12847, cCount = 30142, pCount = 128490;
+  setInterval(function(){
+    mCount += Math.floor(Math.random() * 6);
+    cCount += Math.floor(Math.random() * 3);
+    pCount += Math.floor(Math.random() * 40);
+    if (msM) msM.textContent = mCount.toLocaleString();
+    if (msC) msC.textContent = cCount.toLocaleString();
+    if (msP) msP.textContent = '$' + pCount.toLocaleString();
+  }, 900);
+
+  var pct = 0;
+  setInterval(function(){
+    pct = (pct + 1) % 100;
+    if (pctEl) pctEl.textContent = 'SCANNING · ' + String(pct).padStart(2,'0') + '%';
+  }, 180);
+})();
+</script>
+
+</body>
+</html>

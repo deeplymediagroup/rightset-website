@@ -4113,6 +4113,9 @@ document.addEventListener('DOMContentLoaded',function(){
   .cat-tile:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 16px 40px -20px rgba(77,229,196,0.3)}
   .cat-tile-thumb{position:absolute;inset:0}
   .cat-tile-thumb img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+  /* CEO tile — Tim Cook keynote GIF has rotating icons on the right that we want to hide.
+     Push the focal point hard to the left so cover-cropping removes the right portion. */
+  .cat-tile-ceo .cat-tile-thumb img{object-position:0% center;transform:scale(1.6);transform-origin:left center}
   .cat-tile-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(10,14,18,0.55) 55%,rgba(10,14,18,0.95) 82%,rgba(10,14,18,1) 100%);pointer-events:none}
   .cat-tile-body{position:absolute;inset:0;padding:26px 24px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2;gap:10px;pointer-events:none}
   .cat-tile-idx{font-family:var(--mono);font-size:12px;letter-spacing:0.16em;color:var(--accent);text-shadow:0 1px 10px rgba(0,0,0,0.8);font-weight:500}
@@ -4124,70 +4127,9 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif" data-still="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy_s.gif" data-anim="https://media.giphy.com/media/nCYvTZdcOAuOapyNjG/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">03</span><span class="cat-tile-name">Archives &amp; estates</span></div></div>
     <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif" data-still="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy_s.gif" data-anim="https://media.giphy.com/media/HFpuvC5RH9jnkV8r4C/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">04</span><span class="cat-tile-name">Sports &amp; highlights</span></div></div>
     <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif" data-still="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy_s.gif" data-anim="https://media.giphy.com/media/KH7wWVCHFgcF5lZPAx/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">05</span><span class="cat-tile-name">Live streams &amp; replays</span></div></div>
-    <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif" data-still="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy_s.gif" data-anim="https://media.giphy.com/media/0EaRdAcvzaUyMXFCMs/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">06</span><span class="cat-tile-name">TV, film &amp; documentary</span></div></div>
-    <div class="cat-tile"><div class="cat-tile-thumb cat-tile-thumb-podcast" aria-hidden="true">
-      <svg viewBox="0 0 320 400" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">
-        <defs>
-          <linearGradient id="podBg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#1a2530"/>
-            <stop offset="100%" stop-color="#0a1115"/>
-          </linearGradient>
-          <radialGradient id="podGlow" cx="0.5" cy="0.42" r="0.55">
-            <stop offset="0%" stop-color="#4de5c4" stop-opacity="0.45"/>
-            <stop offset="60%" stop-color="#1fc5a3" stop-opacity="0.12"/>
-            <stop offset="100%" stop-color="#0a1115" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="320" height="400" fill="url(#podBg)"/>
-        <ellipse cx="160" cy="170" rx="180" ry="160" fill="url(#podGlow)"/>
-        <!-- soundwave bars left -->
-        <g fill="#4de5c4" opacity="0.65">
-          <rect x="34" y="178" width="3" height="44" rx="1.5"/>
-          <rect x="46" y="156" width="3" height="88" rx="1.5"/>
-          <rect x="58" y="170" width="3" height="60" rx="1.5"/>
-          <rect x="70" y="140" width="3" height="120" rx="1.5"/>
-          <rect x="82" y="166" width="3" height="68" rx="1.5"/>
-        </g>
-        <!-- soundwave bars right -->
-        <g fill="#7dd3fc" opacity="0.55">
-          <rect x="234" y="166" width="3" height="68" rx="1.5"/>
-          <rect x="246" y="140" width="3" height="120" rx="1.5"/>
-          <rect x="258" y="170" width="3" height="60" rx="1.5"/>
-          <rect x="270" y="156" width="3" height="88" rx="1.5"/>
-          <rect x="282" y="178" width="3" height="44" rx="1.5"/>
-        </g>
-        <!-- microphone -->
-        <g transform="translate(160,180)">
-          <!-- mic body -->
-          <rect x="-22" y="-58" width="44" height="78" rx="22" fill="#f7f9f7" opacity="0.92"/>
-          <rect x="-16" y="-52" width="32" height="66" rx="16" fill="none" stroke="#0f1418" stroke-width="1.5" opacity="0.35"/>
-          <!-- mic grille lines -->
-          <g stroke="#0f1418" stroke-width="1" opacity="0.25">
-            <line x1="-14" y1="-42" x2="14" y2="-42"/>
-            <line x1="-14" y1="-32" x2="14" y2="-32"/>
-            <line x1="-14" y1="-22" x2="14" y2="-22"/>
-            <line x1="-14" y1="-12" x2="14" y2="-12"/>
-            <line x1="-14" y1="-2" x2="14" y2="-2"/>
-            <line x1="-14" y1="8" x2="14" y2="8"/>
-          </g>
-          <!-- mic stand arc -->
-          <path d="M-44,2 Q-44,40 0,40 Q44,40 44,2" fill="none" stroke="#f7f9f7" stroke-width="3" opacity="0.85" stroke-linecap="round"/>
-          <!-- mic stem -->
-          <line x1="0" y1="40" x2="0" y2="68" stroke="#f7f9f7" stroke-width="3" opacity="0.85" stroke-linecap="round"/>
-          <!-- mic base -->
-          <rect x="-26" y="68" width="52" height="6" rx="3" fill="#f7f9f7" opacity="0.85"/>
-        </g>
-        <!-- ambient particles -->
-        <g fill="#4de5c4" opacity="0.5">
-          <circle cx="50" cy="80" r="2"/>
-          <circle cx="280" cy="100" r="1.5"/>
-          <circle cx="80" cy="320" r="1.8"/>
-          <circle cx="260" cy="340" r="2"/>
-          <circle cx="160" cy="60" r="1.2"/>
-        </g>
-      </svg>
-    </div><div class="cat-tile-body"><span class="cat-tile-idx">07</span><span class="cat-tile-name">Podcasts &amp; interviews</span></div></div>
-    <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif" data-still="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy_s.gif" data-anim="https://media.giphy.com/media/ToMjGpJctqrZgKzX0wE/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">08</span><span class="cat-tile-name">CEOs, founders, and operators</span></div></div>
+    <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/wJD3qiNjSeHS0dP28T/giphy.gif" data-still="https://media.giphy.com/media/wJD3qiNjSeHS0dP28T/giphy.gif" data-anim="https://media.giphy.com/media/wJD3qiNjSeHS0dP28T/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">06</span><span class="cat-tile-name">TV, film &amp; documentary</span></div></div>
+    <div class="cat-tile"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/PW3Hypy4XqQNe7bS5o/giphy.gif" data-still="https://media.giphy.com/media/PW3Hypy4XqQNe7bS5o/giphy.gif" data-anim="https://media.giphy.com/media/PW3Hypy4XqQNe7bS5o/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">07</span><span class="cat-tile-name">Podcasts &amp; interviews</span></div></div>
+    <div class="cat-tile cat-tile-ceo"><div class="cat-tile-thumb"><img src="https://media.giphy.com/media/Y0DRVHkaOmguSUBav4/giphy.gif" data-still="https://media.giphy.com/media/Y0DRVHkaOmguSUBav4/giphy.gif" data-anim="https://media.giphy.com/media/Y0DRVHkaOmguSUBav4/giphy.gif" alt="" loading="lazy"></div><div class="cat-tile-body"><span class="cat-tile-idx">08</span><span class="cat-tile-name">CEOs, founders, and operators</span></div></div>
   </div>
 </section>
 <script>
@@ -4446,100 +4388,45 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
   <div class="deepfake-compare">
     <!--
-      ░░ TO USE A REAL YOUTUBE THUMBNAIL HERE ░░
-      Drop a real image at: thumbs/deepfake-authentic.jpg (16:9, ~1280x720)
-      Then replace the entire <svg class="thumb-figure"> block below with:
-        <img class="thumb-image" src="thumbs/deepfake-authentic.jpg" alt="" loading="lazy">
-      Same swap on the .removed version using thumbs/deepfake-aifake.jpg
+      ░░ DEEPFAKE COMPARISON — REAL YOUTUBE THUMBNAILS ░░
+      Authentic side: img.youtube.com/vi/khOaAHK7efc — Alan Watts "What if money was no object?"
+      AI/Removed side: img.youtube.com/vi/hklPKABjRdA — AI Alan Watts & Terence McKenna (GPT-4)
+      To swap either, replace the YouTube video ID in the img src URL with a different one.
     -->
     <div class="deepfake-card">
       <span class="deepfake-tag authentic">Authentic</span>
       <div class="deepfake-thumb">
-        <div class="thumb-stage-light" aria-hidden="true"></div>
-        <svg class="thumb-figure" viewBox="0 0 240 240" aria-hidden="true">
-          <defs>
-            <linearGradient id="dfHead" x1="0.3" x2="0.8" y1="0" y2="1">
-              <stop offset="0%" stop-color="#6df0d4"/>
-              <stop offset="55%" stop-color="#1fc5a3"/>
-              <stop offset="100%" stop-color="#0e2a26"/>
-            </linearGradient>
-            <linearGradient id="dfBody" x1="0.3" x2="0.8" y1="0" y2="1">
-              <stop offset="0%" stop-color="#3a4d5e" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#0f1418" stop-opacity="1"/>
-            </linearGradient>
-            <radialGradient id="dfRim" cx="0.75" cy="0.25" r="0.55">
-              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.55"/>
-              <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <!-- rim light glow -->
-          <circle cx="180" cy="60" r="100" fill="url(#dfRim)"/>
-          <!-- shoulders / torso -->
-          <path d="M20 240 Q20 156 60 140 Q90 130 120 130 Q150 130 180 140 Q220 156 220 240 Z" fill="url(#dfBody)"/>
-          <!-- neck -->
-          <path d="M104 130 L104 105 Q104 100 108 100 L132 100 Q136 100 136 105 L136 130 Z" fill="url(#dfHead)" opacity="0.85"/>
-          <!-- head + suggested hair -->
-          <path d="M82 80 Q82 50 120 46 Q158 50 158 80 Q158 88 156 96 Q150 110 138 116 Q128 120 120 120 Q112 120 102 116 Q90 110 84 96 Q82 88 82 80 Z" fill="url(#dfHead)"/>
-          <!-- subtle face shadow on left -->
-          <path d="M82 80 Q82 50 120 46 Q120 100 102 116 Q90 110 84 96 Q82 88 82 80 Z" fill="#0f1418" opacity="0.28"/>
-          <!-- shirt collar suggestion -->
-          <path d="M104 130 L120 152 L136 130 L150 142 L150 200 L90 200 L90 142 Z" fill="#0a1115" opacity="0.65"/>
-        </svg>
+        <img class="thumb-image" src="https://img.youtube.com/vi/khOaAHK7efc/maxresdefault.jpg" alt="" loading="lazy">
         <span class="thumb-play" aria-hidden="true"></span>
         <span class="thumb-channel">
           <span class="thumb-avatar"></span>
-          @rightsholder <span class="verified">✓</span>
+          @AlanWatts <span class="verified">✓</span>
         </span>
-        <span class="thumb-title">The morning routine that<br>built a 9-figure business</span>
-        <span class="thumb-duration">14:32</span>
+        <span class="thumb-duration">3:01</span>
       </div>
       <div class="deepfake-meta">
-        <strong>Original upload</strong>
-        Posted by verified channel<br>
-        4.2M views · 2 yrs on YouTube
+        <strong>What if money was no object?</strong>
+        Alan Watts · official rightsholder<br>
+        12M views · uploaded 2013
       </div>
     </div>
     <div class="deepfake-vs">VS</div>
     <div class="deepfake-card">
       <span class="deepfake-tag removed">AI-generated · Removed</span>
       <div class="deepfake-thumb removed">
-        <div class="thumb-stage-light" aria-hidden="true"></div>
-        <svg class="thumb-figure" viewBox="0 0 240 240" aria-hidden="true">
-          <defs>
-            <linearGradient id="dfHead2" x1="0.3" x2="0.8" y1="0" y2="1">
-              <stop offset="0%" stop-color="#6df0d4"/>
-              <stop offset="55%" stop-color="#1fc5a3"/>
-              <stop offset="100%" stop-color="#0e2a26"/>
-            </linearGradient>
-            <linearGradient id="dfBody2" x1="0.3" x2="0.8" y1="0" y2="1">
-              <stop offset="0%" stop-color="#3a4d5e" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#0f1418" stop-opacity="1"/>
-            </linearGradient>
-            <radialGradient id="dfRim2" cx="0.75" cy="0.25" r="0.55">
-              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.55"/>
-              <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <circle cx="180" cy="60" r="100" fill="url(#dfRim2)"/>
-          <path d="M20 240 Q20 156 60 140 Q90 130 120 130 Q150 130 180 140 Q220 156 220 240 Z" fill="url(#dfBody2)"/>
-          <path d="M104 130 L104 105 Q104 100 108 100 L132 100 Q136 100 136 105 L136 130 Z" fill="url(#dfHead2)" opacity="0.85"/>
-          <path d="M82 80 Q82 50 120 46 Q158 50 158 80 Q158 88 156 96 Q150 110 138 116 Q128 120 120 120 Q112 120 102 116 Q90 110 84 96 Q82 88 82 80 Z" fill="url(#dfHead2)"/>
-          <path d="M82 80 Q82 50 120 46 Q120 100 102 116 Q90 110 84 96 Q82 88 82 80 Z" fill="#0f1418" opacity="0.28"/>
-          <path d="M104 130 L120 152 L136 130 L150 142 L150 200 L90 200 L90 142 Z" fill="#0a1115" opacity="0.65"/>
-        </svg>
+        <img class="thumb-image" src="https://img.youtube.com/vi/hklPKABjRdA/maxresdefault.jpg" alt="" loading="lazy">
         <span class="thumb-play" aria-hidden="true"></span>
         <span class="thumb-channel">
           <span class="thumb-avatar"></span>
-          @rightsholder.real · new
+          @watts-archives · new
         </span>
-        <span class="thumb-title">The morning routine that<br>built a 9-figure business</span>
-        <span class="thumb-duration">14:32</span>
+        <span class="thumb-duration">28:14</span>
         <span class="thumb-stamp">REMOVED</span>
       </div>
       <div class="deepfake-meta">
-        <strong>Synthetic audio detected</strong>
-        Channel age: 4 days<br>
-        Upload pattern flagged
+        <strong>AI Alan Watts &amp; Terence McKenna conversation</strong>
+        Synthetic voice detected (GPT-4)<br>
+        Unauthorized likeness · channel age 11 days
       </div>
     </div>
   </div>

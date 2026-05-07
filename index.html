@@ -4161,15 +4161,20 @@ document.addEventListener('DOMContentLoaded',function(){
   position:relative;
 }
 .deepfake-head{
-  max-width:760px;
+  max-width:960px;
   margin-bottom:32px;
 }
 .deepfake-head .h1{
   margin-top:14px;
   font-size:clamp(2.4rem, 5.2vw, 4.25rem);
+  white-space:nowrap;
 }
 .deepfake-head .body-lg{
   margin-top:16px;
+  max-width:680px;
+}
+@media(max-width:760px){
+  .deepfake-head .h1{white-space:normal}
 }
 .deepfake-compare{
   display:grid;

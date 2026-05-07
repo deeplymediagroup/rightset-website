@@ -788,6 +788,17 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   background:#000;
 }
 .vi-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* Transparent click-shield — sits above the iframe so clicks can't escape
+   to youtube.com. The radar overlays (z-index 2) stay below this so they
+   render visually but stay non-interactive (pointer-events:none on them). */
+.vi-clickshield{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:auto;
+  background:transparent;
+  cursor:default;
+}
 .vi-radar{
   position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;
 }
@@ -1278,7 +1289,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
     <p class="section-sub">Audio fingerprint, face reconstruction artifacts, lip-sync drift. We sweep YouTube continuously and flag every signal that doesn't add up.</p>
 
     <div class="vi-frame" style="margin-top:36px">
-      <iframe src="https://www.youtube.com/embed/WzK1MBEpkJ0?autoplay=1&mute=1&loop=1&playlist=WzK1MBEpkJ0&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/WzK1MBEpkJ0?autoplay=1&mute=1&loop=1&playlist=WzK1MBEpkJ0&controls=0&modestbranding=1&rel=0&disablekb=1&iv_load_policy=3&start=0&end=25" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       <div class="vi-radar">
         <div class="vi-grid-overlay"></div>
         <div class="vi-scanbeam"></div>
@@ -1287,6 +1298,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
         <div class="vi-target t3"><span class="vi-target-label">lip-sync drift</span></div>
       </div>
       <div class="vi-status">SCANNING · 99.98% accuracy</div>
+      <div class="vi-clickshield" aria-hidden="true"></div>
     </div>
     <div class="vi-summary">
       <div class="vi-cell"><div class="lbl">Signals flagged</div><div class="val danger">3</div></div>

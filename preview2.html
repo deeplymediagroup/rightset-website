@@ -973,18 +973,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   56%,90%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
   100%{opacity:0;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
 }
-.vj-divider{
-  position:absolute;
-  top:0;bottom:0;
-  left:50%;
-  width:2px;
-  background:linear-gradient(180deg, transparent 0%, var(--accent) 12%, var(--accent) 88%, transparent 100%);
-  transform:translateX(-50%);
-  z-index:3;
-  pointer-events:none;
-  opacity:0.65;
-  box-shadow:0 0 18px var(--accent-glow);
-}
+/* divider removed per Brandon's feedback */
 .vj-meta{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1008,8 +997,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
 @media(max-width:680px){
   .vj-frame{grid-template-columns:1fr}
-  .vj-divider{top:50%;left:0;right:0;width:auto;height:2px;transform:translateY(-50%);background:linear-gradient(90deg, transparent 0%, var(--accent) 12%, var(--accent) 88%, transparent 100%)}
-  .vj-meta{grid-template-columns:1fr}
 }
 
 .footer-note{
@@ -1452,7 +1439,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
         <video class="vj-video-b" src="/videos/billgates-deepfake.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
         <span class="vj-stamp">REMOVED</span>
       </div>
-      <div class="vj-divider" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -1485,9 +1471,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   window.addEventListener('touchend', function(){ dragging = false; });
 })();
 
-// Variant J — start both videos at the same instant and keep them aligned.
+// Variant J — start both videos at the same instant and keep them frame-locked.
 // We deliberately do NOT use the autoplay/loop attributes; managing both
-// from JS lets us restart them as a pair so they stay frame-locked.
+// from JS lets us restart them as a pair so they stay aligned.
 (function(){
   var a = document.querySelector('.vj-video-a');
   var b = document.querySelector('.vj-video-b');
@@ -1495,27 +1481,39 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
   function startBoth(){
     try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
-    // Kick both off in the same event-loop tick.
     Promise.all([a.play(), b.play()]).catch(function(){});
   }
 
-  var ready = {a:false, b:false};
-  function maybeStart(){
-    if (ready.a && ready.b) startBoth();
+  // Wait for both videos to have enough data to play. CRITICAL: if a video
+  // already loaded before our script ran (very common for small local files),
+  // canplay has already fired, so the listener never triggers — check
+  // readyState first and short-circuit.
+  function whenReady(v, cb){
+    if (v.readyState >= 3) { cb(); }
+    else { v.addEventListener('canplay', cb, {once:true}); }
   }
-  a.addEventListener('canplay', function(){ ready.a = true; maybeStart(); }, {once:true});
-  b.addEventListener('canplay', function(){ ready.b = true; maybeStart(); }, {once:true});
+  var ra = false, rb = false;
+  whenReady(a, function(){ ra = true; if (rb) startBoth(); });
+  whenReady(b, function(){ rb = true; if (ra) startBoth(); });
 
-  // Manual loop: when the master ends, restart BOTH together.
-  a.addEventListener('ended', startBoth);
-  b.addEventListener('ended', startBoth);
-
-  // Continuous drift correction — snap b to a if they slip more than ~30ms.
-  setInterval(function(){
+  // rAF-driven sync: every frame we (1) snap both to 0 atomically before
+  // either reaches the end (so the loop is seamless and identical on both
+  // sides), (2) snap b to a if drift exceeds ~40ms.
+  function tick(){
+    requestAnimationFrame(tick);
     if (a.paused || b.paused) return;
-    var drift = Math.abs(a.currentTime - b.currentTime);
-    if (drift > 0.03) { b.currentTime = a.currentTime; }
-  }, 500);
+    var dur = a.duration || 23;
+    if (a.currentTime >= dur - 0.05 || b.currentTime >= dur - 0.05) {
+      a.currentTime = 0;
+      b.currentTime = 0;
+      return;
+    }
+    var drift = b.currentTime - a.currentTime;
+    if (Math.abs(drift) > 0.04) {
+      b.currentTime = a.currentTime;
+    }
+  }
+  requestAnimationFrame(tick);
 })();
 </script>
 

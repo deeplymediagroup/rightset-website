@@ -894,6 +894,103 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .vi-cell .val.danger{color:var(--danger-bright)}
 .vi-cell .val.accent{color:var(--accent)}
 
+/* ============================================================
+   VARIANT J — Split-screen synced videos
+   Source video (854×480) sliced down the middle, top labels cropped.
+   Two locally-hosted MP4s play in sync side-by-side.
+   ============================================================ */
+.vj-frame{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px -40px rgba(0,0,0,0.7);
+  background:#000;
+}
+.vj-half{
+  position:relative;
+  aspect-ratio:415/425;
+  overflow:hidden;
+  background:#000;
+}
+.vj-half video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.vj-half.deepfake::before{
+  content:"";position:absolute;inset:0;z-index:2;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(255,98,98,0.10) 14px,rgba(255,98,98,0.10) 28px),rgba(20,8,8,0.32);
+  pointer-events:none;
+}
+.vj-half-tag{
+  position:absolute;top:14px;left:14px;z-index:4;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;font-weight:500;
+  backdrop-filter:blur(6px);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.vj-half-tag::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+}
+.vj-half.authentic .vj-half-tag{background:rgba(77,229,196,0.18);color:var(--accent);border:1px solid rgba(77,229,196,0.5)}
+.vj-half.authentic .vj-half-tag::before{background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.vj-half.deepfake .vj-half-tag{background:rgba(255,98,98,0.2);color:var(--danger-bright);border:1px solid rgba(255,98,98,0.5)}
+.vj-half.deepfake .vj-half-tag::before{background:var(--danger-bright);box-shadow:0 0 8px var(--danger-glow)}
+.vj-stamp{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-10deg);
+  font-family:var(--mono);font-size:clamp(18px, 2.2vw, 28px);font-weight:700;letter-spacing:0.18em;
+  color:#fff;background:var(--danger);
+  padding:8px 16px;border-radius:4px;
+  z-index:5;white-space:nowrap;pointer-events:none;
+  box-shadow:0 8px 32px rgba(255,98,98,0.45);
+}
+.vj-divider{
+  position:absolute;
+  top:0;bottom:0;
+  left:50%;
+  width:2px;
+  background:linear-gradient(180deg, transparent 0%, var(--accent) 12%, var(--accent) 88%, transparent 100%);
+  transform:translateX(-50%);
+  z-index:3;
+  pointer-events:none;
+  opacity:0.65;
+  box-shadow:0 0 18px var(--accent-glow);
+}
+.vj-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--line);
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden;
+}
+.vj-meta-cell{
+  background:#11181d;
+  padding:14px 18px;
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.6;
+  color:var(--text-mute);
+}
+.vj-meta-cell strong{color:var(--text);font-weight:500;display:block;margin-bottom:4px;font-size:13px}
+.vj-meta-cell.danger strong{color:var(--danger-bright)}
+
+@media(max-width:680px){
+  .vj-frame{grid-template-columns:1fr}
+  .vj-divider{top:50%;left:0;right:0;width:auto;height:2px;transform:translateY(-50%);background:linear-gradient(90deg, transparent 0%, var(--accent) 12%, var(--accent) 88%, transparent 100%)}
+  .vj-meta{grid-template-columns:1fr}
+}
+
 .footer-note{
   max-width:var(--max);
   margin:0 auto;
@@ -923,6 +1020,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
     <a href="#g">G · Side-by-side video embeds</a>
     <a href="#h">H · Hero video + delayed REMOVED stamp</a>
     <a href="#i">I · Detection radar scan over video</a>
+    <a href="#j">J · Split-screen synced videos</a>
   </div>
 </header>
 
@@ -1310,8 +1408,51 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 </section>
 
+<!-- ============================================================
+     VARIANT J — Split-screen synced videos (sliced from source)
+     ============================================================ -->
+<section class="variant" id="j">
+  <div class="variant-head">
+    <div class="vlabel">Variant J · sliced from the source clip · two synced local videos</div>
+    <h2>Split-screen synced videos — same moment, both faces</h2>
+    <p>Took the source deepfake clip, sliced it down the middle, and cropped the labels off the top. The result: two separate videos that play and loop in sync side-by-side. Real Bill Gates on the left, the deepfake on the right with the red overlay + REMOVED stamp. <strong>Strongest comparison</strong> — viewers see identical mouth movements happening at the exact same time, and the only thing different is the face. Conveys "we caught a real one" with no ambiguity.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">Same words. Same moment.<br>Different face.</h2>
+    <p class="section-sub">Real on the left. Synthesized on the right. Both move identically — that's the problem AI created. We catch them anyway.</p>
+
+    <div class="vj-frame" style="margin-top:36px">
+      <div class="vj-half authentic">
+        <span class="vj-half-tag">Authentic</span>
+        <video src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      </div>
+      <div class="vj-half deepfake">
+        <span class="vj-half-tag">AI · Removed</span>
+        <video src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+        <span class="vj-stamp">REMOVED</span>
+      </div>
+      <div class="vj-divider" aria-hidden="true"></div>
+    </div>
+
+    <div class="vj-meta">
+      <div class="vj-meta-cell">
+        <strong>Original upload</strong>
+        Posted by verified channel<br>
+        4.2M views · uploaded 2018
+      </div>
+      <div class="vj-meta-cell danger">
+        <strong>Synthesized · taken down</strong>
+        Synthetic audio detected · 99.2%<br>
+        Channel age 11 days · pattern flagged
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="footer-note">
-  Pick a variant: tell me "I want B" / "I want D and H mixed" / etc. — these are isolated explorations only. The live site at <a href="/">/</a> still uses Variant A.
+  Pick a variant: tell me "I want B" / "I want J" / "I want D and J mixed" / etc. — these are isolated explorations only. The live site at <a href="/">/</a> still uses Variant A.
 </div>
 
 <script>
@@ -1336,6 +1477,30 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   slider.addEventListener('touchstart', function(e){ dragging = true; setPos(e.touches[0].clientX); }, {passive:true});
   window.addEventListener('touchmove', function(e){ if (dragging) setPos(e.touches[0].clientX); }, {passive:true});
   window.addEventListener('touchend', function(){ dragging = false; });
+})();
+
+// Variant J — keep the two split-screen videos in lockstep
+(function(){
+  var a = document.querySelector('.vj-half.authentic video');
+  var b = document.querySelector('.vj-half.deepfake video');
+  if (!a || !b) return;
+
+  var ready = 0;
+  function startBoth(){
+    ready++;
+    if (ready < 2) return;
+    try { a.currentTime = 0; b.currentTime = 0; } catch(e){}
+    Promise.all([a.play(), b.play()]).catch(function(){});
+  }
+  a.addEventListener('loadedmetadata', startBoth);
+  b.addEventListener('loadedmetadata', startBoth);
+
+  // Resync periodically so any drift is corrected before it's visible.
+  setInterval(function(){
+    if (a.paused || b.paused) return;
+    var drift = Math.abs(a.currentTime - b.currentTime);
+    if (drift > 0.08) { b.currentTime = a.currentTime; }
+  }, 2000);
 })();
 </script>
 

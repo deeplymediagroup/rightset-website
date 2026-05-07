@@ -56,5 +56,13 @@
     { "source": "/concepts/headlines", "destination": "/concepts/headlines.html" },
     { "source": "/concepts/cta-options", "destination": "/concepts/cta-options.html" },
     { "source": "/preview2", "destination": "/preview2.html" }
+  ],
+  "headers": [
+    {
+      "source": "/videos/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
   ]
 }

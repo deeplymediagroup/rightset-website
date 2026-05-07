@@ -4511,45 +4511,55 @@ document.addEventListener('DOMContentLoaded',function(){
 </section>
 
 <script>
-// Deepfake-defense split-screen — native autoplay+loop handles playback;
-// JS just (1) re-aligns both videos to t=0 the instant both are playable
-// so the very first visible frame matches, and (2) corrects drift > 40ms.
+// Deepfake-defense split-screen — pause both videos when the section is
+// scrolled off-screen (zero decode cost the rest of the page), and align
+// to t=0 + restart together when it scrolls back in. No per-frame drift
+// correction: the per-frame currentTime seeks were causing choppy
+// playback + CPU pressure on lower-end hardware. The two clips are sliced
+// from the same source so they stay visually in sync naturally.
 (function(){
   var a = document.querySelector('.df-video-a');
   var b = document.querySelector('.df-video-b');
-  if (!a || !b) return;
+  var frame = document.querySelector('.df-frame');
+  if (!a || !b || !frame) return;
+
+  function bothReady(){return a.readyState >= 3 && b.readyState >= 3;}
 
   function alignAndPlay(){
-    if (a.readyState < 3 || b.readyState < 3) return;
+    if (!bothReady()) return;
     try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
-    Promise.all([a.play(), b.play()]).catch(function(){});
-  }
-  if (a.readyState >= 3 && b.readyState >= 3) alignAndPlay();
-  else {
-    a.addEventListener('canplay', alignAndPlay, {once:true});
-    b.addEventListener('canplay', alignAndPlay, {once:true});
+    a.play().catch(function(){});
+    b.play().catch(function(){});
   }
 
-  // Safety net: if either video ever ends (shouldn't with loop, but in case
-  // a browser quirks out), restart both together so we never freeze.
+  function whenReadyThen(cb){
+    if (bothReady()) { cb(); return; }
+    var fired = false;
+    function maybe(){ if (!fired && bothReady()) { fired = true; cb(); } }
+    a.addEventListener('canplay', maybe, {once:true});
+    b.addEventListener('canplay', maybe, {once:true});
+  }
+
+  // IntersectionObserver: only play when at least 10% of the frame is in
+  // viewport. Saves all video decode CPU/GPU work the rest of the time.
+  var io = new IntersectionObserver(function(entries){
+    if (entries[0].isIntersecting) {
+      whenReadyThen(alignAndPlay);
+    } else {
+      a.pause(); b.pause();
+    }
+  }, {threshold: 0.1});
+  io.observe(frame);
+
+  // Safety net: if either ever fires `ended` (shouldn't with loop=true,
+  // but in case a browser quirks out), restart both together.
   function restartPair(){
     a.currentTime = 0; b.currentTime = 0;
-    Promise.all([a.play(), b.play()]).catch(function(){});
+    a.play().catch(function(){});
+    b.play().catch(function(){});
   }
   a.addEventListener('ended', restartPair);
   b.addEventListener('ended', restartPair);
-
-  // Drift-correction tick. Snap b to a if > 40ms apart, but ignore drift
-  // > 1s (that's the natural loop-wrap, where one video has wrapped to ~0
-  // and the other is still near the end for one frame).
-  function tick(){
-    requestAnimationFrame(tick);
-    if (a.paused || b.paused) return;
-    var drift = b.currentTime - a.currentTime;
-    var abs = Math.abs(drift);
-    if (abs > 0.04 && abs < 1) b.currentTime = a.currentTime;
-  }
-  requestAnimationFrame(tick);
 })();
 </script>
 

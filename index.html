@@ -4381,6 +4381,106 @@ document.addEventListener('DOMContentLoaded',function(){
   letter-spacing:0.15em;
   font-weight:500;
 }
+
+/* ---- Variant K · split-screen synced videos + paired caption row ---- */
+.df-frame{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px -40px rgba(0,0,0,0.7);
+  background:#000;
+}
+.df-half{
+  position:relative;
+  /* Match the source video's natural aspect (~415x480) so the embedded
+     ORIGINAL/DEEPFAKE label at the top of each clip never gets clipped. */
+  aspect-ratio:13/15;
+  overflow:hidden;
+  background:#000;
+}
+.df-half video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+/* Right (deepfake) side animated red tint that fades in mid-loop. */
+.df-half.deepfake::before{
+  content:"";
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  opacity:0;
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 16px, rgba(255,98,98,0.12) 16px, rgba(255,98,98,0.12) 32px),
+    rgba(20,8,8,0.42);
+  animation:dfFadeIn 6s ease-in-out infinite;
+}
+@keyframes dfFadeIn{
+  0%,40%{opacity:0}
+  55%,90%{opacity:1}
+  100%{opacity:0}
+}
+.df-stamp{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,calc(-50% - 60px)) rotate(-8deg) scale(1.6);
+  opacity:0;
+  font-family:var(--mono);
+  font-size:clamp(18px, 2.6vw, 36px);
+  font-weight:700;
+  letter-spacing:0.18em;
+  color:var(--danger-bright);
+  border:3.5px solid var(--danger-bright);
+  padding:10px 22px;
+  border-radius:5px;
+  background:rgba(20,8,8,0.6);
+  z-index:5;
+  white-space:nowrap;
+  pointer-events:none;
+  box-shadow:0 8px 40px rgba(255,98,98,0.4);
+  animation:dfStampDrop 6s ease-in-out infinite;
+}
+@keyframes dfStampDrop{
+  0%,40%{opacity:0;transform:translate(-50%,calc(-50% - 80px)) rotate(-8deg) scale(1.6)}
+  52%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1.05)}
+  56%,90%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+}
+.df-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--line);
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden;
+}
+.df-meta-cell{
+  background:#11181d;
+  padding:14px 18px;
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.6;
+  color:var(--text-mute);
+}
+.df-meta-cell strong{
+  color:var(--text);
+  font-weight:500;
+  display:block;
+  margin-bottom:4px;
+  font-size:13px;
+}
+.df-meta-cell.danger strong{color:var(--danger-bright)}
+@media(max-width:680px){
+  .df-frame{grid-template-columns:1fr}
+  .df-meta{grid-template-columns:1fr}
+}
 </style>
 <section class="deepfake reveal">
   <div class="deepfake-head">
@@ -4388,51 +4488,70 @@ document.addEventListener('DOMContentLoaded',function(){
     <h2 class="h1">When AI pretends to be you,<br>we help you take it down.</h2>
     <p class="body-lg">AI fakes mislead your audience and dilute your brand. We help you defend what you've built.</p>
   </div>
-  <div class="deepfake-compare">
-    <!--
-      ░░ DEEPFAKE COMPARISON — REAL YOUTUBE THUMBNAILS ░░
-      Authentic side: img.youtube.com/vi/khOaAHK7efc — Alan Watts "What if money was no object?"
-      AI/Removed side: img.youtube.com/vi/hklPKABjRdA — AI Alan Watts & Terence McKenna (GPT-4)
-      To swap either, replace the YouTube video ID in the img src URL with a different one.
-    -->
-    <div class="deepfake-card">
-      <span class="deepfake-tag authentic">Authentic</span>
-      <div class="deepfake-thumb">
-        <img class="thumb-image" src="https://img.youtube.com/vi/khOaAHK7efc/maxresdefault.jpg" alt="" loading="lazy">
-        <span class="thumb-play" aria-hidden="true"></span>
-        <span class="thumb-channel">
-          <span class="thumb-avatar"></span>
-          @AlanWatts <span class="verified">✓</span>
-        </span>
-        <span class="thumb-duration">3:01</span>
-      </div>
-      <div class="deepfake-meta">
-        <strong>What if money was no object?</strong>
-        Alan Watts · official rightsholder<br>
-        12M views · uploaded 2013
-      </div>
+  <div class="df-frame">
+    <div class="df-half authentic">
+      <video class="df-video-a" src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
     </div>
-    <div class="deepfake-vs">VS</div>
-    <div class="deepfake-card">
-      <span class="deepfake-tag removed">AI-generated · Removed</span>
-      <div class="deepfake-thumb removed">
-        <img class="thumb-image" src="https://img.youtube.com/vi/hklPKABjRdA/maxresdefault.jpg" alt="" loading="lazy">
-        <span class="thumb-play" aria-hidden="true"></span>
-        <span class="thumb-channel">
-          <span class="thumb-avatar"></span>
-          @watts-archives · new
-        </span>
-        <span class="thumb-duration">28:14</span>
-        <span class="thumb-stamp">REMOVED</span>
-      </div>
-      <div class="deepfake-meta">
-        <strong>AI Alan Watts &amp; Terence McKenna conversation</strong>
-        Synthetic voice detected (GPT-4)<br>
-        Unauthorized likeness · channel age 11 days
-      </div>
+    <div class="df-half deepfake">
+      <video class="df-video-b" src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <span class="df-stamp">REMOVED</span>
+    </div>
+  </div>
+
+  <div class="df-meta">
+    <div class="df-meta-cell">
+      <strong>Authentic</strong>
+      Original Bill Gates interview &middot; audio fingerprint matches public archive &middot; channel verified.
+    </div>
+    <div class="df-meta-cell danger">
+      <strong>Synthetic &mdash; takedown filed</strong>
+      Deepfake audio &middot; face geometry mismatch &middot; lip-sync drift detected &middot; channel age &lt; 30 days.
     </div>
   </div>
 </section>
+
+<script>
+// Deepfake-defense split-screen — native autoplay+loop handles playback;
+// JS just (1) re-aligns both videos to t=0 the instant both are playable
+// so the very first visible frame matches, and (2) corrects drift > 40ms.
+(function(){
+  var a = document.querySelector('.df-video-a');
+  var b = document.querySelector('.df-video-b');
+  if (!a || !b) return;
+
+  function alignAndPlay(){
+    if (a.readyState < 3 || b.readyState < 3) return;
+    try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
+    Promise.all([a.play(), b.play()]).catch(function(){});
+  }
+  if (a.readyState >= 3 && b.readyState >= 3) alignAndPlay();
+  else {
+    a.addEventListener('canplay', alignAndPlay, {once:true});
+    b.addEventListener('canplay', alignAndPlay, {once:true});
+  }
+
+  // Safety net: if either video ever ends (shouldn't with loop, but in case
+  // a browser quirks out), restart both together so we never freeze.
+  function restartPair(){
+    a.currentTime = 0; b.currentTime = 0;
+    Promise.all([a.play(), b.play()]).catch(function(){});
+  }
+  a.addEventListener('ended', restartPair);
+  b.addEventListener('ended', restartPair);
+
+  // Drift-correction tick. Snap b to a if > 40ms apart, but ignore drift
+  // > 1s (that's the natural loop-wrap, where one video has wrapped to ~0
+  // and the other is still near the end for one frame).
+  function tick(){
+    requestAnimationFrame(tick);
+    if (a.paused || b.paused) return;
+    var drift = b.currentTime - a.currentTime;
+    var abs = Math.abs(drift);
+    if (abs > 0.04 && abs < 1) b.currentTime = a.currentTime;
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
 
 <div class="hairline"></div>
 

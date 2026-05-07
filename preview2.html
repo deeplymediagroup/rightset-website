@@ -911,7 +911,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 }
 .vj-half{
   position:relative;
-  aspect-ratio:415/425;
+  /* Match the video's natural aspect (415x480 ≈ 13:15) so the top
+     ORIGINAL/DEEPFAKE label is never clipped off. */
+  aspect-ratio:13/15;
   overflow:hidden;
   background:#000;
 }
@@ -921,6 +923,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:center top;
   display:block;
 }
 /* Right (deepfake) side gets the H-style animated overlay + stamp drop.
@@ -1438,33 +1441,18 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
   <div class="demo demo-pad">
     <div class="section-eyebrow">Deepfake defense</div>
-    <h2 class="section-headline">Same words. Same moment.<br>Different face.</h2>
-    <p class="section-sub">Real on the left. Synthesized on the right. Both move identically — that's the problem AI created. We catch them anyway.</p>
+    <h2 class="section-headline">When AI pretends to be you,<br>we help you take it down.</h2>
+    <p class="section-sub">Watching is the easy part — anyone can scroll past a fake. We scan, we detect, and we file the takedown the moment a synthetic upload appears.</p>
 
     <div class="vj-frame" style="margin-top:36px">
       <div class="vj-half authentic">
-        <span class="vj-half-tag">Authentic</span>
         <video class="vj-video-a" src="/videos/billgates-original.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
       </div>
       <div class="vj-half deepfake">
-        <span class="vj-half-tag">AI · Removed</span>
         <video class="vj-video-b" src="/videos/billgates-deepfake.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
         <span class="vj-stamp">REMOVED</span>
       </div>
       <div class="vj-divider" aria-hidden="true"></div>
-    </div>
-
-    <div class="vj-meta">
-      <div class="vj-meta-cell">
-        <strong>Original upload</strong>
-        Posted by verified channel<br>
-        4.2M views · uploaded 2018
-      </div>
-      <div class="vj-meta-cell danger">
-        <strong>Synthesized · taken down</strong>
-        Synthetic audio detected · 99.2%<br>
-        Channel age 11 days · pattern flagged
-      </div>
     </div>
   </div>
 </section>

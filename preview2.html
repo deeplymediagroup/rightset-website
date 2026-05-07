@@ -1433,10 +1433,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
     <div class="vj-frame" style="margin-top:36px">
       <div class="vj-half authentic">
-        <video class="vj-video-a" src="/videos/billgates-original.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+        <video class="vj-video-a" src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
       </div>
       <div class="vj-half deepfake">
-        <video class="vj-video-b" src="/videos/billgates-deepfake.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+        <video class="vj-video-b" src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
         <span class="vj-stamp">REMOVED</span>
       </div>
     </div>
@@ -1471,45 +1471,47 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   window.addEventListener('touchend', function(){ dragging = false; });
 })();
 
-// Variant J — start both videos at the same instant and keep them frame-locked.
-// We deliberately do NOT use the autoplay/loop attributes; managing both
-// from JS lets us restart them as a pair so they stay aligned.
+// Variant J — native autoplay+loop handles playback (smoothest loop the
+// browser can do). JS just (1) re-aligns both to t=0 the instant both are
+// playable so the very first visible frame matches, and (2) corrects drift.
 (function(){
   var a = document.querySelector('.vj-video-a');
   var b = document.querySelector('.vj-video-b');
   if (!a || !b) return;
 
-  function startBoth(){
-    try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
+  function alignAndPlay(){
+    if (a.readyState < 3 || b.readyState < 3) return;
+    try {
+      a.pause(); b.pause();
+      a.currentTime = 0; b.currentTime = 0;
+    } catch(e){}
     Promise.all([a.play(), b.play()]).catch(function(){});
   }
-
-  // Wait for both videos to have enough data to play. CRITICAL: if a video
-  // already loaded before our script ran (very common for small local files),
-  // canplay has already fired, so the listener never triggers — check
-  // readyState first and short-circuit.
-  function whenReady(v, cb){
-    if (v.readyState >= 3) { cb(); }
-    else { v.addEventListener('canplay', cb, {once:true}); }
+  if (a.readyState >= 3 && b.readyState >= 3) {
+    alignAndPlay();
+  } else {
+    a.addEventListener('canplay', alignAndPlay, {once:true});
+    b.addEventListener('canplay', alignAndPlay, {once:true});
   }
-  var ra = false, rb = false;
-  whenReady(a, function(){ ra = true; if (rb) startBoth(); });
-  whenReady(b, function(){ rb = true; if (ra) startBoth(); });
 
-  // rAF-driven sync: every frame we (1) snap both to 0 atomically before
-  // either reaches the end (so the loop is seamless and identical on both
-  // sides), (2) snap b to a if drift exceeds ~40ms.
+  // Safety net: if either video ever ends (shouldn't with loop, but in case
+  // a browser quirks out), restart both together so we never freeze.
+  function restartPair(){
+    a.currentTime = 0; b.currentTime = 0;
+    Promise.all([a.play(), b.play()]).catch(function(){});
+  }
+  a.addEventListener('ended', restartPair);
+  b.addEventListener('ended', restartPair);
+
+  // Drift-correction tick. We snap b to a if they're > 40ms apart, but
+  // ignore drift > 1s (that's the natural loop-wrap, where one video has
+  // wrapped to ~0 and the other is still near the end for one frame).
   function tick(){
     requestAnimationFrame(tick);
     if (a.paused || b.paused) return;
-    var dur = a.duration || 23;
-    if (a.currentTime >= dur - 0.05 || b.currentTime >= dur - 0.05) {
-      a.currentTime = 0;
-      b.currentTime = 0;
-      return;
-    }
     var drift = b.currentTime - a.currentTime;
-    if (Math.abs(drift) > 0.04) {
+    var abs = Math.abs(drift);
+    if (abs > 0.04 && abs < 1) {
       b.currentTime = a.currentTime;
     }
   }

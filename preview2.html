@@ -248,8 +248,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   position:relative;
   aspect-ratio:16/9;
 }
-.vb-video-wrap iframe{
-  position:absolute;inset:0;width:100%;height:100%;border:0;
+.vb-video-wrap iframe,
+.vb-video-wrap img{
+  position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:cover;
 }
 .vb-overlay{
   position:absolute;inset:0;pointer-events:none;
@@ -277,9 +278,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   box-shadow:0 0 10px var(--danger-glow);
 }
 @keyframes vbBlink{0%,100%{opacity:0.95}50%{opacity:0.55}}
-.vb-marker.m1{top:14%;left:10%}
-.vb-marker.m2{top:46%;right:8%;animation-delay:0.6s}
-.vb-marker.m3{bottom:18%;left:14%;animation-delay:1.2s}
+.vb-marker.m1{top:14%;right:10%}
+.vb-marker.m2{top:46%;right:10%;animation-delay:0.6s}
+.vb-marker.m3{bottom:18%;right:10%;animation-delay:1.2s}
 .vb-summary{
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
@@ -1029,6 +1030,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
     <a href="#h">H · Hero video + delayed REMOVED stamp</a>
     <a href="#i">I · Detection radar scan over video</a>
     <a href="#j">J · Split-screen synced videos</a>
+    <a href="#k">K · Split-screen + caption row</a>
   </div>
 </header>
 
@@ -1083,7 +1085,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   <div class="variant-head">
     <div class="vlabel">Variant B</div>
     <h2>Embedded video with floating detection markers</h2>
-    <p>Plays your actual deepfake reference video inline. Floating red markers point to specific tells (synthetic audio, face inconsistency, channel age). Below the video, three live-style stat cards show the takedown summary. <strong>Strongest if you want to use the video you sent.</strong></p>
+    <p>Static frame from the deepfake clip — no YouTube embed, no click-through. Three red detection markers stack on the right side, calling out the specific tells (synthetic audio, face inconsistency, channel age). Below the frame, three live-style stat cards show the takedown summary. <strong>Strongest if you want a clean, controlled image with no chrome.</strong></p>
   </div>
 
   <div class="demo demo-pad">
@@ -1093,7 +1095,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
     <div class="vb-frame" style="margin-top:36px">
       <div class="vb-video-wrap">
-        <iframe src="https://www.youtube.com/embed/3wVpVH0Wa6E?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowfullscreen></iframe>
+        <img src="https://img.youtube.com/vi/3wVpVH0Wa6E/maxresdefault.jpg" alt="Deepfake clip frame">
         <div class="vb-overlay">
           <div class="vb-marker m1">Synthetic audio · 99.2% match</div>
           <div class="vb-marker m2">Face inconsistency · frame 47</div>
@@ -1443,6 +1445,46 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 </section>
 
+<!-- ============================================================
+     VARIANT K — Split-screen synced videos + caption row
+     Same as J, but with a paired left/right caption strip below
+     spelling out the authentic source vs. the detected synthetic signals.
+     ============================================================ -->
+<section class="variant" id="k">
+  <div class="variant-head">
+    <div class="vlabel">Variant K · J + paired caption row underneath</div>
+    <h2>Split-screen synced videos — with detection caption</h2>
+    <p>Same split-screen comparison as J, with a paired metadata strip directly under the videos. Left cell credits the authentic source; right cell names the synthetic signals our detection caught and confirms the takedown was filed. <strong>Strongest if you want the visual evidence AND the textual rationale on the page at once.</strong></p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">When AI pretends to be you,<br>we help you take it down.</h2>
+    <p class="section-sub">Watching is the easy part — anyone can scroll past a fake. We scan, we detect, and we file the takedown the moment a synthetic upload appears.</p>
+
+    <div class="vj-frame" style="margin-top:36px">
+      <div class="vj-half authentic">
+        <video class="vk-video-a" src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      </div>
+      <div class="vj-half deepfake">
+        <video class="vk-video-b" src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+        <span class="vj-stamp">REMOVED</span>
+      </div>
+    </div>
+
+    <div class="vj-meta">
+      <div class="vj-meta-cell">
+        <strong>Authentic</strong>
+        Original Bill Gates interview · audio fingerprint matches public archive · channel verified.
+      </div>
+      <div class="vj-meta-cell danger">
+        <strong>Synthetic — takedown filed</strong>
+        Deepfake audio · face geometry mismatch · lip-sync drift detected · channel age &lt; 30 days.
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="footer-note">
   Pick a variant: tell me "I want B" / "I want J" / "I want D and J mixed" / etc. — these are isolated explorations only. The live site at <a href="/">/</a> still uses Variant A.
 </div>
@@ -1471,51 +1513,47 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   window.addEventListener('touchend', function(){ dragging = false; });
 })();
 
-// Variant J — native autoplay+loop handles playback (smoothest loop the
-// browser can do). JS just (1) re-aligns both to t=0 the instant both are
-// playable so the very first visible frame matches, and (2) corrects drift.
+// Variants J & K — native autoplay+loop handles playback (smoothest loop
+// the browser can do). JS just (1) re-aligns both to t=0 the instant both
+// are playable so the very first visible frame matches, and (2) corrects
+// drift > 40ms while ignoring the loop-wrap moment.
 (function(){
-  var a = document.querySelector('.vj-video-a');
-  var b = document.querySelector('.vj-video-b');
-  if (!a || !b) return;
+  function setupSplitSync(selA, selB){
+    var a = document.querySelector(selA);
+    var b = document.querySelector(selB);
+    if (!a || !b) return;
 
-  function alignAndPlay(){
-    if (a.readyState < 3 || b.readyState < 3) return;
-    try {
-      a.pause(); b.pause();
-      a.currentTime = 0; b.currentTime = 0;
-    } catch(e){}
-    Promise.all([a.play(), b.play()]).catch(function(){});
-  }
-  if (a.readyState >= 3 && b.readyState >= 3) {
-    alignAndPlay();
-  } else {
-    a.addEventListener('canplay', alignAndPlay, {once:true});
-    b.addEventListener('canplay', alignAndPlay, {once:true});
-  }
-
-  // Safety net: if either video ever ends (shouldn't with loop, but in case
-  // a browser quirks out), restart both together so we never freeze.
-  function restartPair(){
-    a.currentTime = 0; b.currentTime = 0;
-    Promise.all([a.play(), b.play()]).catch(function(){});
-  }
-  a.addEventListener('ended', restartPair);
-  b.addEventListener('ended', restartPair);
-
-  // Drift-correction tick. We snap b to a if they're > 40ms apart, but
-  // ignore drift > 1s (that's the natural loop-wrap, where one video has
-  // wrapped to ~0 and the other is still near the end for one frame).
-  function tick(){
-    requestAnimationFrame(tick);
-    if (a.paused || b.paused) return;
-    var drift = b.currentTime - a.currentTime;
-    var abs = Math.abs(drift);
-    if (abs > 0.04 && abs < 1) {
-      b.currentTime = a.currentTime;
+    function alignAndPlay(){
+      if (a.readyState < 3 || b.readyState < 3) return;
+      try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
+      Promise.all([a.play(), b.play()]).catch(function(){});
     }
+    if (a.readyState >= 3 && b.readyState >= 3) alignAndPlay();
+    else {
+      a.addEventListener('canplay', alignAndPlay, {once:true});
+      b.addEventListener('canplay', alignAndPlay, {once:true});
+    }
+
+    // Safety net: if either video ever ends (shouldn't with loop, but in
+    // case a browser quirks out), restart both together so we never freeze.
+    function restartPair(){
+      a.currentTime = 0; b.currentTime = 0;
+      Promise.all([a.play(), b.play()]).catch(function(){});
+    }
+    a.addEventListener('ended', restartPair);
+    b.addEventListener('ended', restartPair);
+
+    function tick(){
+      requestAnimationFrame(tick);
+      if (a.paused || b.paused) return;
+      var drift = b.currentTime - a.currentTime;
+      var abs = Math.abs(drift);
+      if (abs > 0.04 && abs < 1) b.currentTime = a.currentTime;
+    }
+    requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+  setupSplitSync('.vj-video-a', '.vj-video-b');
+  setupSplitSync('.vk-video-a', '.vk-video-b');
 })();
 </script>
 

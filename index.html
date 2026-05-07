@@ -4157,18 +4157,19 @@ document.addEventListener('DOMContentLoaded',function(){
 .deepfake{
   max-width:var(--max);
   margin:0 auto;
-  padding:var(--section-y) var(--pad-x);
+  padding:clamp(56px, 7vw, 100px) var(--pad-x);
   position:relative;
 }
 .deepfake-head{
   max-width:760px;
-  margin-bottom:48px;
+  margin-bottom:32px;
 }
 .deepfake-head .h1{
   margin-top:14px;
+  font-size:clamp(2.4rem, 5.2vw, 4.25rem);
 }
 .deepfake-head .body-lg{
-  margin-top:18px;
+  margin-top:16px;
 }
 .deepfake-compare{
   display:grid;

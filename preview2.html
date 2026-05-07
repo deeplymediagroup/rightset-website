@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rightset — Deepfake Defense variants (preview 2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0f1418;
+  --bg-card:#151c22;
+  --bg-lift:#1d262d;
+  --text:#f7f9f7;
+  --text-mute:#c7ccc6;
+  --text-dim:#6b7872;
+  --line:rgba(247,249,247,0.12);
+  --line-strong:rgba(247,249,247,0.24);
+  --accent:#4de5c4;
+  --accent-bright:#6df0d4;
+  --accent-deep:#1fc5a3;
+  --accent-glow:rgba(77,229,196,0.38);
+  --warm:#ffb088;
+  --warm-glow:rgba(255,176,136,0.22);
+  --danger:#ff6262;
+  --danger-bright:#ff8e8e;
+  --danger-glow:rgba(255,98,98,0.28);
+  --sky:#7dd3fc;
+  --sans:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(0.16, 1, 0.3, 1);
+  --max:1280px;
+  --pad-x:clamp(24px, 5vw, 80px);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:-10%;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px circle at 15% 15%, rgba(77,229,196,0.18), transparent 55%),
+    radial-gradient(800px circle at 85% 30%, rgba(125,211,252,0.12), transparent 55%);
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+.page-header{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:60px var(--pad-x) 30px;
+  border-bottom:1px solid var(--line);
+}
+.page-header .eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.page-header .eyebrow::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent-glow);
+}
+.page-header h1{
+  margin-top:14px;
+  font-size:clamp(2.2rem, 5vw, 3.8rem);
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:-0.03em;
+}
+.page-header p{
+  margin-top:18px;
+  max-width:760px;
+  color:var(--text-mute);
+  font-size:1.1rem;
+  line-height:1.55;
+}
+.page-header .toc{
+  margin-top:24px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-family:var(--mono);
+  font-size:12px;
+}
+.page-header .toc a{
+  padding:8px 14px;
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  color:var(--text-mute);
+  letter-spacing:0.05em;
+  transition:all .25s ease;
+}
+.page-header .toc a:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:rgba(77,229,196,0.08);
+}
+
+.variant{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:80px var(--pad-x);
+  border-bottom:1px solid var(--line);
+}
+.variant-head{
+  margin-bottom:36px;
+}
+.variant-head .vlabel{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  margin-bottom:8px;
+}
+.variant-head h2{
+  font-size:clamp(1.6rem, 3vw, 2.4rem);
+  font-weight:600;
+  line-height:1.1;
+  letter-spacing:-0.025em;
+}
+.variant-head p{
+  margin-top:10px;
+  max-width:680px;
+  color:var(--text-mute);
+  line-height:1.55;
+}
+.variant-head p strong{color:var(--text);font-weight:500}
+
+.section-eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text-mute);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.section-eyebrow::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent-glow);
+  animation:dotBlink 3s ease-in-out infinite;
+}
+@keyframes dotBlink{0%,100%{opacity:1}50%{opacity:0.4}}
+
+.section-headline{
+  font-size:clamp(1.8rem, 4vw, 3rem);
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:-0.03em;
+  margin-top:14px;
+}
+.section-sub{
+  margin-top:18px;
+  max-width:720px;
+  color:var(--text-mute);
+  font-size:1.05rem;
+  line-height:1.55;
+}
+
+.demo{
+  margin-top:36px;
+  background:var(--bg-card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+.demo-pad{
+  padding:clamp(24px, 3vw, 40px);
+}
+
+/* ============================================================
+   VARIANT A — Current (side-by-side YouTube thumbnails)
+   ============================================================ */
+.va-compare{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:clamp(20px, 3vw, 40px);
+  align-items:stretch;
+}
+@media(max-width:760px){.va-compare{grid-template-columns:1fr}.va-vs{display:none}}
+.va-card{display:flex;flex-direction:column;gap:14px}
+.va-tag{
+  display:inline-flex;align-self:flex-start;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;font-weight:500;
+}
+.va-tag.authentic{background:rgba(77,229,196,0.15);color:var(--accent);border:1px solid rgba(77,229,196,0.4)}
+.va-tag.removed{background:rgba(255,98,98,0.15);color:var(--danger-bright);border:1px solid rgba(255,98,98,0.4)}
+.va-thumb{
+  position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;
+  border:1px solid var(--line);
+}
+.va-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.va-thumb.removed::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(255,98,98,0.08) 14px,rgba(255,98,98,0.08) 28px),rgba(20,8,8,0.35);
+  pointer-events:none;z-index:2;
+}
+.va-stamp{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-12deg);
+  font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:0.18em;
+  color:var(--danger-bright);border:2.5px solid var(--danger-bright);
+  padding:6px 14px;border-radius:4px;background:rgba(20,8,8,0.55);
+  z-index:3;white-space:nowrap;
+  box-shadow:0 4px 24px rgba(255,98,98,0.25);
+}
+.va-meta{font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--text-mute)}
+.va-meta strong{color:var(--text);font-weight:500;display:block;margin-bottom:4px}
+.va-vs{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--text-dim);letter-spacing:0.15em;font-weight:500}
+
+/* ============================================================
+   VARIANT B — Embedded video with floating detection markers
+   ============================================================ */
+.vb-frame{
+  position:relative;
+  background:#000;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px -40px rgba(0,0,0,0.7);
+}
+.vb-video-wrap{
+  position:relative;
+  aspect-ratio:16/9;
+}
+.vb-video-wrap iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;
+}
+.vb-overlay{
+  position:absolute;inset:0;pointer-events:none;
+}
+.vb-marker{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(20,8,8,0.85);
+  border:1px solid rgba(255,98,98,0.5);
+  padding:6px 12px;
+  border-radius:4px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--danger-bright);
+  backdrop-filter:blur(6px);
+  animation:vbBlink 2.4s ease-in-out infinite;
+}
+.vb-marker::before{
+  content:"";
+  width:6px;height:6px;border-radius:50%;
+  background:var(--danger);
+  box-shadow:0 0 10px var(--danger-glow);
+}
+@keyframes vbBlink{0%,100%{opacity:0.95}50%{opacity:0.55}}
+.vb-marker.m1{top:14%;left:10%}
+.vb-marker.m2{top:46%;right:8%;animation-delay:0.6s}
+.vb-marker.m3{bottom:18%;left:14%;animation-delay:1.2s}
+.vb-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1px;
+  background:var(--line);
+  border-top:1px solid var(--line);
+}
+@media(max-width:680px){.vb-summary{grid-template-columns:1fr}}
+.vb-stat{
+  background:#11181d;
+  padding:18px 22px;
+}
+.vb-stat-lbl{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);
+}
+.vb-stat-val{
+  margin-top:6px;
+  font-size:1.5rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
+  color:var(--text);
+}
+.vb-stat-val.danger{color:var(--danger-bright)}
+.vb-stat-val.accent{color:var(--accent)}
+.vb-stat-sub{
+  margin-top:4px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--text-mute);
+}
+
+/* ============================================================
+   VARIANT C — Wall of takedowns (animated grid)
+   ============================================================ */
+.vc-wall{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:14px;
+}
+@media(max-width:860px){.vc-wall{grid-template-columns:repeat(2, 1fr)}}
+@media(max-width:480px){.vc-wall{grid-template-columns:1fr}}
+.vc-tile{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg, #1a2530 0%, #0a1115 100%);
+}
+.vc-tile img{width:100%;height:100%;object-fit:cover;display:block}
+.vc-tile::before{
+  content:"";position:absolute;inset:0;z-index:2;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 12px,rgba(255,98,98,0.08) 12px,rgba(255,98,98,0.08) 24px),rgba(20,8,8,0.4);
+  opacity:0;
+  animation:vcRemove 8s steps(1) infinite;
+}
+.vc-stamp{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-10deg);
+  font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:0.15em;
+  color:var(--danger-bright);
+  border:2px solid var(--danger-bright);
+  padding:4px 10px;
+  border-radius:3px;
+  background:rgba(20,8,8,0.65);
+  z-index:3;
+  white-space:nowrap;
+  opacity:0;
+  animation:vcStamp 8s steps(1) infinite;
+}
+.vc-tile:nth-child(1)::before,.vc-tile:nth-child(1) .vc-stamp{animation-delay:0s}
+.vc-tile:nth-child(2)::before,.vc-tile:nth-child(2) .vc-stamp{animation-delay:0.7s}
+.vc-tile:nth-child(3)::before,.vc-tile:nth-child(3) .vc-stamp{animation-delay:1.4s}
+.vc-tile:nth-child(4)::before,.vc-tile:nth-child(4) .vc-stamp{animation-delay:2.1s}
+.vc-tile:nth-child(5)::before,.vc-tile:nth-child(5) .vc-stamp{animation-delay:2.8s}
+.vc-tile:nth-child(6)::before,.vc-tile:nth-child(6) .vc-stamp{animation-delay:3.5s}
+.vc-tile:nth-child(7)::before,.vc-tile:nth-child(7) .vc-stamp{animation-delay:4.2s}
+.vc-tile:nth-child(8)::before,.vc-tile:nth-child(8) .vc-stamp{animation-delay:4.9s}
+@keyframes vcRemove{
+  0%,12%{opacity:0}
+  18%,80%{opacity:1}
+  86%,100%{opacity:1}
+}
+@keyframes vcStamp{
+  0%,12%{opacity:0;transform:translate(-50%,-50%) rotate(-10deg) scale(1.4)}
+  17%{opacity:1;transform:translate(-50%,-50%) rotate(-10deg) scale(1)}
+  80%{opacity:1}
+  86%,100%{opacity:1}
+}
+.vc-meta{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:8px 10px;
+  background:linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0));
+  font-family:var(--mono);
+  font-size:9.5px;
+  letter-spacing:0.04em;
+  color:#fff;
+  z-index:4;
+  display:flex;
+  justify-content:space-between;
+}
+.vc-meta .ch{opacity:0.7}
+.vc-meta .age{color:var(--danger-bright)}
+.vc-counter{
+  margin-top:24px;
+  display:flex;
+  align-items:baseline;
+  gap:18px;
+  padding:18px 24px;
+  background:#11181d;
+  border:1px solid var(--line);
+  border-radius:6px;
+}
+.vc-counter-lbl{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);
+}
+.vc-counter-val{
+  font-size:2rem;
+  font-weight:600;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.02em;
+}
+.vc-counter-sub{
+  font-family:var(--mono);font-size:12px;color:var(--text-mute);
+  margin-left:auto;
+}
+
+/* ============================================================
+   VARIANT D — Evidence panel (single big + sidebar)
+   ============================================================ */
+.vd-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:24px;
+  align-items:stretch;
+}
+@media(max-width:860px){.vd-grid{grid-template-columns:1fr}}
+.vd-evidence{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+}
+.vd-evidence img{width:100%;height:100%;object-fit:cover;display:block}
+.vd-evidence::before{
+  content:"";position:absolute;inset:0;z-index:2;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(255,98,98,0.06) 14px,rgba(255,98,98,0.06) 28px),rgba(20,8,8,0.3);
+  pointer-events:none;
+}
+.vd-stamp{
+  position:absolute;top:24px;right:24px;z-index:3;
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.18em;
+  color:#fff;background:var(--danger);
+  padding:6px 12px;border-radius:3px;
+  box-shadow:0 4px 16px rgba(255,98,98,0.4);
+}
+.vd-stamp::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#fff;margin-right:8px;vertical-align:middle;
+}
+.vd-tag{
+  position:absolute;bottom:18px;left:18px;z-index:3;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;
+  color:#fff;background:rgba(0,0,0,0.7);padding:6px 10px;border-radius:3px;
+}
+.vd-panel{
+  background:#11181d;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:22px 24px;
+  display:flex;
+  flex-direction:column;
+}
+.vd-panel-h{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);
+  padding-bottom:14px;border-bottom:1px solid var(--line);
+}
+.vd-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.vd-row:last-child{border-bottom:none}
+.vd-row .icon{
+  width:18px;height:18px;border-radius:50%;
+  background:rgba(255,98,98,0.18);
+  border:1.5px solid var(--danger-bright);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;font-weight:700;color:var(--danger-bright);
+}
+.vd-row .icon.flag::before{content:"!"}
+.vd-row .vd-label{color:var(--text);font-weight:500}
+.vd-row .vd-val{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--text-mute)}
+.vd-action{
+  margin-top:16px;
+  padding:14px 18px;
+  background:rgba(255,98,98,0.08);
+  border:1px solid rgba(255,98,98,0.3);
+  border-radius:6px;
+  display:flex;align-items:center;gap:12px;
+}
+.vd-action-icon{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--danger);color:#fff;
+  font-family:var(--mono);font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.vd-action-text{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:0.06em;color:var(--text);
+}
+.vd-action-text strong{color:var(--danger-bright);text-transform:uppercase;letter-spacing:0.14em;display:block;font-size:11px}
+
+/* ============================================================
+   VARIANT E — Before/After slider
+   ============================================================ */
+.ve-slider{
+  position:relative;
+  aspect-ratio:16/9;
+  max-width:900px;
+  margin:0 auto;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  cursor:ew-resize;
+  user-select:none;
+}
+.ve-slider img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+}
+.ve-slider .ve-after{
+  clip-path:inset(0 0 0 50%);
+}
+.ve-slider .ve-after::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(255,98,98,0.08) 14px,rgba(255,98,98,0.08) 28px),rgba(20,8,8,0.35);
+}
+.ve-handle{
+  position:absolute;
+  top:0;bottom:0;
+  left:50%;
+  width:3px;
+  background:var(--accent);
+  box-shadow:0 0 24px var(--accent-glow);
+  transform:translateX(-50%);
+  z-index:5;
+  pointer-events:none;
+}
+.ve-handle::before,.ve-handle::after{
+  content:"";position:absolute;left:50%;
+  width:42px;height:42px;
+  background:var(--accent);
+  border-radius:50%;
+  transform:translateX(-50%);
+  box-shadow:0 4px 24px rgba(0,0,0,0.5),0 0 24px var(--accent-glow);
+  border:3px solid #0a1115;
+}
+.ve-handle::before{top:50%;margin-top:-21px}
+.ve-handle::after{display:none}
+.ve-handle .arrow{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--mono);font-size:14px;font-weight:700;color:#0a1115;
+  z-index:6;
+  pointer-events:none;
+  letter-spacing:-2px;
+}
+.ve-label{
+  position:absolute;
+  top:16px;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;
+  z-index:4;
+}
+.ve-label.left{left:16px;background:rgba(77,229,196,0.18);color:var(--accent);border:1px solid rgba(77,229,196,0.4)}
+.ve-label.right{right:16px;background:rgba(255,98,98,0.18);color:var(--danger-bright);border:1px solid rgba(255,98,98,0.4)}
+.ve-hint{
+  margin-top:14px;
+  text-align:center;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.1em;
+  color:var(--text-dim);
+  text-transform:uppercase;
+}
+
+/* ============================================================
+   VARIANT F — Compact card with detection radar
+   ============================================================ */
+.vf-card{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:32px;
+  align-items:center;
+  padding:32px;
+  background:#11181d;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+@media(max-width:680px){.vf-card{grid-template-columns:1fr;text-align:center}}
+.vf-thumb{
+  position:relative;
+  width:280px;
+  aspect-ratio:16/9;
+  border-radius:6px;
+  overflow:hidden;
+  border:2px solid var(--danger);
+  flex-shrink:0;
+}
+@media(max-width:680px){.vf-thumb{width:100%;max-width:340px;margin:0 auto}}
+.vf-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(0.7)}
+.vf-thumb::before{
+  content:"";position:absolute;inset:0;z-index:2;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(255,98,98,0.1) 14px,rgba(255,98,98,0.1) 28px);
+}
+.vf-thumb-stamp{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-8deg);
+  font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:0.2em;
+  color:#fff;background:var(--danger);
+  padding:5px 12px;border-radius:3px;
+  z-index:3;
+  box-shadow:0 4px 16px rgba(255,98,98,0.4);
+}
+.vf-body h3{
+  font-size:1.5rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
+  line-height:1.15;
+}
+.vf-signals{
+  margin-top:18px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.vf-sig{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 12px;
+  background:rgba(255,98,98,0.1);
+  border:1px solid rgba(255,98,98,0.35);
+  border-radius:999px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--danger-bright);
+}
+.vf-sig::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--danger);box-shadow:0 0 6px var(--danger-glow);
+}
+.vf-action{
+  margin-top:18px;
+  font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--accent);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.vf-action::before{
+  content:"✓";color:var(--accent);font-weight:700;
+}
+
+/* ============================================================
+   VARIANT G — Side-by-side embedded videos (both playing)
+   ============================================================ */
+.vg-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  align-items:start;
+}
+@media(max-width:760px){.vg-grid{grid-template-columns:1fr}}
+.vg-card{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.vg-tag{
+  display:inline-flex;align-self:flex-start;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;font-weight:500;
+}
+.vg-tag.authentic{background:rgba(77,229,196,0.15);color:var(--accent);border:1px solid rgba(77,229,196,0.4)}
+.vg-tag.removed{background:rgba(255,98,98,0.15);color:var(--danger-bright);border:1px solid rgba(255,98,98,0.4)}
+.vg-vid{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#000;
+}
+.vg-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vg-vid.removed::after{
+  content:"";position:absolute;inset:0;z-index:2;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(255,98,98,0.10) 14px,rgba(255,98,98,0.10) 28px),rgba(20,8,8,0.32);
+  pointer-events:none;
+}
+.vg-stamp{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-12deg);
+  font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:0.18em;
+  color:var(--danger-bright);border:2.5px solid var(--danger-bright);
+  padding:6px 14px;border-radius:4px;background:rgba(20,8,8,0.6);
+  z-index:3;white-space:nowrap;pointer-events:none;
+  box-shadow:0 4px 24px rgba(255,98,98,0.25);
+}
+.vg-meta{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--text-mute)}
+.vg-meta strong{color:var(--text);font-weight:500;display:block;margin-bottom:4px;font-size:13px}
+
+/* ============================================================
+   VARIANT H — Single hero video + delayed REMOVED stamp animation
+   ============================================================ */
+.vh-frame{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:#000;
+  box-shadow:0 30px 80px -40px rgba(0,0,0,0.7);
+}
+.vh-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vh-overlay{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  opacity:0;
+  background:repeating-linear-gradient(45deg,transparent 0,transparent 16px,rgba(255,98,98,0.10) 16px,rgba(255,98,98,0.10) 32px),rgba(20,8,8,0.4);
+  animation:vhFadeIn 6s ease-in-out infinite;
+}
+.vh-stamp-big{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,calc(-50% - 60px)) rotate(-8deg) scale(1.5);
+  opacity:0;
+  font-family:var(--mono);font-size:clamp(28px, 4.5vw, 56px);font-weight:700;letter-spacing:0.18em;
+  color:var(--danger-bright);
+  border:4px solid var(--danger-bright);
+  padding:14px 28px;border-radius:6px;background:rgba(20,8,8,0.6);
+  z-index:4;white-space:nowrap;pointer-events:none;
+  box-shadow:0 8px 40px rgba(255,98,98,0.4);
+  animation:vhStampDrop 6s ease-in-out infinite;
+}
+@keyframes vhFadeIn{
+  0%,40%{opacity:0}
+  55%,90%{opacity:1}
+  100%{opacity:0}
+}
+@keyframes vhStampDrop{
+  0%,40%{opacity:0;transform:translate(-50%,calc(-50% - 80px)) rotate(-8deg) scale(1.6)}
+  52%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1.05)}
+  56%,90%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+}
+.vh-side-stat{
+  position:absolute;
+  z-index:3;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.06em;
+  background:rgba(0,0,0,0.7);color:#fff;
+  padding:6px 10px;border-radius:3px;
+  backdrop-filter:blur(6px);
+}
+.vh-side-stat.tl{top:14px;left:14px;border-left:2px solid var(--danger)}
+.vh-side-stat.tr{top:14px;right:14px;border-right:2px solid var(--danger)}
+.vh-side-stat.bl{bottom:14px;left:14px;border-left:2px solid var(--danger)}
+.vh-belt{
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.04em;
+}
+.vh-pill{
+  padding:8px 14px;
+  background:rgba(255,98,98,0.08);
+  border:1px solid rgba(255,98,98,0.3);
+  border-radius:999px;
+  color:var(--danger-bright);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.vh-pill::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:var(--danger);box-shadow:0 0 6px var(--danger-glow);
+}
+.vh-pill.success{
+  background:rgba(77,229,196,0.08);border-color:rgba(77,229,196,0.35);color:var(--accent);
+}
+.vh-pill.success::before{background:var(--accent);box-shadow:0 0 6px var(--accent-glow)}
+
+/* ============================================================
+   VARIANT I — Detection radar scan over video
+   ============================================================ */
+.vi-frame{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:#000;
+}
+.vi-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vi-radar{
+  position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;
+}
+.vi-scanbeam{
+  position:absolute;
+  left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--accent) 50%,transparent 100%);
+  box-shadow:0 0 18px var(--accent),0 0 4px var(--accent);
+  animation:viScan 3.6s linear infinite;
+}
+@keyframes viScan{
+  0%{top:-2%;opacity:0}
+  10%{opacity:0.9}
+  90%{opacity:0.9}
+  100%{top:102%;opacity:0}
+}
+.vi-grid-overlay{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(77,229,196,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,229,196,0.06) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask-image:radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+  opacity:0.7;
+}
+.vi-target{
+  position:absolute;
+  width:48px;height:48px;
+  border:1.5px solid var(--danger-bright);
+  border-radius:50%;
+  opacity:0;
+  animation:viTarget 3.6s ease-in-out infinite;
+}
+.vi-target::before,.vi-target::after{
+  content:"";position:absolute;background:var(--danger-bright);
+}
+.vi-target::before{left:50%;top:-6px;bottom:-6px;width:1px;transform:translateX(-50%)}
+.vi-target::after{top:50%;left:-6px;right:-6px;height:1px;transform:translateY(-50%)}
+.vi-target.t1{top:24%;left:18%;animation-delay:0.4s}
+.vi-target.t2{top:62%;right:22%;animation-delay:1.6s}
+.vi-target.t3{top:38%;left:54%;animation-delay:2.6s}
+@keyframes viTarget{
+  0%,15%{opacity:0;transform:scale(0.6)}
+  18%{opacity:1;transform:scale(1.2)}
+  22%,55%{opacity:1;transform:scale(1)}
+  60%,100%{opacity:0;transform:scale(1)}
+}
+.vi-target-label{
+  position:absolute;
+  top:100%;left:60%;
+  margin-top:8px;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.05em;
+  background:rgba(20,8,8,0.85);
+  color:var(--danger-bright);
+  padding:3px 7px;border-radius:2px;
+  white-space:nowrap;
+  border:1px solid rgba(255,98,98,0.4);
+}
+.vi-status{
+  position:absolute;
+  bottom:14px;left:14px;
+  z-index:3;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;
+  background:rgba(0,0,0,0.75);
+  padding:6px 12px;border-radius:3px;
+  display:flex;align-items:center;gap:8px;
+  color:var(--accent);
+  border:1px solid rgba(77,229,196,0.4);
+}
+.vi-status::before{
+  content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 8px var(--accent-glow);
+  animation:viPulse 1.4s ease-in-out infinite;
+}
+@keyframes viPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.vi-summary{
+  margin-top:18px;
+  padding:18px 22px;
+  background:#11181d;
+  border:1px solid var(--line);
+  border-radius:6px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:24px;
+  font-family:var(--mono);
+  font-size:11px;
+}
+@media(max-width:680px){.vi-summary{grid-template-columns:1fr 1fr;gap:14px}}
+.vi-cell .lbl{letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);font-size:10px}
+.vi-cell .val{margin-top:6px;font-size:1.2rem;font-weight:600;letter-spacing:-0.02em;color:var(--text)}
+.vi-cell .val.danger{color:var(--danger-bright)}
+.vi-cell .val.accent{color:var(--accent)}
+
+.footer-note{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:48px var(--pad-x) 80px;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.04em;
+  color:var(--text-dim);
+  text-align:center;
+}
+.footer-note a{color:var(--accent);border-bottom:1px solid rgba(77,229,196,0.4)}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="eyebrow">Preview 2 · internal</div>
+  <h1>Deepfake Defense — six layout variants</h1>
+  <p>The current section reads as a static comparison and feels muted. Below are six different ways to visualize the same story. Each uses real content (Brandon's deepfake video clip + the AI Alan Watts thumbnail) so you can see how each approach actually looks. Pick one — or mix elements from multiple.</p>
+  <div class="toc">
+    <a href="#a">A · Current</a>
+    <a href="#b">B · Embedded video + markers</a>
+    <a href="#c">C · Wall of takedowns</a>
+    <a href="#d">D · Evidence panel</a>
+    <a href="#e">E · Before/After slider</a>
+    <a href="#f">F · Compact alert card</a>
+    <a href="#g">G · Side-by-side video embeds</a>
+    <a href="#h">H · Hero video + delayed REMOVED stamp</a>
+    <a href="#i">I · Detection radar scan over video</a>
+  </div>
+</header>
+
+<!-- ============================================================
+     VARIANT A — Current
+     ============================================================ -->
+<section class="variant" id="a">
+  <div class="variant-head">
+    <div class="vlabel">Variant A</div>
+    <h2>Current — side-by-side YouTube thumbnails</h2>
+    <p>For reference. Authentic vs AI-Removed sitting next to each other with VS in the middle. Quiet and static — the comparison is clear but doesn't feel like anything is happening.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">When AI pretends to be you,<br>we help you take it down.</h2>
+    <p class="section-sub">AI fakes mislead your audience and dilute your brand. We help you defend what you've built.</p>
+
+    <div class="va-compare" style="margin-top:36px">
+      <div class="va-card">
+        <span class="va-tag authentic">Authentic</span>
+        <div class="va-thumb">
+          <img src="https://img.youtube.com/vi/khOaAHK7efc/maxresdefault.jpg" alt="">
+        </div>
+        <div class="va-meta">
+          <strong>What if money was no object?</strong>
+          Alan Watts · official rightsholder<br>
+          12M views · uploaded 2013
+        </div>
+      </div>
+      <div class="va-vs">VS</div>
+      <div class="va-card">
+        <span class="va-tag removed">AI-generated · Removed</span>
+        <div class="va-thumb removed">
+          <img src="https://img.youtube.com/vi/hklPKABjRdA/maxresdefault.jpg" alt="">
+          <span class="va-stamp">REMOVED</span>
+        </div>
+        <div class="va-meta">
+          <strong>AI Alan Watts &amp; Terence McKenna conversation</strong>
+          Synthetic voice detected (GPT-4)<br>
+          Unauthorized likeness · channel age 11 days
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT B — Embedded video with detection markers
+     ============================================================ -->
+<section class="variant" id="b">
+  <div class="variant-head">
+    <div class="vlabel">Variant B</div>
+    <h2>Embedded video with floating detection markers</h2>
+    <p>Plays your actual deepfake reference video inline. Floating red markers point to specific tells (synthetic audio, face inconsistency, channel age). Below the video, three live-style stat cards show the takedown summary. <strong>Strongest if you want to use the video you sent.</strong></p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">We scan for the tells AI<br>can't help leaving behind.</h2>
+    <p class="section-sub">Watch what we caught. Synthetic audio fingerprints, face-swap artifacts, channel-pattern flags — every signal that an upload isn't really you.</p>
+
+    <div class="vb-frame" style="margin-top:36px">
+      <div class="vb-video-wrap">
+        <iframe src="https://www.youtube.com/embed/3wVpVH0Wa6E?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowfullscreen></iframe>
+        <div class="vb-overlay">
+          <div class="vb-marker m1">Synthetic audio · 99.2% match</div>
+          <div class="vb-marker m2">Face inconsistency · frame 47</div>
+          <div class="vb-marker m3">Channel age &lt; 11 days</div>
+        </div>
+      </div>
+      <div class="vb-summary">
+        <div class="vb-stat">
+          <div class="vb-stat-lbl">Detection signals</div>
+          <div class="vb-stat-val danger">3 flagged</div>
+          <div class="vb-stat-sub">audio · video · pattern</div>
+        </div>
+        <div class="vb-stat">
+          <div class="vb-stat-lbl">Channel age</div>
+          <div class="vb-stat-val">11 days</div>
+          <div class="vb-stat-sub">below trust threshold</div>
+        </div>
+        <div class="vb-stat">
+          <div class="vb-stat-lbl">Action taken</div>
+          <div class="vb-stat-val accent">Removed</div>
+          <div class="vb-stat-sub">YouTube takedown filed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT C — Wall of takedowns
+     ============================================================ -->
+<section class="variant" id="c">
+  <div class="variant-head">
+    <div class="vlabel">Variant C</div>
+    <h2>Wall of takedowns — animated grid</h2>
+    <p>Eight deepfake thumbnails in a grid. The REMOVED stamp + red overlay appear in sequence (one tile every ~0.7s). Conveys <strong>scale</strong> — "we don't just catch one, we catch dozens every week." Live-monitoring feel.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">AI fakes go up by the hour.<br>We take them down at the same pace.</h2>
+    <p class="section-sub">Every tile below is a real takedown pattern: synthetic voice, cloned likeness, suspicious channel age. We catch them, you decide what happens next.</p>
+
+    <div class="vc-wall" style="margin-top:36px">
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/hklPKABjRdA/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@watts.ai</span><span class="age">3d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/3wVpVH0Wa6E/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@deepclips</span><span class="age">5d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/hklPKABjRdA/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@archives.real</span><span class="age">11d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/3wVpVH0Wa6E/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@motivation.ai</span><span class="age">2d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/hklPKABjRdA/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@vault.official</span><span class="age">7d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/3wVpVH0Wa6E/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@viral.cuts.ai</span><span class="age">1d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/hklPKABjRdA/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@gpt.archive</span><span class="age">4d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+      <div class="vc-tile">
+        <img src="https://img.youtube.com/vi/3wVpVH0Wa6E/hqdefault.jpg" alt="">
+        <span class="vc-meta"><span class="ch">@fake.legacy</span><span class="age">9d old</span></span>
+        <span class="vc-stamp">REMOVED</span>
+      </div>
+    </div>
+
+    <div class="vc-counter">
+      <div>
+        <div class="vc-counter-lbl">Removed this week</div>
+        <div class="vc-counter-val">487</div>
+      </div>
+      <div class="vc-counter-sub">across creator catalogs · synthetic voice + cloned likeness</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT D — Evidence panel
+     ============================================================ -->
+<section class="variant" id="d">
+  <div class="variant-head">
+    <div class="vlabel">Variant D</div>
+    <h2>Evidence panel — single fake + structured detection report</h2>
+    <p>One large image of the fake on the left. On the right, an investigator-style "evidence packet" listing every detection signal with red flag icons. Reads like a security report. <strong>Most credible / "we did the work" feel.</strong></p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">Every fake we remove<br>comes with a paper trail.</h2>
+    <p class="section-sub">We don't just take it down. We document the synthetic signals, channel pattern, and likeness usage — so you can see exactly what we caught and why.</p>
+
+    <div class="vd-grid" style="margin-top:36px">
+      <div class="vd-evidence">
+        <img src="https://img.youtube.com/vi/hklPKABjRdA/maxresdefault.jpg" alt="">
+        <span class="vd-stamp">REMOVED · 2026-04-22</span>
+        <span class="vd-tag">@watts-archives · 11d channel age</span>
+      </div>
+      <div class="vd-panel">
+        <div class="vd-panel-h">Detection signals · evidence packet</div>
+        <div class="vd-row">
+          <span class="icon flag"></span>
+          <span class="vd-label">Synthetic audio fingerprint</span>
+          <span class="vd-val">99.2% match</span>
+        </div>
+        <div class="vd-row">
+          <span class="icon flag"></span>
+          <span class="vd-label">Voice clone (GPT-4 voice)</span>
+          <span class="vd-val">confirmed</span>
+        </div>
+        <div class="vd-row">
+          <span class="icon flag"></span>
+          <span class="vd-label">Channel age below threshold</span>
+          <span class="vd-val">11 days</span>
+        </div>
+        <div class="vd-row">
+          <span class="icon flag"></span>
+          <span class="vd-label">Upload pattern · cluster</span>
+          <span class="vd-val">14 in 48hr</span>
+        </div>
+        <div class="vd-row">
+          <span class="icon flag"></span>
+          <span class="vd-label">Unauthorized likeness</span>
+          <span class="vd-val">flagged</span>
+        </div>
+        <div class="vd-action">
+          <span class="vd-action-icon">↓</span>
+          <span class="vd-action-text"><strong>Action taken</strong>YouTube takedown · auto-filed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT E — Before/After slider (interactive)
+     ============================================================ -->
+<section class="variant" id="e">
+  <div class="variant-head">
+    <div class="vlabel">Variant E</div>
+    <h2>Before/After slider — drag to compare</h2>
+    <p>One image, interactive horizontal slider. Drag left to see the authentic version, drag right to see the AI fake (with the diagonal "removed" treatment applied). Engaging — gets the visitor to <strong>do</strong> something. Best for showing how identical the two look.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">Drag the slider.<br>You can barely tell the difference.</h2>
+    <p class="section-sub">That's the problem AI created. Below is a real authentic Alan Watts video on the left, and an AI-generated impersonation on the right. We can tell them apart — and so should YouTube.</p>
+
+    <div class="ve-slider" id="veSlider" style="margin-top:36px">
+      <img class="ve-before" src="https://img.youtube.com/vi/khOaAHK7efc/maxresdefault.jpg" alt="">
+      <img class="ve-after" src="https://img.youtube.com/vi/hklPKABjRdA/maxresdefault.jpg" alt="">
+      <span class="ve-label left">Authentic</span>
+      <span class="ve-label right">AI · Removed</span>
+      <div class="ve-handle"><span class="arrow">‹›</span></div>
+    </div>
+    <div class="ve-hint">Drag the slider →</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT F — Compact alert card
+     ============================================================ -->
+<section class="variant" id="f">
+  <div class="variant-head">
+    <div class="vlabel">Variant F</div>
+    <h2>Compact alert card — single takedown summary</h2>
+    <p>One tight card. Image on the left with a bold REMOVED tag. On the right: title, detection signals as red pill tags, and the action taken. Smaller footprint, denser information, <strong>less competing for attention with other sections</strong>. Good if you want this section to feel like a clean stat callout, not a full hero moment.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">When AI pretends to be you,<br>we help you take it down.</h2>
+    <p class="section-sub">AI fakes mislead your audience and dilute your brand. We help you defend what you've built.</p>
+
+    <div class="vf-card" style="margin-top:36px">
+      <div class="vf-thumb">
+        <img src="https://img.youtube.com/vi/hklPKABjRdA/maxresdefault.jpg" alt="">
+        <span class="vf-thumb-stamp">REMOVED</span>
+      </div>
+      <div class="vf-body">
+        <h3>"AI Alan Watts &amp; Terence McKenna" — synthetic voice impersonation</h3>
+        <div class="vf-signals">
+          <span class="vf-sig">Synthetic audio · 99.2%</span>
+          <span class="vf-sig">Voice clone · GPT-4</span>
+          <span class="vf-sig">Channel age · 11 days</span>
+          <span class="vf-sig">Likeness flagged</span>
+        </div>
+        <div class="vf-action">YouTube takedown filed · 2026-04-22</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT G — Side-by-side embedded videos
+     ============================================================ -->
+<section class="variant" id="g">
+  <div class="variant-head">
+    <div class="vlabel">Variant G · uses your alternative video (oxXpB9pSETo)</div>
+    <h2>Side-by-side video embeds — both playing at once</h2>
+    <p>Two YouTube embeds, autoplaying muted. Left side runs an authentic Alan Watts video; right side runs the AI deepfake you sent (oxXpB9pSETo) with the red REMOVED treatment overlaid. <strong>Strongest for showing how identical the motion looks</strong> — when both are moving, the comparison hits harder than static thumbnails.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">Real on the left.<br>AI on the right. Watch them both move.</h2>
+    <p class="section-sub">The face moves, the mouth moves, the eyes look forward. AI fakes don't just match in still frames anymore — they move convincingly. We catch them anyway.</p>
+
+    <div class="vg-grid" style="margin-top:36px">
+      <div class="vg-card">
+        <span class="vg-tag authentic">Authentic</span>
+        <div class="vg-vid">
+          <iframe src="https://www.youtube.com/embed/khOaAHK7efc?autoplay=1&mute=1&loop=1&playlist=khOaAHK7efc&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="vg-meta">
+          <strong>What if money was no object?</strong>
+          Alan Watts · official rightsholder · 12M views · 2013
+        </div>
+      </div>
+      <div class="vg-card">
+        <span class="vg-tag removed">AI-generated · Removed</span>
+        <div class="vg-vid removed">
+          <iframe src="https://www.youtube.com/embed/oxXpB9pSETo?autoplay=1&mute=1&loop=1&playlist=oxXpB9pSETo&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <span class="vg-stamp">REMOVED</span>
+        </div>
+        <div class="vg-meta">
+          <strong>Synthetic likeness · unauthorized upload</strong>
+          Synthetic audio + face-clone · channel age 11 days
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT H — Hero video + delayed REMOVED stamp animation
+     ============================================================ -->
+<section class="variant" id="h">
+  <div class="variant-head">
+    <div class="vlabel">Variant H · uses your preferred video (WzK1MBEpkJ0)</div>
+    <h2>Big hero video + delayed REMOVED stamp drop</h2>
+    <p>Single full-bleed video plays clean for ~4 seconds, then the red overlay + REMOVED stamp drop in dramatically. Loops. <strong>Most theatrical / "watch it happen"</strong> — feels like you're watching the takedown live. Below the video, four pill-tags name the detection signals.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">When AI pretends to be you,<br>we help you take it down.</h2>
+    <p class="section-sub">Watching is the easy part — anyone can scroll past a fake. We scan, we detect, and we file the takedown the moment a synthetic upload appears.</p>
+
+    <div class="vh-frame" style="margin-top:36px">
+      <iframe src="https://www.youtube.com/embed/WzK1MBEpkJ0?autoplay=1&mute=1&loop=1&playlist=WzK1MBEpkJ0&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <span class="vh-side-stat tl">SCAN · ACTIVE</span>
+      <span class="vh-side-stat tr">CHANNEL AGE · 11d</span>
+      <span class="vh-side-stat bl">SYNTHETIC AUDIO · 99.2%</span>
+      <div class="vh-overlay"></div>
+      <span class="vh-stamp-big">REMOVED</span>
+    </div>
+    <div class="vh-belt">
+      <span class="vh-pill">Synthetic audio</span>
+      <span class="vh-pill">Voice clone (GPT-4)</span>
+      <span class="vh-pill">Channel age &lt;14d</span>
+      <span class="vh-pill">Cluster pattern</span>
+      <span class="vh-pill success">Takedown filed</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT I — Detection radar scan over video
+     ============================================================ -->
+<section class="variant" id="i">
+  <div class="variant-head">
+    <div class="vlabel">Variant I · uses your preferred video (WzK1MBEpkJ0)</div>
+    <h2>Detection radar — scanning beam over the video</h2>
+    <p>Same hero video, but instead of a stamp drop, an animated teal scan beam sweeps top-to-bottom (matches the radar look from your Live Monitoring section). When the beam crosses detected anomalies, red crosshair targets light up. Reads as <strong>"we're actively scanning right now"</strong> — feels like an air-traffic control screen.</p>
+  </div>
+
+  <div class="demo demo-pad">
+    <div class="section-eyebrow">Deepfake defense</div>
+    <h2 class="section-headline">Every upload gets scanned.<br>Every fake gets caught.</h2>
+    <p class="section-sub">Audio fingerprint, face reconstruction artifacts, lip-sync drift. We sweep YouTube continuously and flag every signal that doesn't add up.</p>
+
+    <div class="vi-frame" style="margin-top:36px">
+      <iframe src="https://www.youtube.com/embed/WzK1MBEpkJ0?autoplay=1&mute=1&loop=1&playlist=WzK1MBEpkJ0&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <div class="vi-radar">
+        <div class="vi-grid-overlay"></div>
+        <div class="vi-scanbeam"></div>
+        <div class="vi-target t1"><span class="vi-target-label">audio · synthetic</span></div>
+        <div class="vi-target t2"><span class="vi-target-label">face · clone</span></div>
+        <div class="vi-target t3"><span class="vi-target-label">lip-sync drift</span></div>
+      </div>
+      <div class="vi-status">SCANNING · 99.98% accuracy</div>
+    </div>
+    <div class="vi-summary">
+      <div class="vi-cell"><div class="lbl">Signals flagged</div><div class="val danger">3</div></div>
+      <div class="vi-cell"><div class="lbl">Channel age</div><div class="val">11 days</div></div>
+      <div class="vi-cell"><div class="lbl">Match confidence</div><div class="val">99.2%</div></div>
+      <div class="vi-cell"><div class="lbl">Action</div><div class="val accent">Removed</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-note">
+  Pick a variant: tell me "I want B" / "I want D and H mixed" / etc. — these are isolated explorations only. The live site at <a href="/">/</a> still uses Variant A.
+</div>
+
+<script>
+// Variant E — drag the slider
+(function(){
+  var slider = document.getElementById('veSlider');
+  if (!slider) return;
+  var after = slider.querySelector('.ve-after');
+  var handle = slider.querySelector('.ve-handle');
+  var dragging = false;
+
+  function setPos(x){
+    var rect = slider.getBoundingClientRect();
+    var pct = Math.min(1, Math.max(0, (x - rect.left) / rect.width));
+    after.style.clipPath = 'inset(0 0 0 ' + (pct * 100) + '%)';
+    handle.style.left = (pct * 100) + '%';
+  }
+
+  slider.addEventListener('mousedown', function(e){ dragging = true; setPos(e.clientX); });
+  window.addEventListener('mousemove', function(e){ if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', function(){ dragging = false; });
+  slider.addEventListener('touchstart', function(e){ dragging = true; setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchmove', function(e){ if (dragging) setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchend', function(){ dragging = false; });
+})();
+</script>
+
+</body>
+</html>

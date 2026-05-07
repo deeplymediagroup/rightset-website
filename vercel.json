@@ -54,6 +54,7 @@
     { "source": "/concepts/v4-coral", "destination": "/concepts/v4-coral.html" },
     { "source": "/concepts/v6-black-orange", "destination": "/concepts/v6-black-orange.html" },
     { "source": "/concepts/headlines", "destination": "/concepts/headlines.html" },
-    { "source": "/concepts/cta-options", "destination": "/concepts/cta-options.html" }
+    { "source": "/concepts/cta-options", "destination": "/concepts/cta-options.html" },
+    { "source": "/preview2", "destination": "/preview2.html" }
   ]
 }

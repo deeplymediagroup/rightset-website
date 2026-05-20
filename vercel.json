@@ -56,7 +56,11 @@
     { "source": "/concepts/headlines", "destination": "/concepts/headlines.html" },
     { "source": "/concepts/cta-options", "destination": "/concepts/cta-options.html" },
     { "source": "/preview2", "destination": "/preview2.html" },
-    { "source": "/preview3", "destination": "/preview3.html" }
+    { "source": "/preview3", "destination": "/preview3.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/faq", "destination": "/faq.html" },
+    { "source": "/licensing", "destination": "/licensing.html" },
+    { "source": "/contact", "destination": "/contact.html" }
   ],
   "headers": [
     {

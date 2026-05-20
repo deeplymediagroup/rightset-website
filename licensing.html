@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Licensing — Rightset</title>
+<meta name="description" content="RightSet administers YouTube licensing programs on behalf of rights holders. Approved creators get permission to use licensed content; royalties are tracked and paid through our platform.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231a1a18'/%3E%3Cg transform='translate(50,50) rotate(-6)'%3E%3Cpath d='M0-38 L33-19 L33 19 L0 38 L-33 19 L-33-19Z' fill='none' stroke='%23f5f5f3' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M0-27 L23.4-13.5 L23.4 13.5 L0 27 L-23.4 13.5 L-23.4-13.5Z' fill='none' stroke='%23f5f5f3' stroke-width='4.5' stroke-linejoin='round'/%3E%3Cpath d='M0-17 L14.7-8.5 L14.7 8.5 L0 17 L-14.7 8.5 L-14.7-8.5Z' fill='none' stroke='%23f5f5f3' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M0-9 L7.8-4.5 L7.8 4.5 L0 9 L-7.8 4.5 L-7.8-4.5Z' fill='none' stroke='%23f5f5f3' stroke-width='3.5' stroke-linejoin='round'/%3E%3Ccircle cx='-1' cy='1' r='3.5' fill='%235eead4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1418;--bg-card:#151c22;--bg-lift:#1d262d;
+  --text:#f7f9f7;--text-mute:#c7ccc6;--text-dim:#6b7872;
+  --line:rgba(247,249,247,0.12);--line-strong:rgba(247,249,247,0.24);
+  --accent:#4de5c4;--accent-bright:#6df0d4;--accent-deep:#1fc5a3;
+  --accent-dim:rgba(77,229,196,0.75);--accent-glow:rgba(77,229,196,0.38);
+  --sans:'Geist',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(0.16, 1, 0.3, 1);
+  --max:1440px;--pad-x:clamp(24px, 6vw, 120px);
+  --section-y:clamp(70px, 9vw, 130px);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--text);
+  font-size:18.5px;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1200px circle at 15% 15%, rgba(77,229,196,0.32), transparent 55%),
+    radial-gradient(1000px circle at 85% 30%, rgba(125,211,252,0.22), transparent 55%);
+  opacity:0.5;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+svg{display:block}
+::selection{background:var(--text);color:var(--bg)}
+
+/* Nav */
+nav.top{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:20px var(--pad-x);
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  background:rgba(10,10,10,0.72);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+nav.top .mark{display:inline-flex;align-items:center;gap:10px;color:var(--text)}
+nav.top .mark-icon{width:28px;height:28px;flex-shrink:0}
+nav.top .mark-word{font-size:17px;font-weight:500;letter-spacing:-0.02em}
+nav.top ul{display:flex;gap:36px;list-style:none}
+nav.top ul a{font-size:13px;color:var(--text);transition:color .3s var(--ease)}
+nav.top ul a:hover{color:var(--accent)}
+nav.top .nav-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:11px 20px;font-family:var(--mono);
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text);background:transparent;
+  border:1px solid var(--line-strong);
+  transition:all .5s var(--ease);
+}
+nav.top .nav-cta:hover{border-color:var(--accent-dim);color:var(--accent)}
+nav.top .nav-cta .dot{
+  width:5px;height:5px;background:var(--accent);border-radius:50%;
+  animation:blink 2.2s ease-in-out infinite;box-shadow:0 0 6px var(--accent-glow);
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+@media(max-width:860px){
+  nav.top ul{display:none}
+  nav.top .nav-cta{padding:10px 16px;font-size:10px}
+}
+
+/* Hero */
+.lic-hero{
+  max-width:var(--max);margin:0 auto;
+  padding:200px var(--pad-x) 70px var(--pad-x);
+}
+.lic-hero .kicker, .lic-section .kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--accent);
+  display:inline-flex;align-items:center;margin-bottom:24px;
+}
+.lic-hero .kicker::before, .lic-section .kicker::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 8px var(--accent-glow);
+  margin-right:10px;
+}
+.lic-hero h1{
+  font-size:clamp(3rem, 6.5vw, 5.5rem);
+  font-weight:500;line-height:0.98;letter-spacing:-0.035em;
+  margin-bottom:28px;text-wrap:balance;
+  max-width:18ch;
+}
+.lic-hero p.lead{
+  font-size:clamp(1.15rem, 1.5vw, 1.35rem);
+  color:var(--text-mute);max-width:62ch;line-height:1.6;
+}
+
+/* Section base */
+.lic-section{
+  max-width:var(--max);margin:0 auto;
+  padding:var(--section-y) var(--pad-x);
+  position:relative;
+}
+.lic-section h2{
+  font-size:clamp(2.1rem, 4vw, 3.4rem);
+  font-weight:500;line-height:1.05;letter-spacing:-0.03em;
+  margin-bottom:24px;text-wrap:balance;
+  max-width:24ch;
+}
+.lic-section .body{
+  font-size:1.1rem;line-height:1.65;color:var(--text-mute);
+  max-width:68ch;
+}
+
+/* How it works steps */
+.lic-steps-grid{
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);
+  margin-top:48px;
+}
+@media(max-width:860px){.lic-steps-grid{grid-template-columns:1fr}}
+.lic-step{
+  background:var(--bg-card);padding:44px 36px;
+  display:flex;flex-direction:column;gap:14px;
+  position:relative;transition:background .3s ease;
+}
+.lic-step:hover{background:var(--bg-lift)}
+.lic-step .num{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.16em;
+  color:var(--accent);
+}
+.lic-step h3{
+  font-size:1.4rem;font-weight:500;letter-spacing:-0.02em;
+  line-height:1.2;color:var(--text);
+}
+.lic-step p{font-size:1rem;line-height:1.6;color:var(--text-mute)}
+
+/* Dashboard visual */
+.lic-visual{
+  max-width:var(--max);margin:0 auto;
+  padding:0 var(--pad-x) var(--section-y);
+}
+.lic-visual-frame{
+  position:relative;
+  border:1px solid var(--line);
+  background:var(--bg-card);
+  border-radius:6px;overflow:hidden;
+  box-shadow:0 30px 80px -40px rgba(0,0,0,0.6);
+}
+.lic-visual-chrome{
+  display:flex;align-items:center;gap:8px;
+  padding:11px 16px;
+  background:var(--bg-lift);
+  border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;color:var(--text-mute);
+  letter-spacing:0.04em;
+}
+.lic-visual-chrome .dot{
+  width:9px;height:9px;border-radius:50%;
+  background:rgba(255,255,255,0.18);
+}
+.lic-visual-chrome .url{margin-left:14px;color:var(--text-mute)}
+.lic-visual-chrome .url-accent{color:var(--accent)}
+.lic-visual-stage{
+  padding:32px;
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;
+  background:
+    radial-gradient(1200px circle at 70% 20%, rgba(77,229,196,0.10), transparent 50%),
+    linear-gradient(135deg, var(--bg-card) 0%, var(--bg-lift) 100%);
+}
+.lic-stage-cell{
+  background:rgba(15,20,24,0.55);
+  border:1px solid var(--line);border-radius:4px;
+  padding:18px 16px;
+}
+.lic-stage-cell .l{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--text-mute);margin-bottom:8px;
+}
+.lic-stage-cell .v{
+  font-size:1.55rem;font-weight:500;color:var(--text);
+  letter-spacing:-0.02em;line-height:1;
+}
+.lic-stage-cell .v.acc{color:var(--accent)}
+.lic-stage-cell .c{
+  font-family:var(--mono);font-size:10px;color:var(--text-mute);
+  margin-top:8px;letter-spacing:0.04em;
+}
+.lic-visual-caption{
+  margin-top:18px;text-align:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text-mute);
+}
+
+/* Two-up: For rights holders / For creators */
+.lic-twoup{
+  max-width:var(--max);margin:0 auto;
+  padding:0 var(--pad-x) var(--section-y);
+}
+.lic-twoup-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line);border:1px solid var(--line);
+}
+@media(max-width:860px){.lic-twoup-grid{grid-template-columns:1fr}}
+.lic-twoup-card{
+  background:var(--bg-card);padding:clamp(40px, 4vw, 60px) clamp(32px, 4vw, 50px);
+  display:flex;flex-direction:column;gap:18px;
+}
+.lic-twoup-card.featured{
+  background:linear-gradient(180deg, rgba(77,229,196,0.07), rgba(77,229,196,0.02) 50%, var(--bg-card));
+}
+.lic-twoup-card .kicker{margin-bottom:8px}
+.lic-twoup-card h3{
+  font-size:clamp(1.65rem, 2.4vw, 2.05rem);
+  font-weight:500;letter-spacing:-0.025em;line-height:1.15;
+  color:var(--text);text-wrap:balance;
+  max-width:22ch;
+}
+.lic-twoup-card p{
+  font-size:1.02rem;line-height:1.6;color:var(--text-mute);
+  flex:1;
+}
+.lic-twoup-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:auto;align-self:flex-start;
+  padding:14px 22px;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text);background:transparent;
+  border:1px solid var(--line-strong);
+  transition:all .4s var(--ease);
+}
+.lic-twoup-cta:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 16px rgba(94,234,212,0.1)}
+.lic-twoup-card.featured .lic-twoup-cta{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.lic-twoup-card.featured .lic-twoup-cta:hover{background:transparent;color:var(--accent)}
+
+/* Final */
+.lic-final{
+  max-width:var(--max);margin:0 auto;
+  padding:var(--section-y) var(--pad-x);
+  text-align:center;border-top:1px solid var(--line);
+}
+.lic-final h2{
+  font-size:clamp(2rem, 4vw, 3rem);
+  font-weight:500;letter-spacing:-0.03em;line-height:1.05;
+  margin-bottom:28px;text-wrap:balance;
+}
+.lic-final-cta{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:18px 28px;
+  font-family:var(--sans);font-size:13px;font-weight:500;
+  border:1px solid var(--line-strong);
+  background:transparent;color:var(--text);
+  position:relative;overflow:hidden;
+  transition:all .5s var(--ease);
+}
+.lic-final-cta::before{
+  content:"";position:absolute;inset:0;background:var(--accent);
+  transform:translateY(101%);transition:transform .6s var(--ease);z-index:-1;
+}
+.lic-final-cta:hover::before{transform:translateY(0)}
+.lic-final-cta:hover{color:var(--bg);border-color:var(--accent);box-shadow:0 0 30px var(--accent-glow)}
+.lic-final-cta .arrow{transition:transform .5s var(--ease)}
+.lic-final-cta:hover .arrow{transform:translateX(4px)}
+
+footer.simple-footer{
+  max-width:var(--max);margin:0 auto;
+  padding:48px var(--pad-x);
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text-mute);flex-wrap:wrap;gap:20px;
+}
+footer.simple-footer a{color:var(--text-mute);transition:color .2s ease}
+footer.simple-footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="/" class="mark">
+    <svg class="mark-icon" viewBox="0 0 100 100" fill="none">
+      <g transform="translate(50,50) rotate(-6)">
+        <path d="M0-42 L36-21 L36 21 L0 42 L-36 21 L-36-21Z" stroke="#f5f5f3" stroke-width="5" stroke-linejoin="round" fill="none"/>
+        <path d="M0-30 L26-15 L26 15 L0 30 L-26 15 L-26-15Z" stroke="#f5f5f3" stroke-width="4.5" stroke-linejoin="round" fill="none"/>
+        <path d="M0-19 L16.5-9.5 L16.5 9.5 L0 19 L-16.5 9.5 L-16.5-9.5Z" stroke="#f5f5f3" stroke-width="4" stroke-linejoin="round" fill="none"/>
+        <path d="M0-10 L8.7-5 L8.7 5 L0 10 L-8.7 5 L-8.7-5Z" stroke="#f5f5f3" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+        <circle cx="-1" cy="1" r="4" fill="#5eead4"/>
+      </g>
+    </svg>
+    <span class="mark-word">rightset</span>
+  </a>
+  <ul>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <a href="/#audit" class="nav-cta"><span class="dot"></span>Book a demo</a>
+</nav>
+
+<section class="lic-hero">
+  <div class="kicker">Licensing</div>
+  <h1>How Licensing Works</h1>
+  <p class="lead">RightSet administers YouTube licensing programs on behalf of rights holders. Approved creators are granted permission to use the content into their videos, with royalties tracked, calculated, and distributed through our platform.</p>
+</section>
+
+<section class="lic-section">
+  <div class="kicker">How it works</div>
+  <h2>Three steps from enrollment to royalty payout.</h2>
+  <div class="lic-steps-grid">
+    <div class="lic-step">
+      <span class="num">STEP 01</span>
+      <h3>Rights holders enroll their content.</h3>
+      <p>Eligible rights holders enroll a library of content into a licensing program administered by RightSet.</p>
+    </div>
+    <div class="lic-step">
+      <span class="num">STEP 02</span>
+      <h3>Creators are vetted and approved.</h3>
+      <p>Creators apply or are invited. Once vetted against the program's Creator Criteria, approved creators accept the Creator Licensing Terms through our platform.</p>
+    </div>
+    <div class="lic-step">
+      <span class="num">STEP 03</span>
+      <h3>Royalties tracked and paid.</h3>
+      <p>Our platform tracks every use, calculates royalties owed under the program, and distributes the rights holder's share.</p>
+    </div>
+  </div>
+</section>
+
+<section class="lic-visual">
+  <div class="lic-visual-frame" aria-hidden="true">
+    <div class="lic-visual-chrome">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="url">studio.rightset.com<span class="url-accent">/licensing</span></span>
+    </div>
+    <div class="lic-visual-stage">
+      <div class="lic-stage-cell"><div class="l">Approved creators</div><div class="v acc">2,418</div><div class="c">↗ +124 this month</div></div>
+      <div class="lic-stage-cell"><div class="l">Tracked uses · 30d</div><div class="v">48,290</div><div class="c">↗ +12.4%</div></div>
+      <div class="lic-stage-cell"><div class="l">Royalties owed</div><div class="v">$184,210</div><div class="c">pending payout</div></div>
+      <div class="lic-stage-cell"><div class="l">Programs active</div><div class="v">12</div><div class="c">across 4 regions</div></div>
+      <div class="lic-stage-cell"><div class="l">RPM blended</div><div class="v">$3.81</div><div class="c">↗ +0.22</div></div>
+      <div class="lic-stage-cell"><div class="l">Payout cycle</div><div class="v">Monthly</div><div class="c">next: May 1</div></div>
+    </div>
+  </div>
+  <p class="lic-visual-caption">Usage, royalties, and earnings tracked in real time through the RightSet platform.</p>
+</section>
+
+<section class="lic-twoup">
+  <div class="lic-twoup-grid">
+    <div class="lic-twoup-card featured">
+      <div class="kicker">For rights holders</div>
+      <h3>Add your content to a licensing program.</h3>
+      <p>Licensing programs are available for rights holders with substantial YouTube earning potential. RightSet administers the program end-to-end: vetting creators, enforcing Content Guidelines, tracking usage, calculating royalties, and distributing your share.</p>
+      <a href="/contact" class="lic-twoup-cta">Talk to us about licensing <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="lic-twoup-card">
+      <div class="kicker">For creators</div>
+      <h3>Use licensed content. Pay royalties. Stay claim-free.</h3>
+      <p>Approved creators get permission to use licensed content in their videos in exchange for royalties. To qualify, you'll need to be YouTube-monetized and meet the program's requirements. Follow the guidelines, and you're exempt from Content ID claims on that content.</p>
+      <a href="/contact" class="lic-twoup-cta">Reach out about joining <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="lic-final">
+  <h2>Want to talk licensing? Reach out.</h2>
+  <a href="/contact" class="lic-final-cta">Contact us <span class="arrow">→</span></a>
+</section>
+
+<footer class="simple-footer">
+  <span>© 2026 Rightset. All rights reserved.</span>
+  <span><a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/contact">Contact</a></span>
+</footer>
+
+</body>
+</html>

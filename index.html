@@ -4437,6 +4437,134 @@ document.addEventListener('DOMContentLoaded',function(){
   letter-spacing:-0.02em;margin-top:4px;
 }
 .svc-block-stat .c .v .pos{color:var(--accent)}
+
+/* DEEPFAKE visual — Detection log with face-scan illustration */
+.svc-df-stage{
+  display:flex;flex-direction:column;gap:10px;
+  height:100%;
+}
+.svc-df-top{
+  display:grid;grid-template-columns:160px 1fr;gap:12px;
+  align-items:stretch;
+}
+.svc-df-face{
+  position:relative;
+  background:rgba(15,20,24,0.7);
+  border:1px solid var(--line);
+  border-radius:4px;
+  overflow:hidden;
+  min-height:130px;
+}
+.svc-df-face::after{
+  /* faint diagonal hatch to suggest "synthetic frame" */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(135deg,
+    rgba(176,132,245,0.08) 0 2px, transparent 2px 12px);
+  mix-blend-mode:screen;
+}
+.svc-df-face svg{
+  position:absolute;inset:0;width:100%;height:100%;
+}
+.svc-df-face .scan-beam{
+  position:absolute;left:8%;right:8%;height:1.5px;
+  background:linear-gradient(90deg,transparent,#b084f5,transparent);
+  box-shadow:0 0 10px rgba(176,132,245,0.6);
+  animation:dfscan 2.6s linear infinite;
+  opacity:0.85;
+}
+@keyframes dfscan{
+  0%{top:14%;opacity:0}
+  10%{opacity:0.95}
+  90%{opacity:0.95}
+  100%{top:88%;opacity:0}
+}
+.svc-df-face .stamp{
+  position:absolute;top:9px;right:9px;
+  font-family:var(--mono);
+  font-size:8.5px;letter-spacing:0.14em;
+  padding:3px 7px;border:1px solid rgba(255,94,122,0.45);
+  color:#ff8aa1;background:rgba(255,94,122,0.07);
+  border-radius:2px;
+  z-index:2;
+}
+.svc-df-signals{
+  display:flex;flex-direction:column;gap:6px;
+  background:rgba(15,20,24,0.55);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:12px;
+}
+.svc-df-signals .ttl{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--text-mute);
+  margin-bottom:4px;
+}
+.svc-df-sig{
+  display:grid;grid-template-columns:auto 1fr auto;gap:8px;
+  align-items:center;
+  font-family:var(--mono);font-size:10px;color:var(--text-mute);
+  letter-spacing:0.02em;
+  padding:3px 0;
+}
+.svc-df-sig .ico{
+  width:6px;height:6px;border-radius:50%;
+  background:#ff5e7a;box-shadow:0 0 6px rgba(255,94,122,0.5);
+}
+.svc-df-sig .lbl{color:var(--text)}
+.svc-df-sig .pct{color:#ff8aa1;font-weight:500}
+
+.svc-df-feed{display:flex;flex-direction:column;gap:6px}
+.svc-df-feed .ttl{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--text-mute);
+  margin-bottom:2px;
+}
+.svc-df-row{
+  display:grid;grid-template-columns:auto 1fr;gap:10px;
+  padding:8px 10px;
+  background:rgba(15,20,24,0.55);
+  border:1px solid var(--line);
+  border-radius:3px;
+  align-items:center;
+}
+.svc-df-row .stamp{
+  font-family:var(--mono);
+  font-size:8.5px;letter-spacing:0.12em;
+  padding:3px 6px;
+  border:1px solid rgba(255,94,122,0.4);
+  color:#ff8aa1;
+  background:rgba(255,94,122,0.06);
+  border-radius:2px;
+  align-self:flex-start;
+}
+.svc-df-row .body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.svc-df-row .ch{
+  font-family:var(--mono);font-size:10.5px;
+  color:var(--text);letter-spacing:0.02em;
+}
+.svc-df-row .why{
+  font-family:var(--mono);font-size:9px;
+  color:var(--text-mute);letter-spacing:0.04em;
+  line-height:1.4;
+}
+.svc-df-stat{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  margin-top:auto;padding-top:10px;
+}
+.svc-df-stat .c{
+  background:rgba(15,20,24,0.55);
+  border:1px solid var(--line);
+  border-radius:3px;padding:10px 12px;
+}
+.svc-df-stat .c .l{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--text-mute);
+}
+.svc-df-stat .c .v{
+  font-size:1.15rem;font-weight:500;color:var(--text);
+  letter-spacing:-0.02em;margin-top:4px;
+}
+.svc-df-stat .c .v .acc{color:var(--accent)}
 </style>
 
 <section id="claims" class="service-section reveal">
@@ -4852,86 +4980,112 @@ document.addEventListener('DOMContentLoaded',function(){
   .df-meta{grid-template-columns:1fr}
 }
 </style>
-<section id="deepfake" class="deepfake reveal">
-  <div class="deepfake-head">
-    <div class="kicker">Services · Deepfake Defense</div>
-    <h2 class="h1">When AI pretends to be you,<br>we help you take it down.</h2>
-    <p class="body-lg">AI fakes mislead your audience and dilute your brand. We help you defend what you've built.</p>
-  </div>
-  <div class="df-frame">
-    <div class="df-half authentic">
-      <video class="df-video-a" src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+<section id="deepfake" class="service-section reveal">
+  <div class="service-grid">
+    <div class="service-content">
+      <div class="kicker">Services · Deepfake Defense</div>
+      <h2 class="h1">When AI pretends to be you,<br>we help you <span class="accent-word">take it down</span>.</h2>
+      <p class="service-body">AI fakes mislead your audience and dilute your brand. We help you defend what you've built — synthetic voices, face swaps, and unauthorized AI re-uses of your likeness, removed from YouTube.</p>
+      <div class="service-cta-row">
+        <a href="#audit" class="service-cta">Book a demo <span class="arrow">→</span></a>
+      </div>
     </div>
-    <div class="df-half deepfake">
-      <video class="df-video-b" src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
-      <span class="df-stamp">REMOVED</span>
-    </div>
-  </div>
-
-  <div class="df-meta">
-    <div class="df-meta-cell">
-      <strong>Authentic</strong>
-      Original Bill Gates interview &middot; audio fingerprint matches public archive &middot; channel verified.
-    </div>
-    <div class="df-meta-cell danger">
-      <strong>Synthetic &mdash; takedown filed</strong>
-      Deepfake audio &middot; face geometry mismatch &middot; lip-sync drift detected &middot; channel age &lt; 30 days.
+    <div class="service-visual" aria-hidden="true">
+      <div class="service-visual-chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url">studio.rightset.com<span class="url-accent">/deepfake</span></span>
+      </div>
+      <div class="service-visual-stage">
+        <div class="svc-df-stage">
+          <div class="svc-df-top">
+            <div class="svc-df-face">
+              <span class="stamp">SYNTHETIC</span>
+              <span class="scan-beam"></span>
+              <!-- Stylized face wireframe with detection markers -->
+              <svg viewBox="0 0 160 130" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <radialGradient id="dfFaceGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#b084f5" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#b084f5" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="160" height="130" fill="url(#dfFaceGlow)"/>
+                <!-- face outline -->
+                <ellipse cx="80" cy="68" rx="34" ry="42" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.65"/>
+                <!-- jaw -->
+                <path d="M52,78 Q80,108 108,78" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.55"/>
+                <!-- eyes -->
+                <ellipse cx="68" cy="60" rx="5" ry="2.4" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.8"/>
+                <ellipse cx="92" cy="60" rx="5" ry="2.4" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.8"/>
+                <circle cx="68" cy="60" r="1.2" fill="#c7ccc6"/>
+                <circle cx="92" cy="60" r="1.2" fill="#c7ccc6"/>
+                <!-- nose -->
+                <path d="M80,62 L77,76 L83,76 Z" fill="none" stroke="#c7ccc6" stroke-width="0.7" opacity="0.55"/>
+                <!-- mouth -->
+                <path d="M70,86 Q80,91 90,86" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.7"/>
+                <!-- detection landmark dots (mesh) -->
+                <g fill="#b084f5" opacity="0.9">
+                  <circle cx="50" cy="55" r="1"/><circle cx="65" cy="47" r="1"/>
+                  <circle cx="80" cy="44" r="1"/><circle cx="95" cy="47" r="1"/>
+                  <circle cx="110" cy="55" r="1"/><circle cx="56" cy="72" r="1"/>
+                  <circle cx="104" cy="72" r="1"/><circle cx="63" cy="92" r="1"/>
+                  <circle cx="80" cy="100" r="1"/><circle cx="97" cy="92" r="1"/>
+                </g>
+                <!-- detection brackets (corner crosshairs) -->
+                <g stroke="#ff5e7a" stroke-width="1.2" fill="none">
+                  <path d="M40,30 L40,38 M40,30 L48,30"/>
+                  <path d="M120,30 L120,38 M120,30 L112,30"/>
+                  <path d="M40,106 L40,98 M40,106 L48,106"/>
+                  <path d="M120,106 L120,98 M120,106 L112,106"/>
+                </g>
+                <!-- lip-sync drift indicator -->
+                <g stroke="#ff5e7a" stroke-dasharray="2 2" stroke-width="0.6" opacity="0.7">
+                  <path d="M70,86 Q80,93 90,86" fill="none"/>
+                </g>
+              </svg>
+            </div>
+            <div class="svc-df-signals">
+              <div class="ttl">Detection signals</div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Face geometry mismatch</span><span class="pct">0.42σ</span></div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Lip-sync drift detected</span><span class="pct">84 ms</span></div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Voice clone (audio anomaly)</span><span class="pct">0.91</span></div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Channel age &lt; 30 days</span><span class="pct">flag</span></div>
+            </div>
+          </div>
+          <div class="svc-df-feed">
+            <div class="ttl">Recent takedowns</div>
+            <div class="svc-df-row">
+              <span class="stamp">REMOVED</span>
+              <div class="body">
+                <span class="ch">@ai-exec-clones · synthetic CEO interview</span>
+                <span class="why">face geometry mismatch · voice clone</span>
+              </div>
+            </div>
+            <div class="svc-df-row">
+              <span class="stamp">REMOVED</span>
+              <div class="body">
+                <span class="ch">@deep-replicas-04 · fake endorsement</span>
+                <span class="why">lip-sync drift · audio fingerprint anomaly</span>
+              </div>
+            </div>
+            <div class="svc-df-row">
+              <span class="stamp">REMOVED</span>
+              <div class="body">
+                <span class="ch">@cloned-voices · AI speech compilation</span>
+                <span class="why">voice clone · channel age &lt; 30 days</span>
+              </div>
+            </div>
+          </div>
+          <div class="svc-df-stat">
+            <div class="c"><div class="l">Flagged · month</div><div class="v">248</div></div>
+            <div class="c"><div class="l">Takedowns filed</div><div class="v"><span class="acc">196</span></div></div>
+            <div class="c"><div class="l">Detection acc.</div><div class="v"><span class="acc">99.4%</span></div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<script>
-// Deepfake-defense split-screen — pause both videos when the section is
-// scrolled off-screen (zero decode cost the rest of the page), and align
-// to t=0 + restart together when it scrolls back in. No per-frame drift
-// correction: the per-frame currentTime seeks were causing choppy
-// playback + CPU pressure on lower-end hardware. The two clips are sliced
-// from the same source so they stay visually in sync naturally.
-(function(){
-  var a = document.querySelector('.df-video-a');
-  var b = document.querySelector('.df-video-b');
-  var frame = document.querySelector('.df-frame');
-  if (!a || !b || !frame) return;
-
-  function bothReady(){return a.readyState >= 3 && b.readyState >= 3;}
-
-  function alignAndPlay(){
-    if (!bothReady()) return;
-    try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
-    a.play().catch(function(){});
-    b.play().catch(function(){});
-  }
-
-  function whenReadyThen(cb){
-    if (bothReady()) { cb(); return; }
-    var fired = false;
-    function maybe(){ if (!fired && bothReady()) { fired = true; cb(); } }
-    a.addEventListener('canplay', maybe, {once:true});
-    b.addEventListener('canplay', maybe, {once:true});
-  }
-
-  // IntersectionObserver: only play when at least 10% of the frame is in
-  // viewport. Saves all video decode CPU/GPU work the rest of the time.
-  var io = new IntersectionObserver(function(entries){
-    if (entries[0].isIntersecting) {
-      whenReadyThen(alignAndPlay);
-    } else {
-      a.pause(); b.pause();
-    }
-  }, {threshold: 0.1});
-  io.observe(frame);
-
-  // Safety net: if either ever fires `ended` (shouldn't with loop=true,
-  // but in case a browser quirks out), restart both together.
-  function restartPair(){
-    a.currentTime = 0; b.currentTime = 0;
-    a.play().catch(function(){});
-    b.play().catch(function(){});
-  }
-  a.addEventListener('ended', restartPair);
-  b.addEventListener('ended', restartPair);
-})();
-</script>
 
 <div class="hairline"></div>
 

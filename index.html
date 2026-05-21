@@ -4325,13 +4325,16 @@ document.addEventListener('DOMContentLoaded',function(){
 .service-visual-chrome .url-accent{color:var(--accent)}
 .service-visual-stage{
   position:relative;
-  aspect-ratio:16/10;
+  /* Removed fixed aspect-ratio — content was being clipped at the bottom on
+     narrower viewports. Stage now grows to fit its inner content. */
+  min-height:340px;
   padding:24px;
   background:
     radial-gradient(1200px circle at 70% 20%, rgba(77,229,196,0.10), transparent 50%),
     radial-gradient(800px circle at 20% 80%, rgba(125,211,252,0.08), transparent 55%),
     linear-gradient(135deg, var(--bg-card) 0%, var(--bg-lift) 100%);
-  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
 /* CLAIMS visual — KPI cards + revenue trend */
@@ -4399,7 +4402,7 @@ document.addEventListener('DOMContentLoaded',function(){
   background:#ff5e7a;box-shadow:0 0 8px rgba(255,94,122,0.5);
   animation:blink 1.4s ease-in-out infinite;
 }
-.svc-block-feed{display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden}
+.svc-block-feed{display:flex;flex-direction:column;gap:8px;flex:1}
 .svc-block-row{
   display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;
   padding:9px 11px;
@@ -5476,7 +5479,7 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="price-card featured">
       <div class="price-head">
         <span class="price-label">01 &middot; Revenue share</span>
-        <span class="price-name">Most partners start here.</span>
+        <span class="price-name">Most clients start here.</span>
       </div>
       <div class="price-amount">
         <strong>% of recovery</strong><span class="unit">no recovery, no fee</span>
@@ -5494,10 +5497,10 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="price-card">
       <div class="price-head">
         <span class="price-label">02 &middot; Flat service fee</span>
-        <span class="price-name">For larger catalogs.</span>
+        <span class="price-name">For larger content libraries.</span>
       </div>
       <div class="price-amount">
-        <strong>Flat monthly fee</strong><span class="unit">scoped per catalog</span>
+        <strong>Flat monthly fee</strong><span class="unit">scoped per content library</span>
       </div>
       <p class="price-desc">Fixed cost. Best when your recovery volume is predictable.</p>
       <ul class="price-features">
@@ -6223,7 +6226,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const target = document.querySelector(href);
     if (!target) return;
     e.preventDefault();
-    const y = target.getBoundingClientRect().top + window.scrollY - 20;
+    // Offset for the fixed nav (~70-80px tall once scrolled).
+    const navEl = document.getElementById('topNav');
+    const navOffset = navEl ? navEl.getBoundingClientRect().height + 12 : 80;
+    const y = target.getBoundingClientRect().top + window.scrollY - navOffset;
     window.scrollTo({ top: y, behavior: 'smooth' });
   });
 });

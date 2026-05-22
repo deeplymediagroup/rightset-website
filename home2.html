@@ -2124,15 +2124,19 @@ footer .f-meta{
 
 .monitor-frame{
   position:relative;
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:0;
+  display:block;
   border:1px solid var(--line-strong);
   background:
     linear-gradient(180deg,rgba(94,234,212,0.02),transparent 30%),
     var(--bg-card);
   overflow:hidden;
-  min-height:520px;
+}
+/* V222.1 — body becomes 2-col so grid is left, log is right (less vertical) */
+.monitor-body{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  position:relative;
+  z-index:2;
 }
 .monitor-frame::before{
   content:"";position:absolute;inset:0;
@@ -2150,7 +2154,7 @@ footer .f-meta{
 }
 @keyframes monitorScan{
   0%{transform:translateY(0)}
-  100%{transform:translateY(520px)}
+  100%{transform:translateY(100vh)}
 }
 
 .monitor-chrome{
@@ -2290,7 +2294,7 @@ footer .f-meta{
 .ms-cell .ms-val.accent{color:var(--accent);text-shadow:0 0 12px var(--accent-glow)}
 
 @media(max-width:860px){
-  .monitor-frame{grid-template-columns:1fr;min-height:0}
+  .monitor-body{grid-template-columns:1fr}
   .monitor-grid-wrap{border-right:none;border-bottom:1px solid var(--line)}
   .asset-grid{grid-template-columns:repeat(10,1fr)}
   .monitor-stats{grid-template-columns:1fr 1fr}
@@ -2724,6 +2728,37 @@ footer .f-meta{
 .hd-ch{color:var(--text);letter-spacing:0.02em;font-size:10.5px}
 .hd-amt{color:var(--accent);font-weight:500;font-size:10.5px;text-align:right}
 .hd-feed-row:nth-child(4) .hd-amt{color:#ff8aa1;font-weight:400;font-size:9.5px}
+
+/* V222.1 — Aliveness animations for dashboard mocks */
+@keyframes valBumpH2{
+  0%{color:var(--text);text-shadow:none}
+  18%{color:var(--accent-bright);text-shadow:0 0 14px var(--accent-glow)}
+  100%{color:var(--text);text-shadow:none}
+}
+.val-bump{animation:valBumpH2 0.65s var(--ease-out)}
+.val-bump-money{animation:valBumpH2 0.65s var(--ease-out)}
+/* Apply bump to the accent-colored values too */
+.svc-block-stat .c .v.val-bump .pos,
+.svc-df-stat .c .v.val-bump .acc,
+.hd-kpi-v.val-bump-money{
+  animation:inherit;
+}
+@keyframes feedRowInH2{
+  0%{opacity:0;transform:translateY(-10px);max-height:0;margin-top:0;padding-top:0;padding-bottom:0;border-width:0}
+  60%{max-height:80px;padding-top:initial;padding-bottom:initial}
+  100%{opacity:1;transform:translateY(0);max-height:80px}
+}
+.fade-in-row{
+  animation:feedRowInH2 0.55s var(--ease-out) forwards;
+}
+@keyframes feedRowOutH2{
+  0%{opacity:1;transform:translateY(0)}
+  100%{opacity:0;transform:translateY(6px)}
+}
+.fade-out-row{
+  animation:feedRowOutH2 0.35s var(--ease-out) forwards;
+  pointer-events:none;
+}
 /* Stacks below the hero copy whenever the two columns would collide */
 @media(max-width:1180px){
   .hero{flex-direction:column}
@@ -6899,6 +6934,163 @@ document.querySelectorAll('.btn').forEach(btn => {
       bg.style.transform = `translateY(${(offset - 0.5) * -15}px)`;
     });
   }, { passive: true });
+})();
+
+/* ===========================================================
+   V222.1 — Aliveness for home2 dashboard mocks
+   Tickers + rotating feed rows for Hero / Claims / Block /
+   Deepfake. Only initialized when those dashboards exist.
+   =========================================================== */
+(function home2Aliveness(){
+  function fmt(n){ return Math.floor(n).toLocaleString('en-US'); }
+  function pulse(el, cls){
+    if(!el) return;
+    cls = cls || 'val-bump';
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+    setTimeout(function(){ el.classList.remove(cls); }, 700);
+  }
+  function tick(opts){
+    var el = opts.el;
+    if(!el) return;
+    var val = opts.start;
+    setInterval(function(){
+      val += (typeof opts.step === 'function') ? opts.step() : opts.step;
+      el.textContent = opts.format ? opts.format(val) : fmt(val);
+      pulse(el, opts.cls || 'val-bump');
+    }, opts.interval);
+  }
+
+  // ----- HERO DASHBOARD -----
+  tick({ el: document.querySelector('.hd-rev'),    start: 24180,  step: function(){ return 2 + Math.floor(Math.random()*14); }, interval: 2400, cls: 'val-bump-money' });
+  tick({ el: document.querySelector('.hd-claims'), start: 12847,  step: function(){ return Math.random()<0.45?1:0; }, interval: 3700 });
+
+  // ----- CLAIMS dashboard KPIs -----
+  var claimKpis = document.querySelectorAll('#claims .svc-claims-kpi .v');
+  if(claimKpis[0]) tick({ el: claimKpis[0], start: 12847,  step: function(){ return Math.random()<0.4?1:0; }, interval: 4100 });
+  if(claimKpis[1]) tick({ el: claimKpis[1], start: 128490, step: function(){ return 1 + Math.floor(Math.random()*8); }, interval: 2800, format: function(v){ return '$' + fmt(v); } });
+
+  // ----- BLOCK dashboard KPIs -----
+  var blockVs = document.querySelectorAll('#block .svc-block-stat .c .v');
+  if(blockVs[0]) tick({ el: blockVs[0], start: 1284, step: function(){ return Math.random()<0.45?1:0; }, interval: 4500 });
+
+  // ----- DEEPFAKE dashboard KPIs -----
+  var dfVs = document.querySelectorAll('#deepfake .svc-df-stat .c .v');
+  if(dfVs[0]) tick({ el: dfVs[0], start: 248, step: function(){ return Math.random()<0.3?1:0; }, interval: 6100 });
+
+  // ----- FEED ROW ROTATION -----
+  function maintainCount(parent, selector, max){
+    var rows = parent.querySelectorAll(selector);
+    while(rows.length > max){
+      var last = rows[rows.length-1];
+      last.classList.add('fade-out-row');
+      setTimeout((function(el){ return function(){ if(el && el.parentNode) el.remove(); }; })(last), 340);
+      rows = parent.querySelectorAll(selector + ':not(.fade-out-row)');
+      if(rows.length <= max) break;
+    }
+  }
+
+  // Hero feed: mix CLAIMED and BLOCKED rows
+  (function heroFeed(){
+    var feed = document.querySelector('.hero-dash-feed');
+    if(!feed) return;
+    var pool = [
+      { type:'claim', ch:'@clip-archive · choreo re-upload',    minA:1500, maxA:4500 },
+      { type:'claim', ch:'@viral-cuts-de · german edit',         minA: 800, maxA:2200 },
+      { type:'claim', ch:'@reaction-zone · clip / react',        minA: 400, maxA:1500 },
+      { type:'claim', ch:'@daily-clips · speech compilation',    minA: 700, maxA:2400 },
+      { type:'claim', ch:'@compilation-x · best-of',             minA:1100, maxA:2900 },
+      { type:'block', ch:'@reup-channel-12 · full re-upload',    block:true },
+      { type:'block', ch:'@scrape-feed-99 · choreo edit',        block:true },
+      { type:'block', ch:'@auto-pirate-04 · speech edit',        block:true }
+    ];
+    setInterval(function(){
+      var item = pool[Math.floor(Math.random()*pool.length)];
+      var row = document.createElement('div');
+      row.className = 'hd-feed-row fade-in-row';
+      if(item.block){
+        row.innerHTML = '<span class="hd-stamp block">BLOCKED</span><span class="hd-ch">'+item.ch+'</span><span class="hd-amt">view denied</span>';
+      } else {
+        var amt = item.minA + Math.floor(Math.random()*(item.maxA-item.minA));
+        row.innerHTML = '<span class="hd-stamp claim">CLAIMED</span><span class="hd-ch">'+item.ch+'</span><span class="hd-amt">+$'+fmt(amt)+'</span>';
+      }
+      var head = feed.querySelector('.hd-feed-head');
+      if(head) head.after(row); else feed.prepend(row);
+      maintainCount(feed, '.hd-feed-row', 3);
+    }, 4800);
+  })();
+
+  // Claims feed
+  (function claimsFeed(){
+    var rows = document.querySelector('#claims .svc-claims-rows');
+    if(!rows) return;
+    var chans = ['@clip-archive','@viral-cuts-de','@daily-clips','@reaction-zone','@compilation-x','@speech-cuts','@react-hub-es'];
+    var kinds = ['choreo re-upload','spanish dub','speech compilation','clip / react','best-of','foreign edit','full episode'];
+    setInterval(function(){
+      var ch = chans[Math.floor(Math.random()*chans.length)];
+      var kd = kinds[Math.floor(Math.random()*kinds.length)];
+      var amt = 500 + Math.floor(Math.random()*4000);
+      var row = document.createElement('div');
+      row.className = 'svc-claims-row fade-in-row';
+      row.innerHTML = '<span><span class="ch">'+ch+'</span> · '+kd+'</span><span class="amt">$'+fmt(amt)+'</span>';
+      rows.prepend(row);
+      maintainCount(rows, '.svc-claims-row', 4);
+    }, 5200);
+  })();
+
+  // Block feed
+  (function blockFeed(){
+    var feed = document.querySelector('#block .svc-block-feed');
+    if(!feed) return;
+    var chans = ['@feedrip','@clip-pirate','@reup-channel','@viralcuts','@scrape-feed','@auto-pirate','@bot-uploader'];
+    var sufs = ['es','de','fr','jp','it','pt-br'];
+    var kinds = ['full re-upload','spanish edit','choreo','best-of clip','speech compilation','clip / react','german edit'];
+    var ages = ['just now','1m ago','3m ago','5m ago','8m ago'];
+    setInterval(function(){
+      var ch = chans[Math.floor(Math.random()*chans.length)];
+      var suf = Math.random()<0.5 ? '-'+sufs[Math.floor(Math.random()*sufs.length)] : '-'+Math.floor(Math.random()*9999);
+      var kd = kinds[Math.floor(Math.random()*kinds.length)];
+      var row = document.createElement('div');
+      row.className = 'svc-block-row fade-in-row';
+      row.innerHTML = '<span class="stamp">BLOCKED</span><span class="ch">'+ch+suf+' · '+kd+'</span><span class="ts">just now</span>';
+      feed.prepend(row);
+      maintainCount(feed, '.svc-block-row', 4);
+      var existing = feed.querySelectorAll('.svc-block-row:not(.fade-out-row)');
+      existing.forEach(function(r, i){
+        var ts = r.querySelector('.ts');
+        if(!ts || i === 0) return;
+        ts.textContent = ages[Math.min(i, ages.length-1)];
+      });
+    }, 5800);
+  })();
+
+  // Deepfake feed
+  (function dfFeed(){
+    var feed = document.querySelector('#deepfake .svc-df-feed');
+    if(!feed) return;
+    var chans = ['@ai-fake-clones','@cloned-voice-09','@deep-replicas','@synthetic-cuts','@ai-clones-02','@fake-exec'];
+    var kinds = ['synthetic interview','fake CEO endorsement','AI speech compilation','cloned-voice excerpt','deepfake announcement','synthetic statement'];
+    var reasons = [
+      'face geometry mismatch · voice clone',
+      'lip-sync drift · audio fingerprint anomaly',
+      'voice clone · channel age < 30 days',
+      'face geometry mismatch · lip-sync drift',
+      'frame-level anomaly · voice clone'
+    ];
+    setInterval(function(){
+      var row = document.createElement('div');
+      row.className = 'svc-df-row fade-in-row';
+      row.innerHTML = '<span class="stamp">REMOVED</span>'
+        + '<div class="body">'
+        + '<span class="ch">'+chans[Math.floor(Math.random()*chans.length)]+' · '+kinds[Math.floor(Math.random()*kinds.length)]+'</span>'
+        + '<span class="why">'+reasons[Math.floor(Math.random()*reasons.length)]+'</span>'
+        + '</div>';
+      var ttl = feed.querySelector('.ttl');
+      if(ttl) ttl.after(row); else feed.prepend(row);
+      maintainCount(feed, '.svc-df-row', 3);
+    }, 7200);
+  })();
 })();
 
 </script>

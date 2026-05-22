@@ -2126,6 +2126,11 @@ footer .f-meta{
   position:relative;
   display:grid;
   grid-template-columns:1.4fr 1fr;
+  grid-template-areas:
+    "chrome chrome"
+    "grid   stats"
+    "grid   log";
+  grid-template-rows:auto auto 1fr;
   gap:0;
   border:1px solid var(--line-strong);
   background:
@@ -2134,6 +2139,10 @@ footer .f-meta{
   overflow:hidden;
   min-height:520px;
 }
+.monitor-chrome{grid-area:chrome}
+.monitor-grid-wrap{grid-area:grid}
+.monitor-stats{grid-area:stats}
+.monitor-log{grid-area:log}
 .monitor-frame::before{
   content:"";position:absolute;inset:0;
   background:
@@ -2154,7 +2163,6 @@ footer .f-meta{
 }
 
 .monitor-chrome{
-  grid-column:1 / -1;
   display:flex;align-items:center;gap:12px;
   padding:14px 20px;
   border-bottom:1px solid var(--line);
@@ -2266,11 +2274,11 @@ footer .f-meta{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:0;
-  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
   position:relative;z-index:2;
 }
 .ms-cell{
-  padding:22px 24px;
+  padding:18px 18px;
   border-right:1px solid var(--line);
 }
 .ms-cell:last-child{border-right:none}
@@ -2281,7 +2289,7 @@ footer .f-meta{
   margin-bottom:8px;
 }
 .ms-cell .ms-val{
-  font-size:clamp(1.3rem,2vw,1.75rem);
+  font-size:clamp(1.15rem,1.7vw,1.55rem);
   font-weight:500;
   letter-spacing:-0.02em;
   color:var(--text);
@@ -2290,10 +2298,20 @@ footer .f-meta{
 .ms-cell .ms-val.accent{color:var(--accent);text-shadow:0 0 12px var(--accent-glow)}
 
 @media(max-width:860px){
-  .monitor-frame{grid-template-columns:1fr;min-height:0}
+  .monitor-frame{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "chrome"
+      "grid"
+      "stats"
+      "log";
+    grid-template-rows:auto auto auto 1fr;
+    min-height:0;
+  }
   .monitor-grid-wrap{border-right:none;border-bottom:1px solid var(--line)}
   .asset-grid{grid-template-columns:repeat(10,1fr)}
-  .monitor-stats{grid-template-columns:1fr 1fr}
+  .monitor-stats{grid-template-columns:1fr 1fr;border-bottom:none}
+  .ms-cell{padding:14px 16px}
   .ms-cell:nth-child(2){border-right:none}
   .ms-cell:nth-child(3){grid-column:1 / -1;border-top:1px solid var(--line);border-right:none}
 }
@@ -4565,6 +4583,28 @@ document.addEventListener('DOMContentLoaded',function(){
   letter-spacing:-0.02em;margin-top:4px;
 }
 .svc-df-stat .c .v .acc{color:var(--accent)}
+
+/* Service-visual mobile responsiveness — keep dashboards readable on small screens */
+@media(max-width:640px){
+  .svc-claims-kpis{grid-template-columns:repeat(2, 1fr);gap:8px}
+  .svc-claims-kpi{padding:11px 10px}
+  .svc-claims-kpi .v{font-size:1.2rem}
+  .svc-df-top{grid-template-columns:1fr;gap:10px}
+  .svc-df-face{min-height:120px;aspect-ratio:16/9}
+  .svc-df-stat .c{padding:9px 10px}
+  .svc-df-stat .c .v{font-size:1rem}
+  .service-visual-stage{padding:18px}
+}
+@media(max-width:380px){
+  .svc-claims-kpis{grid-template-columns:1fr;gap:6px}
+  .svc-claims-kpi{padding:10px 11px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .svc-claims-kpi .l{margin-bottom:0}
+  .svc-claims-kpi .c{margin-top:0;font-size:9px}
+  .svc-df-stat{grid-template-columns:1fr 1fr}
+  .svc-df-stat .c:nth-child(3){grid-column:1/-1}
+  .service-visual-stage{padding:14px}
+  .svc-claims-row, .svc-block-row, .svc-df-row{font-size:9.5px;padding:8px 9px}
+}
 </style>
 
 <section id="claims" class="service-section reveal">
@@ -5155,26 +5195,16 @@ document.addEventListener('DOMContentLoaded',function(){
       <span class="chrome-status"><span class="live-dot"></span>LIVE</span>
     </div>
 
-    <div class="monitor-body">
-      <!-- left: asset grid -->
-      <div class="monitor-grid-wrap">
-        <div class="monitor-label">
-          <span>CONTENT LIBRARY · 996 ASSETS</span>
-          <span id="scanPct">SCANNING · 00%</span>
-        </div>
-        <div class="asset-grid" id="assetGrid" aria-hidden="true"></div>
+    <!-- left: asset grid -->
+    <div class="monitor-grid-wrap">
+      <div class="monitor-label">
+        <span>CONTENT LIBRARY · 996 ASSETS</span>
+        <span id="scanPct">SCANNING · 00%</span>
       </div>
-
-      <!-- right: log stream -->
-      <div class="monitor-log">
-        <div class="monitor-label">
-          <span>EVENT LOG · REAL-TIME</span>
-        </div>
-        <div class="log-stream" id="logStream"></div>
-      </div>
+      <div class="asset-grid" id="assetGrid" aria-hidden="true"></div>
     </div>
 
-    <!-- footer stats -->
+    <!-- right top: stats (moved above event log) -->
     <div class="monitor-stats">
       <div class="ms-cell">
         <div class="ms-lbl">Matches today</div>
@@ -5188,6 +5218,14 @@ document.addEventListener('DOMContentLoaded',function(){
         <div class="ms-lbl">Recovered this month</div>
         <div class="ms-val" id="msPaid">$128,490</div>
       </div>
+    </div>
+
+    <!-- right bottom: log stream -->
+    <div class="monitor-log">
+      <div class="monitor-label">
+        <span>EVENT LOG · REAL-TIME</span>
+      </div>
+      <div class="log-stream" id="logStream"></div>
     </div>
   </div>
 </section>

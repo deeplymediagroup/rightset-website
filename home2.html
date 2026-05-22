@@ -2709,6 +2709,10 @@ footer .f-meta{
 .hd-chart-svg{width:100%;height:90px;display:block}
 .hero-dash-feed{
   display:flex;flex-direction:column;gap:6px;
+  /* Lock height so row rotations don't resize the hero dashboard */
+  height:128px;
+  overflow:hidden;
+  contain:layout;
 }
 .hd-feed-head{
   display:flex;justify-content:space-between;align-items:center;
@@ -2758,20 +2762,21 @@ footer .f-meta{
   animation:inherit;
 }
 @keyframes feedRowInH2{
-  0%{opacity:0;transform:translateY(-10px);max-height:0;margin-top:0;padding-top:0;padding-bottom:0;border-width:0}
-  60%{max-height:80px;padding-top:initial;padding-bottom:initial}
-  100%{opacity:1;transform:translateY(0);max-height:80px}
+  0%{opacity:0;transform:translateY(-8px);max-height:0;padding-top:0;padding-bottom:0;border-width:0;margin-top:-6px}
+  100%{opacity:1;transform:translateY(0);max-height:200px;margin-top:0}
 }
 .fade-in-row{
   animation:feedRowInH2 0.55s var(--ease-out) forwards;
+  overflow:hidden;
 }
 @keyframes feedRowOutH2{
-  0%{opacity:1;transform:translateY(0)}
-  100%{opacity:0;transform:translateY(6px)}
+  0%{opacity:1;transform:translateY(0);max-height:200px;margin-top:0}
+  100%{opacity:0;transform:translateY(6px);max-height:0;padding-top:0;padding-bottom:0;border-width:0;margin-top:-6px}
 }
 .fade-out-row{
-  animation:feedRowOutH2 0.35s var(--ease-out) forwards;
+  animation:feedRowOutH2 0.55s var(--ease-out) forwards;
   pointer-events:none;
+  overflow:hidden;
 }
 /* Stacks below the hero copy whenever the two columns would collide */
 @media(max-width:1180px){
@@ -4442,7 +4447,13 @@ document.addEventListener('DOMContentLoaded',function(){
   text-transform:uppercase;color:var(--text-mute);
   margin-bottom:8px;
 }
-.svc-claims-rows{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.svc-claims-rows{
+  display:flex;flex-direction:column;gap:6px;margin-top:10px;
+  /* Lock height so row rotations don't resize the chart card */
+  height:140px;
+  overflow:hidden;
+  contain:layout;
+}
 .svc-claims-row{
   display:grid;grid-template-columns:1fr auto;gap:10px;
   font-family:var(--mono);font-size:10.5px;color:var(--text-mute);
@@ -4727,7 +4738,15 @@ document.addEventListener('DOMContentLoaded',function(){
 .svc-df-sig .lbl{color:var(--text)}
 .svc-df-sig .pct{color:#ff8aa1;font-weight:500}
 
-.svc-df-feed{display:flex;flex-direction:column;gap:6px}
+.svc-df-feed{
+  display:flex;flex-direction:column;gap:6px;
+  /* Lock height: stable container regardless of row transitions.
+     Transient extra content (during cross-fade) is clipped, so the
+     parent stage never grows or shrinks. */
+  height:184px;
+  overflow:hidden;
+  contain:layout;
+}
 .svc-df-feed .ttl{
   font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
   text-transform:uppercase;color:var(--text-mute);
@@ -7243,7 +7262,9 @@ document.querySelectorAll('.btn').forEach(btn => {
     while(rows.length > max){
       var last = rows[rows.length-1];
       last.classList.add('fade-out-row');
-      setTimeout((function(el){ return function(){ if(el && el.parentNode) el.remove(); }; })(last), 340);
+      // Remove only after the collapse animation finishes, so the new
+      // row's growth and this row's shrink keep the container height stable.
+      setTimeout((function(el){ return function(){ if(el && el.parentNode) el.remove(); }; })(last), 580);
       rows = parent.querySelectorAll(selector + ':not(.fade-out-row)');
       if(rows.length <= max) break;
     }

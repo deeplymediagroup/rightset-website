@@ -61,7 +61,9 @@
     { "source": "/faq", "destination": "/faq.html" },
     { "source": "/licensing", "destination": "/licensing.html" },
     { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/home2", "destination": "/home2.html" }
+    { "source": "/home2", "destination": "/home2.html" },
+    { "source": "/home3", "destination": "/home3.html" },
+    { "source": "/home4", "destination": "/home4.html" }
   ],
   "headers": [
     {

@@ -4921,129 +4921,91 @@ document.addEventListener('DOMContentLoaded',function(){
 }
 
 /* ---- Variant K · split-screen synced videos + paired caption row ---- */
-/* V222.x — reworked Bill Gates split-screen: capped, centered, clearly
-   legible, with bulletproof autoplay (no click-to-play affordance). */
+/* V222.x — Deepfake comparison: single pre-composited 16:9 clip.
+   One <video> (deepfake-billgates.mp4, 853x480) → one reliable autoplay,
+   fills the frame with zero black space, no two-element sync. */
 .df-frame{
   position:relative;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0;
-  max-width:680px;          /* cap so the portrait pair never dominates */
+  max-width:880px;
   margin:0 auto;
+  aspect-ratio:853/480;     /* exact source ratio — no letterboxing */
   border-radius:10px;
   overflow:hidden;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px -40px rgba(0,0,0,0.7);
-  background:#000;
-}
-/* thin divider between the two halves */
-.df-frame::after{
-  content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;
-  transform:translateX(-0.5px);z-index:4;pointer-events:none;
-  background:linear-gradient(180deg,transparent,rgba(247,249,247,0.28),transparent);
-}
-.df-half{
-  position:relative;
-  aspect-ratio:13/15;       /* matches the ~415x480 source clips */
-  overflow:hidden;
   background:#0a0e12;
 }
-.df-half video{
+.df-video{
   position:absolute;inset:0;
   width:100%;height:100%;
-  object-fit:cover;object-position:center top;display:block;
-  pointer-events:none;      /* never clickable — no play affordance */
+  object-fit:cover;display:block;
+  pointer-events:none;      /* no click target — it just runs */
 }
-/* corner tags identifying each side */
-.df-tag{
-  position:absolute;top:11px;left:11px;z-index:5;
-  display:inline-flex;align-items:center;
-  font-family:var(--mono);font-size:9.5px;font-weight:500;
-  letter-spacing:0.13em;text-transform:uppercase;
-  padding:5px 9px;border-radius:3px;
-  background:rgba(10,14,18,0.74);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  color:var(--text);border:1px solid var(--line-strong);
-}
-.df-tag .tdot{
-  width:5px;height:5px;border-radius:50%;margin-right:7px;
-  background:var(--accent);box-shadow:0 0 6px var(--accent-glow);
-}
-.df-tag.danger{
-  color:#ff8aa1;border-color:rgba(255,94,122,0.5);
-  background:rgba(26,10,13,0.74);
-}
-.df-tag.danger .tdot{
-  background:#ff5e7a;box-shadow:0 0 6px rgba(255,94,122,0.6);
-  animation:blink 1.4s ease-in-out infinite;
-}
-/* deepfake side: LIGHT persistent treatment so the clip stays visible
-   (the whole point is "it looks identical"). */
-.df-half.deepfake::before{
-  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(180deg, rgba(255,94,122,0.04), rgba(255,94,122,0.13));
-  box-shadow:inset 0 0 0 1px rgba(255,94,122,0.38);
-}
-/* sweeping scan line = "actively scanning this upload" */
-.df-half.deepfake .df-scan{
+/* teal scan sweep = "actively scanning this upload" (matches Live Monitoring) */
+.df-scan{
   position:absolute;left:0;right:0;height:2px;z-index:3;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(255,94,122,0.75),transparent);
-  box-shadow:0 0 10px rgba(255,94,122,0.5);
-  animation:dfScan 3.4s linear infinite;
+  background:linear-gradient(90deg,transparent,rgba(94,234,212,0.7),transparent);
+  box-shadow:0 0 12px rgba(94,234,212,0.5);
+  animation:dfScan 4s linear infinite;
 }
 @keyframes dfScan{0%{top:-2%}100%{top:102%}}
-.df-stamp{
-  position:absolute;bottom:11px;right:11px;z-index:5;
-  display:inline-flex;align-items:center;gap:7px;
+/* corner status pill (bottom-right, clear of any burned-in top labels) */
+.df-badge{
+  position:absolute;bottom:14px;right:14px;z-index:5;
+  display:inline-flex;align-items:center;gap:8px;
   font-family:var(--mono);font-size:10px;font-weight:600;
-  letter-spacing:0.15em;text-transform:uppercase;
-  color:#ff5e7a;
-  border:1.5px solid #ff5e7a;
-  padding:5px 9px;border-radius:3px;
-  background:rgba(26,10,13,0.78);
+  letter-spacing:0.13em;text-transform:uppercase;
+  color:#ff5e7a;border:1.5px solid #ff5e7a;
+  padding:6px 11px;border-radius:3px;
+  background:rgba(26,10,13,0.8);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   white-space:nowrap;pointer-events:none;
   box-shadow:0 4px 20px rgba(255,94,122,0.25);
 }
-.df-stamp::before{
-  content:"";width:6px;height:6px;border-radius:50%;
-  background:#ff5e7a;box-shadow:0 0 8px rgba(255,94,122,0.7);
+.df-badge-dot{
+  width:6px;height:6px;border-radius:50%;background:#ff5e7a;
+  box-shadow:0 0 8px rgba(255,94,122,0.7);
   animation:blink 1.6s ease-in-out infinite;
 }
+/* meta row — status icon + colored accent border */
 .df-meta{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1px;
-  background:var(--line);
-  margin:18px auto 0;
-  max-width:680px;          /* align with the capped frame */
-  border:1px solid var(--line);
-  border-radius:6px;
-  overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  margin:18px auto 0;max-width:880px;
 }
 .df-meta-cell{
-  background:#11181d;
-  padding:14px 18px;
-  font-family:var(--mono);
-  font-size:12px;
-  line-height:1.6;
-  color:var(--text-mute);
+  position:relative;
+  background:var(--bg-card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:18px 20px 18px 22px;
+  overflow:hidden;
 }
-.df-meta-cell strong{
-  color:var(--text);
-  font-weight:500;
-  display:block;
-  margin-bottom:4px;
-  font-size:13px;
+.df-meta-cell::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--accent);
 }
-.df-meta-cell.danger strong{color:#ff5e7a}
+.df-meta-cell.danger::before{background:#ff5e7a}
+.df-meta-head{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.df-meta-ico{
+  width:18px;height:18px;flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  border:1.5px solid var(--accent);color:var(--accent);
+  font-size:10px;font-weight:700;line-height:1;
+}
+.df-meta-cell.danger .df-meta-ico{border-color:#ff5e7a;color:#ff5e7a}
+.df-meta-title{
+  font-family:var(--sans);font-size:14px;font-weight:600;
+  letter-spacing:-0.01em;color:var(--text);
+}
+.df-meta-cell.danger .df-meta-title{color:#ff8aa1}
+.df-meta-body{
+  font-family:var(--mono);font-size:11.5px;line-height:1.65;
+  color:var(--text-mute);letter-spacing:0.01em;
+}
 @media(max-width:680px){
-  /* keep side-by-side (capped) so the comparison stays intact + compact */
-  .df-frame{max-width:440px}
-  .df-tag{font-size:8.5px;padding:4px 7px;top:8px;left:8px}
-  .df-tag .tdot{margin-right:5px}
-  .df-stamp{font-size:8.5px;padding:4px 7px;bottom:8px;right:8px}
-  .df-meta{grid-template-columns:1fr;max-width:440px}
+  .df-meta{grid-template-columns:1fr;gap:10px}
+  .df-badge{font-size:8.5px;padding:5px 8px;bottom:10px;right:10px}
 }
 </style>
 <section id="deepfake" class="deepfake reveal">
@@ -5053,89 +5015,70 @@ document.addEventListener('DOMContentLoaded',function(){
     <p class="body-lg">AI fakes mislead your audience and dilute your brand. We help you defend what you've built.</p>
   </div>
   <div class="df-frame">
-    <div class="df-half authentic">
-      <video class="df-video-a" src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
-      <span class="df-tag"><span class="tdot"></span>Original</span>
-    </div>
-    <div class="df-half deepfake">
-      <video class="df-video-b" src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
-      <span class="df-scan" aria-hidden="true"></span>
-      <span class="df-tag danger"><span class="tdot"></span>AI Deepfake</span>
-      <span class="df-stamp">Removed</span>
-    </div>
+    <video class="df-video" src="/videos/deepfake-billgates.mp4" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
+    <span class="df-scan" aria-hidden="true"></span>
+    <span class="df-badge"><span class="df-badge-dot"></span>Synthetic detected &middot; takedown filed</span>
   </div>
-
   <div class="df-meta">
     <div class="df-meta-cell">
-      <strong>Authentic</strong>
-      Original Bill Gates interview &middot; audio fingerprint matches public archive &middot; channel verified.
+      <div class="df-meta-head">
+        <span class="df-meta-ico">&check;</span>
+        <span class="df-meta-title">Authentic source</span>
+      </div>
+      <div class="df-meta-body">Audio fingerprint matches the public archive. Channel verified.</div>
     </div>
     <div class="df-meta-cell danger">
-      <strong>Synthetic &mdash; takedown filed</strong>
-      Deepfake audio &middot; face geometry mismatch &middot; lip-sync drift detected &middot; channel age &lt; 30 days.
+      <div class="df-meta-head">
+        <span class="df-meta-ico">!</span>
+        <span class="df-meta-title">Synthetic &mdash; removed</span>
+      </div>
+      <div class="df-meta-body">Face-geometry mismatch and lip-sync drift detected. Channel age under 30 days.</div>
     </div>
   </div>
 </section>
 
 <script>
-// Deepfake split-screen — bulletproof autoplay.
-// Each clip plays INDEPENDENTLY as soon as it can (never gated on both,
-// so a slow-buffering side can't leave the other paused on a play button).
-// Forces muted before play (some browsers require the property), re-kicks
-// on any unexpected pause while in view, and pauses off-screen to save
-// decode. No controls, no click target — it just runs.
+// Deepfake comparison — single composited clip, bulletproof muted autoplay.
+// Plays the moment it can AND whenever the section scrolls into view, and
+// re-starts if the browser ever pauses it. No controls, no click target —
+// it just runs. (Pauses off-screen to save decode.)
 (function(){
-  var a = document.querySelector('.df-video-a');
-  var b = document.querySelector('.df-video-b');
+  var v = document.querySelector('.df-video');
   var frame = document.querySelector('.df-frame');
-  if (!a || !b || !frame) return;
-  var vids = [a, b];
-  var inView = true;
+  if (!v || !frame) return;
 
-  function kick(v){
+  // Force muted state before play() so autoplay policies always allow it.
+  v.muted = true; v.defaultMuted = true; v.setAttribute('muted','');
+  v.playsInline = true;
+
+  var inView = false;
+  function kick(){
+    if (document.hidden || !inView) return;
     var p = v.play();
     if (p && p.catch) p.catch(function(){});
   }
 
-  vids.forEach(function(v){
-    // belt-and-suspenders so autoplay policies always allow it
-    v.muted = true; v.defaultMuted = true; v.setAttribute('muted','');
-    v.playsInline = true;
-    v.addEventListener('loadeddata', function(){ kick(v); });
-    v.addEventListener('canplay',    function(){ kick(v); });
-    // if the browser pauses it (power-save, tab change) and it's in view,
-    // nudge it straight back — keeps it truly automatic
-    v.addEventListener('pause', function(){
-      if (inView && !document.hidden) setTimeout(function(){ kick(v); }, 120);
-    });
-    kick(v);
+  ['loadeddata','canplay','canplaythrough'].forEach(function(ev){
+    v.addEventListener(ev, kick);
   });
 
-  // Align both to t=0 the first time they're each playable, so the opening
-  // frames line up. No per-frame drift correction (kept the loop smooth).
-  var aligned = false;
-  function tryAlign(){
-    if (aligned) return;
-    if (a.readyState >= 2 && b.readyState >= 2){
-      aligned = true;
-      try { a.currentTime = 0; b.currentTime = 0; } catch(e){}
-    }
-  }
-  a.addEventListener('canplay', tryAlign);
-  b.addEventListener('canplay', tryAlign);
-
-  // Pause off-screen for performance; resume (and keep auto) when in view.
+  // Start/stop with viewport visibility — the key fix for
+  // "it didn't autostart when it was on screen".
   if ('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
+    new IntersectionObserver(function(entries){
       inView = entries[0].isIntersecting;
-      vids.forEach(function(v){ inView ? kick(v) : v.pause(); });
-    }, {threshold: 0.12});
-    io.observe(frame);
+      if (inView) kick(); else v.pause();
+    }, {threshold: 0.15}).observe(frame);
+  } else {
+    inView = true; kick();
   }
 
-  // Wake back up when returning to the tab.
+  // If anything pauses it while it should be running, nudge it back.
+  v.addEventListener('pause', function(){
+    if (inView && !document.hidden) setTimeout(kick, 150);
+  });
   document.addEventListener('visibilitychange', function(){
-    if (!document.hidden && inView) vids.forEach(kick);
+    if (!document.hidden && inView) kick();
   });
 })();
 </script>

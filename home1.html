@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rightset — v222.3 (dashboard hero + Bill Gates deepfake)</title>
+<title>Rightset — Turn lost distribution into revenue.</title>
 <meta name="description" content="Rightset finds and monetizes your content wherever it appears on YouTube — especially on channels you don't control. You're already getting the views. We make sure you get paid for them.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -41,8 +41,6 @@
   --accent-deep:#1fc5a3;
   --accent-dim: rgba(77,229,196,0.75);
   --accent-glow:rgba(77,229,196,0.38);
-  /* Danger red — deepfake "REMOVED" stamp + alerts */
-  --danger-bright:#ff8e8e;
   /* Warm peach — kept for small pops only */
   --warm:       #ffb088;
   --warm-dim:   rgba(255,176,136,0.6);
@@ -2169,7 +2167,7 @@ footer .f-meta{
 }
 @keyframes monitorScan{
   0%{transform:translateY(0)}
-  100%{transform:translateY(100vh)}
+  100%{transform:translateY(520px)}
 }
 
 .monitor-chrome{
@@ -2589,222 +2587,6 @@ footer .f-meta{
 <style>
 /* V15: Cinematic hero — large globe, dramatic entrance, data-ticker */
 .hero{ position:relative; overflow:hidden; }
-
-/* V222.1 — HERO DASHBOARD (replaces globe + floating cards on /home2) */
-.hero-dash-wrap{
-  position:absolute;
-  top:50%;
-  right:clamp(20px, 4vw, 80px);
-  transform:translateY(-50%);
-  width:min(640px, 50vw);
-  max-width:calc(100vw - 48px);
-  z-index:1;
-  border:1px solid var(--line);
-  border-radius:8px;
-  background:var(--bg-card);
-  overflow:hidden;
-  box-shadow:0 40px 100px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(77,229,196,0.06);
-  opacity:0;
-  animation:dashFadeIn 0.9s var(--ease-out) 0.15s forwards;
-}
-@keyframes dashFadeIn{
-  0%{opacity:0;transform:translateY(-50%) translateY(20px)}
-  100%{opacity:1;transform:translateY(-50%)}
-}
-.hero-dash-wrap::before{
-  /* subtle glow halo around the dashboard */
-  content:"";position:absolute;inset:-30px;border-radius:14px;
-  background:
-    radial-gradient(600px circle at 70% 30%, rgba(77,229,196,0.15), transparent 60%),
-    radial-gradient(500px circle at 20% 80%, rgba(125,211,252,0.10), transparent 60%);
-  pointer-events:none;
-  z-index:-1;
-}
-.hero-dash-chrome{
-  display:flex;align-items:center;gap:8px;
-  padding:11px 14px;
-  background:var(--bg-lift);
-  border-bottom:1px solid var(--line);
-  font-family:var(--mono);
-  font-size:10.5px;color:var(--text-mute);
-  letter-spacing:0.04em;
-}
-.hero-dash-chrome .hd-dot{
-  width:8.5px;height:8.5px;border-radius:50%;
-  background:rgba(255,255,255,0.18);
-}
-.hero-dash-chrome .hd-url{
-  margin-left:12px;color:var(--text-mute);flex:1;
-}
-.hero-dash-chrome .hd-url-accent{color:var(--accent)}
-.hero-dash-chrome .hd-live{
-  display:inline-flex;align-items:center;gap:7px;
-  font-size:9.5px;letter-spacing:0.16em;color:var(--accent);
-  padding:3px 8px;
-  border:1px solid var(--accent-dim);
-  border-radius:2px;
-  background:rgba(77,229,196,0.05);
-}
-.hero-dash-chrome .hd-live-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--accent);box-shadow:0 0 6px var(--accent-glow);
-  animation:blink 1.6s ease-in-out infinite;
-}
-.hero-dash-stage{
-  padding:18px;
-  display:flex;flex-direction:column;gap:14px;
-  background:
-    radial-gradient(800px circle at 80% 10%, rgba(77,229,196,0.08), transparent 50%),
-    radial-gradient(700px circle at 10% 90%, rgba(125,211,252,0.06), transparent 55%),
-    linear-gradient(160deg, var(--bg-card) 0%, var(--bg-lift) 100%);
-}
-.hero-dash-kpis{
-  display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;
-}
-.hd-kpi{
-  background:rgba(15,20,24,0.6);
-  border:1px solid var(--line);
-  border-radius:4px;
-  padding:12px 11px;
-}
-.hd-kpi-l{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--text-mute);
-  margin-bottom:6px;
-}
-.hd-kpi-v{
-  font-size:1.15rem;font-weight:500;color:var(--text);
-  letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;
-}
-.hd-kpi-c{
-  font-family:var(--mono);font-size:9.5px;color:var(--accent);
-  margin-top:5px;letter-spacing:0.04em;
-}
-.hero-dash-chart{
-  background:rgba(15,20,24,0.6);
-  border:1px solid var(--line);
-  border-radius:4px;
-  padding:14px;
-}
-.hd-chart-head{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:10px;
-}
-.hd-chart-l{
-  font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--text-mute);
-}
-.hd-chart-pill{
-  font-family:var(--mono);font-size:9.5px;letter-spacing:0.08em;
-  color:var(--accent);
-  padding:3px 8px;
-  border:1px solid var(--accent-dim);
-  border-radius:2px;
-  background:rgba(77,229,196,0.05);
-}
-.hd-chart-svg{width:100%;height:90px;display:block}
-.hero-dash-feed{
-  display:flex;flex-direction:column;gap:6px;
-  /* Lock height so row rotations don't resize the hero dashboard */
-  height:128px;
-  overflow:hidden;
-  contain:layout;
-}
-.hd-feed-head{
-  display:flex;justify-content:space-between;align-items:center;
-  font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--text-mute);
-  margin-bottom:2px;
-}
-.hd-feed-meta{color:var(--accent-dim)}
-.hd-feed-row{
-  display:grid;grid-template-columns:auto 1fr auto;gap:10px;
-  align-items:center;
-  padding:8px 10px;
-  background:rgba(15,20,24,0.55);
-  border:1px solid var(--line);
-  border-radius:3px;
-  font-family:var(--mono);font-size:10.5px;
-}
-.hd-stamp{
-  font-size:8.5px;letter-spacing:0.12em;
-  padding:3px 6px;border-radius:2px;
-  text-transform:uppercase;
-}
-.hd-stamp.claim{
-  color:var(--accent);background:rgba(77,229,196,0.06);
-  border:1px solid var(--accent-dim);
-}
-.hd-stamp.block{
-  color:#ff8aa1;background:rgba(255,94,122,0.06);
-  border:1px solid rgba(255,94,122,0.4);
-}
-.hd-ch{color:var(--text);letter-spacing:0.02em;font-size:10.5px}
-.hd-amt{color:var(--accent);font-weight:500;font-size:10.5px;text-align:right}
-.hd-feed-row:nth-child(4) .hd-amt{color:#ff8aa1;font-weight:400;font-size:9.5px}
-
-/* V222.1 — Aliveness animations for dashboard mocks */
-@keyframes valBumpH2{
-  0%{color:var(--text);text-shadow:none}
-  18%{color:var(--accent-bright);text-shadow:0 0 14px var(--accent-glow)}
-  100%{color:var(--text);text-shadow:none}
-}
-.val-bump{animation:valBumpH2 0.65s var(--ease-out)}
-.val-bump-money{animation:valBumpH2 0.65s var(--ease-out)}
-/* Apply bump to the accent-colored values too */
-.svc-block-stat .c .v.val-bump .pos,
-.svc-df-stat .c .v.val-bump .acc,
-.hd-kpi-v.val-bump-money{
-  animation:inherit;
-}
-@keyframes feedRowInH2{
-  0%{opacity:0;transform:translateY(-8px);max-height:0;padding-top:0;padding-bottom:0;border-width:0;margin-top:-6px}
-  100%{opacity:1;transform:translateY(0);max-height:200px;margin-top:0}
-}
-.fade-in-row{
-  animation:feedRowInH2 0.55s var(--ease-out) forwards;
-  overflow:hidden;
-}
-@keyframes feedRowOutH2{
-  0%{opacity:1;transform:translateY(0);max-height:200px;margin-top:0}
-  100%{opacity:0;transform:translateY(6px);max-height:0;padding-top:0;padding-bottom:0;border-width:0;margin-top:-6px}
-}
-.fade-out-row{
-  animation:feedRowOutH2 0.55s var(--ease-out) forwards;
-  pointer-events:none;
-  overflow:hidden;
-}
-/* Stacks below the hero copy whenever the two columns would collide */
-@media(max-width:1180px){
-  .hero{flex-direction:column}
-  .hero-content{order:1}
-  .hero-dash-wrap{
-    order:2;
-    position:static;
-    transform:none;
-    width:100%;
-    max-width:none;
-    margin-top:40px;
-    animation:dashFadeInStatic 0.9s var(--ease-out) 0.15s forwards;
-  }
-  @keyframes dashFadeInStatic{
-    0%{opacity:0;transform:translateY(20px)}
-    100%{opacity:1;transform:translateY(0)}
-  }
-}
-@media(max-width:720px){
-  .hero-dash-kpis{grid-template-columns:repeat(2, 1fr)}
-}
-@media(max-width:520px){
-  .hero-dash-stage{padding:14px;gap:10px}
-  .hero-dash-kpis{gap:8px}
-  .hd-kpi{padding:10px}
-  .hd-kpi-v{font-size:1.05rem}
-}
-/* At wide widths, give a touch more breathing room between text and dash */
-@media(min-width:1181px){
-  .hero-dash-wrap{width:min(620px, 46vw)}
-}
 
 /* Globe wrapper — parallax target */
 .hero-globe-wrap{
@@ -3405,83 +3187,243 @@ footer .f-meta{
 
 <section class="hero">
 
-  <!-- V222.1 — HERO DASHBOARD (replaces globe + floating cards) -->
-  <div class="hero-dash-wrap" aria-hidden="true">
-    <div class="hero-dash-chrome">
-      <span class="hd-dot"></span><span class="hd-dot"></span><span class="hd-dot"></span>
-      <span class="hd-url">studio.rightset.com<span class="hd-url-accent">/overview</span></span>
-      <span class="hd-live"><span class="hd-live-dot"></span>LIVE</span>
+  <!-- FLOATING PARTICLES — depth layer -->
+  <div class="hero-particles" aria-hidden="true">
+    <span class="hero-particle" style="left:5%;  bottom:0; animation-duration:18s; animation-delay:0s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:12%; bottom:0; animation-duration:22s; animation-delay:2s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:22%; bottom:0; animation-duration:16s; animation-delay:4s;  width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:35%; bottom:0; animation-duration:20s; animation-delay:1s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:45%; bottom:0; animation-duration:24s; animation-delay:6s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:55%; bottom:0; animation-duration:19s; animation-delay:3s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:65%; bottom:0; animation-duration:21s; animation-delay:8s;  width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:72%; bottom:0; animation-duration:17s; animation-delay:5s;  width:2.5px; height:2.5px;"></span>
+    <span class="hero-particle" style="left:82%; bottom:0; animation-duration:23s; animation-delay:10s; width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:90%; bottom:0; animation-duration:20s; animation-delay:7s;  width:3px; height:3px;"></span>
+    <span class="hero-particle" style="left:8%;  bottom:0; animation-duration:25s; animation-delay:12s; width:1.5px; height:1.5px;"></span>
+    <span class="hero-particle" style="left:30%; bottom:0; animation-duration:18s; animation-delay:9s;  width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:50%; bottom:0; animation-duration:22s; animation-delay:11s; width:2.5px; height:2.5px;"></span>
+    <span class="hero-particle" style="left:78%; bottom:0; animation-duration:19s; animation-delay:14s; width:2px; height:2px;"></span>
+    <span class="hero-particle" style="left:95%; bottom:0; animation-duration:21s; animation-delay:3s;  width:1.5px; height:1.5px;"></span>
+  </div>
+
+  <!-- V17: FLOATING VIDEO CARDS — real client thumbnails orbiting the globe -->
+  <div class="hero-float-cards" aria-hidden="true">
+    <!-- 1: Kyle Hanagami - Shape of You (249M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/Kl5B6MBAntI/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">249M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · CHOREO</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
     </div>
-    <div class="hero-dash-stage">
-      <div class="hero-dash-kpis">
-        <div class="hd-kpi">
-          <div class="hd-kpi-l">Revenue · month</div>
-          <div class="hd-kpi-v">$<span class="hd-rev">24,180</span></div>
-          <div class="hd-kpi-c">↗ +12.4%</div>
-        </div>
-        <div class="hd-kpi">
-          <div class="hd-kpi-l">Claims · month</div>
-          <div class="hd-kpi-v"><span class="hd-claims">12,847</span></div>
-          <div class="hd-kpi-c">↗ +8.2%</div>
-        </div>
-        <div class="hd-kpi">
-          <div class="hd-kpi-l">Match accuracy</div>
-          <div class="hd-kpi-v">99.98%</div>
-          <div class="hd-kpi-c">↗ stable</div>
-        </div>
-        <div class="hd-kpi">
-          <div class="hd-kpi-l">Next payout</div>
-          <div class="hd-kpi-v">May 1</div>
-          <div class="hd-kpi-c">· monthly</div>
-        </div>
+    <!-- 2: SSSniperWolf Funny TikToks (44M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/ULNFHKeD9KA/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">44M views</div>
       </div>
-      <div class="hero-dash-chart">
-        <div class="hd-chart-head">
-          <span class="hd-chart-l">Revenue · last 30 days</span>
-          <span class="hd-chart-pill">↗ $24K recovered</span>
-        </div>
-        <svg class="hd-chart-svg" viewBox="0 0 800 140" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="hdFill" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%"  stop-color="#4de5c4" stop-opacity=".42"/>
-              <stop offset="100%" stop-color="#4de5c4" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <g stroke="rgba(247,249,247,0.06)" stroke-width="1">
-            <line x1="0" y1="35" x2="800" y2="35"/>
-            <line x1="0" y1="70" x2="800" y2="70"/>
-            <line x1="0" y1="105" x2="800" y2="105"/>
-          </g>
-          <path d="M0,110 L60,98 L120,102 L180,82 L240,76 L300,86 L360,58 L420,54 L480,40 L540,46 L600,28 L660,34 L720,18 L800,10 L800,140 L0,140 Z" fill="url(#hdFill)"/>
-          <path d="M0,110 L60,98 L120,102 L180,82 L240,76 L300,86 L360,58 L420,54 L480,40 L540,46 L600,28 L660,34 L720,18 L800,10"
-                fill="none" stroke="#4de5c4" stroke-width="2"
-                style="filter:drop-shadow(0 0 8px rgba(77,229,196,0.55))"/>
-          <circle cx="800" cy="10" r="3.5" fill="#4de5c4"/>
-        </svg>
+      <div class="float-card-info">
+        <span class="float-card-title">COMPILATION · REACT</span>
+        <span class="float-card-badge">CLAIMED</span>
       </div>
-      <div class="hero-dash-feed">
-        <div class="hd-feed-head">
-          <span class="hd-feed-l">Recent activity</span>
-          <span class="hd-feed-meta">real-time</span>
-        </div>
-        <div class="hd-feed-row">
-          <span class="hd-stamp claim">CLAIMED</span>
-          <span class="hd-ch">@clip-central · choreo re-upload</span>
-          <span class="hd-amt">+$2,840</span>
-        </div>
-        <div class="hd-feed-row">
-          <span class="hd-stamp claim">CLAIMED</span>
-          <span class="hd-ch">@viral-feed-es · spanish dub</span>
-          <span class="hd-amt">+$1,910</span>
-        </div>
-        <div class="hd-feed-row">
-          <span class="hd-stamp block">BLOCKED</span>
-          <span class="hd-ch">@reup-channel-09 · choreo</span>
-          <span class="hd-amt">view denied</span>
-        </div>
+    </div>
+    <!-- 3: Alan Watts - Dreams (82M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/9RMHHwJ9Eqk/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">82M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · LECTURE</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 4: Amazing Cutting Skills (51M) -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/S_tTewiSuOs/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">51M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · VIRAL</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 5: CloeCouture Barbie House (31M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/X1_HFC4XAcI/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">31M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · FULL</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 6: IShowSpeed Scariest TikToks (13M) -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/qVtbb6pzk1Y/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">13M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">REACTION · CLIP</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 7: Jim Rohn "Everything will change" (4.2M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/32KUrAdSrgo/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">4.2M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · SPEECH</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 8: CloeCouture Tiny House (36M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/Iyfo2N5IQB8/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">36M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · FULL</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 9: Try Not To Laugh Top 100 (41M) -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/gXKy3GQJRKA/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">41M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">COMPILATION · BEST OF</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 10: courtreezy TikTok Recipes (12M) -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/ni8-UjA3bNc/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">12M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · REACT</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 11: Jim Rohn at chalkboard (2.1M) — CLIENT -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/YF75cLE-6hI/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">2.1M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">FOREIGN LANG · GR</span>
+        <span class="float-card-badge">CLAIMED</span>
+      </div>
+    </div>
+    <!-- 12: Kinetic Sand ASMR (135M) -->
+    <div class="float-card">
+      <div class="float-card-thumb">
+        <img class="float-card-img" src="https://i.ytimg.com/vi/3clqk2U3T9Y/mqdefault.jpg" alt="" loading="lazy">
+        <div class="float-card-play"></div>
+        <div class="float-card-views">135M views</div>
+      </div>
+      <div class="float-card-info">
+        <span class="float-card-title">RE-UPLOAD · FULL</span>
+        <span class="float-card-badge">CLAIMED</span>
       </div>
     </div>
   </div>
+
+  <!-- GLOBAL GUARDIAN GLOBE — wireframe sphere with scanning sweep + pulsing node network -->
+  <div class="hero-globe-wrap" aria-hidden="true">
+  <div class="hero-globe">
+    <svg class="hero-globe-svg" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="globeAtmo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#5eead4" stop-opacity="0.10"/>
+          <stop offset="55%"  stop-color="#5eead4" stop-opacity="0.025"/>
+          <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="globeSweepGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#5eead4" stop-opacity="0"/>
+          <stop offset="50%"  stop-color="#5eead4" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+        </linearGradient>
+        <clipPath id="globeClip">
+          <circle cx="300" cy="300" r="240"/>
+        </clipPath>
+      </defs>
+
+      <!-- Atmospheric glow -->
+      <circle cx="300" cy="300" r="290" fill="url(#globeAtmo)"/>
+
+      <!-- Main sphere outline -->
+      <circle cx="300" cy="300" r="240" fill="none" stroke="#5eead4" stroke-width="1" opacity="0.4"/>
+
+      <!-- Latitude ellipses (horizontal) -->
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.22">
+        <ellipse cx="300" cy="300" rx="240" ry="40"/>
+        <ellipse cx="300" cy="300" rx="232" ry="100"/>
+        <ellipse cx="300" cy="300" rx="216" ry="160"/>
+        <ellipse cx="300" cy="300" rx="190" ry="210"/>
+      </g>
+
+      <!-- Longitude ellipses (vertical) -->
+      <g fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.18">
+        <ellipse cx="300" cy="300" rx="40"  ry="240"/>
+        <ellipse cx="300" cy="300" rx="100" ry="240"/>
+        <ellipse cx="300" cy="300" rx="160" ry="240"/>
+        <ellipse cx="300" cy="300" rx="210" ry="240"/>
+      </g>
+
+      <!-- Drifting connection arcs between nodes -->
+      <g fill="none" stroke="#5eead4" stroke-width="0.8">
+        <path class="globe-arc"    d="M210,180 Q290,110 380,155"/>
+        <path class="globe-arc a2" d="M180,300 Q300,230 445,265"/>
+        <path class="globe-arc a3" d="M260,405 Q330,475 395,385"/>
+      </g>
+
+      <!-- Pulsing node network -->
+      <g>
+        <circle class="globe-node"     cx="210" cy="180" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n2"  cx="380" cy="155" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n3"  cx="445" cy="265" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n4"  cx="180" cy="300" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n5"  cx="260" cy="405" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n6"  cx="395" cy="385" r="3.2" fill="#5eead4"/>
+        <circle class="globe-node n7"  cx="310" cy="225" r="2"   fill="#f5f5f3"/>
+        <circle class="globe-node n8"  cx="150" cy="370" r="2"   fill="#f5f5f3"/>
+        <circle class="globe-node n9"  cx="420" cy="440" r="2"   fill="#f5f5f3"/>
+        <circle class="globe-node n10" cx="340" cy="475" r="2"   fill="#f5f5f3"/>
+      </g>
+
+      <!-- Horizontal scanning sweep (clipped to sphere) -->
+      <g clip-path="url(#globeClip)">
+        <rect class="globe-sweep" x="-20" y="60" width="40" height="480" fill="url(#globeSweepGrad)"/>
+      </g>
+    </svg>
+  </div>
+  </div><!-- /hero-globe-wrap -->
 
   <div class="hero-content">
     <h1 class="hero-headline">
@@ -4443,13 +4385,7 @@ document.addEventListener('DOMContentLoaded',function(){
   text-transform:uppercase;color:var(--text-mute);
   margin-bottom:8px;
 }
-.svc-claims-rows{
-  display:flex;flex-direction:column;gap:6px;margin-top:10px;
-  /* Lock height so row rotations don't resize the chart card */
-  height:140px;
-  overflow:hidden;
-  contain:layout;
-}
+.svc-claims-rows{display:flex;flex-direction:column;gap:6px;margin-top:10px}
 .svc-claims-row{
   display:grid;grid-template-columns:1fr auto;gap:10px;
   font-family:var(--mono);font-size:10.5px;color:var(--text-mute);
@@ -4513,151 +4449,6 @@ document.addEventListener('DOMContentLoaded',function(){
   letter-spacing:-0.02em;margin-top:4px;
 }
 .svc-block-stat .c .v .pos{color:var(--accent)}
-
-/* V222.1 — Block visual REDESIGN (less redundant vs Claims)
-   Big counter + 24h bar chart + live ticker. Defensive feel: red/pink
-   palette, shield icon, no row-by-row feed. */
-.svc-bv-stage{
-  display:flex;flex-direction:column;gap:12px;
-  height:100%;
-}
-.svc-bv-status{
-  display:grid;grid-template-columns:auto 1fr auto;gap:12px;
-  align-items:center;
-  padding:11px 13px;
-  background:rgba(255,94,122,0.05);
-  border:1px solid rgba(255,94,122,0.22);
-  border-radius:4px;
-}
-.svc-bv-shield{ width:22px; height:22px; flex-shrink:0; }
-.svc-bv-status .meta{min-width:0}
-.svc-bv-status .lbl{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.16em;
-  text-transform:uppercase;color:#ff8aa1;
-  margin-bottom:2px;
-}
-.svc-bv-status .status{
-  font-size:11px;color:var(--text);line-height:1.3;
-}
-.svc-bv-status .live{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:#ff8aa1;
-  padding:3px 8px;background:rgba(255,94,122,0.08);
-  border:1px solid rgba(255,94,122,0.35);
-  border-radius:2px;
-  flex-shrink:0;
-}
-.svc-bv-status .live .dot{
-  width:5px;height:5px;border-radius:50%;background:#ff5e7a;
-  box-shadow:0 0 6px rgba(255,94,122,0.5);
-  animation:blink 1.4s ease-in-out infinite;
-}
-.svc-bv-hero{
-  text-align:center;
-  padding:18px 14px 12px;
-  background:
-    radial-gradient(500px circle at 50% 50%, rgba(255,94,122,0.07), transparent 70%),
-    rgba(15,20,24,0.55);
-  border:1px solid var(--line);
-  border-radius:4px;
-}
-.svc-bv-hero .lbl{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.16em;
-  text-transform:uppercase;color:var(--text-mute);
-  margin-bottom:6px;
-}
-.svc-bv-hero .counter{
-  font-size:clamp(2.3rem, 4.5vw, 3.4rem);
-  font-weight:500;letter-spacing:-0.04em;
-  font-variant-numeric:tabular-nums;
-  color:var(--text);
-  line-height:1;
-}
-.svc-bv-hero .counter.val-bump{
-  animation:valBumpRed 0.65s var(--ease-out);
-}
-@keyframes valBumpRed{
-  0%{color:var(--text);text-shadow:none}
-  18%{color:#ff8aa1;text-shadow:0 0 14px rgba(255,94,122,0.5)}
-  100%{color:var(--text);text-shadow:none}
-}
-.svc-bv-hero .sub{
-  font-family:var(--mono);font-size:10px;
-  color:var(--accent);
-  margin-top:8px;letter-spacing:0.04em;
-}
-.svc-bv-chart{
-  background:rgba(15,20,24,0.6);
-  border:1px solid var(--line);
-  border-radius:4px;
-  padding:12px;
-}
-.svc-bv-chart .ttl{
-  display:flex;justify-content:space-between;align-items:center;
-  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--text-mute);
-  margin-bottom:10px;
-}
-.svc-bv-chart .ttl .peak{color:#ff8aa1}
-.svc-bv-chart .bars{
-  display:flex;align-items:flex-end;gap:3px;
-  height:62px;
-}
-.svc-bv-chart .bar{
-  flex:1;
-  background:linear-gradient(180deg, rgba(255,94,122,0.85), rgba(255,94,122,0.35));
-  border-radius:1px;
-  min-height:5px;
-  transition:height 0.6s var(--ease);
-}
-.svc-bv-chart .bar.active{
-  background:linear-gradient(180deg, #ff8aa1, #ff5e7a);
-  box-shadow:0 0 10px rgba(255,94,122,0.45);
-}
-.svc-bv-chart .axis{
-  display:flex;justify-content:space-between;
-  margin-top:6px;
-  font-family:var(--mono);font-size:8.5px;
-  color:var(--text-dim);letter-spacing:0.1em;
-}
-.svc-bv-latest{
-  display:grid;grid-template-columns:auto 1fr auto;gap:10px;
-  align-items:center;
-  padding:10px 12px;
-  background:rgba(15,20,24,0.55);
-  border:1px solid var(--line);
-  border-radius:3px;
-  margin-top:auto;
-}
-.svc-bv-latest .stamp{
-  font-family:var(--mono);font-size:8.5px;letter-spacing:0.12em;
-  padding:3px 7px;
-  border:1px solid rgba(255,94,122,0.4);
-  color:#ff8aa1;background:rgba(255,94,122,0.06);
-  border-radius:2px;
-}
-.svc-bv-latest .ch{
-  font-family:var(--mono);font-size:10.5px;
-  color:var(--text);letter-spacing:0.02em;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  min-width:0;
-}
-.svc-bv-latest .ts{
-  font-family:var(--mono);font-size:9.5px;
-  color:var(--text-mute);
-  letter-spacing:0.04em;
-}
-@media(max-width:640px){
-  .svc-bv-status{grid-template-columns:auto 1fr;}
-  .svc-bv-status .live{grid-column:1/-1;justify-self:start}
-  .svc-bv-chart .bars{height:52px}
-}
-@media(max-width:380px){
-  .svc-bv-hero{padding:14px 12px 10px}
-  .svc-bv-status{padding:10px 12px}
-  .svc-bv-latest{padding:8px 10px}
-  .svc-bv-latest .ch{font-size:10px}
-}
 
 /* DEEPFAKE visual — Detection log with face-scan illustration */
 .svc-df-stage{
@@ -4734,15 +4525,7 @@ document.addEventListener('DOMContentLoaded',function(){
 .svc-df-sig .lbl{color:var(--text)}
 .svc-df-sig .pct{color:#ff8aa1;font-weight:500}
 
-.svc-df-feed{
-  display:flex;flex-direction:column;gap:6px;
-  /* Lock height: stable container regardless of row transitions.
-     Transient extra content (during cross-fade) is clipped, so the
-     parent stage never grows or shrinks. */
-  height:184px;
-  overflow:hidden;
-  contain:layout;
-}
+.svc-df-feed{display:flex;flex-direction:column;gap:6px}
 .svc-df-feed .ttl{
   font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
   text-transform:uppercase;color:var(--text-mute);
@@ -4874,37 +4657,17 @@ document.addEventListener('DOMContentLoaded',function(){
         <span class="url">studio.rightset.com<span class="url-accent">/block</span></span>
       </div>
       <div class="service-visual-stage">
-        <div class="svc-bv-stage">
-          <div class="svc-bv-status">
-            <svg class="svc-bv-shield" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2 L20 5 V12 C20 17 16 21 12 22 C8 21 4 17 4 12 V5 Z" stroke="#ff5e7a" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M9 12 L11 14 L15 10" stroke="#ff5e7a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="meta">
-              <div class="lbl">Active enforcement</div>
-              <div class="status">Blocking unauthorized uploads in real time</div>
-            </div>
-            <span class="live"><span class="dot"></span>LIVE</span>
+        <div class="svc-block-stage">
+          <div class="svc-block-banner">Active enforcement · blocking re-uploads</div>
+          <div class="svc-block-feed">
+            <div class="svc-block-row"><span class="stamp">BLOCKED</span><span class="ch">@feedrip-7421 · full re-upload</span><span class="ts">just now</span></div>
+            <div class="svc-block-row"><span class="stamp">BLOCKED</span><span class="ch">@clip-pirate-es · spanish edit</span><span class="ts">2m ago</span></div>
+            <div class="svc-block-row"><span class="stamp">BLOCKED</span><span class="ch">@reup-channel-09 · choreo</span><span class="ts">5m ago</span></div>
+            <div class="svc-block-row"><span class="stamp">BLOCKED</span><span class="ch">@viralcuts · best-of clip</span><span class="ts">8m ago</span></div>
           </div>
-          <div class="svc-bv-hero">
-            <div class="lbl">Attempts blocked · today</div>
-            <div class="counter" id="bvCounter">1,284</div>
-            <div class="sub"><span id="bvViews">8.4M</span> views never earned by bad actors</div>
-          </div>
-          <div class="svc-bv-chart">
-            <div class="ttl">
-              <span>Blocks · last 24 hours</span>
-              <span class="peak">Peak <span id="bvPeak">142</span>/hr</span>
-            </div>
-            <div class="bars" id="bvBars"></div>
-            <div class="axis">
-              <span>−24h</span><span>−18h</span><span>−12h</span><span>−6h</span><span>now</span>
-            </div>
-          </div>
-          <div class="svc-bv-latest">
-            <span class="stamp">BLOCKED</span>
-            <span class="ch" id="bvLatestCh">@feedrip-7421 · full re-upload</span>
-            <span class="ts" id="bvLatestTs">just now</span>
+          <div class="svc-block-stat">
+            <div class="c"><div class="l">Blocked today</div><div class="v">1,284</div></div>
+            <div class="c"><div class="l">Views prevented</div><div class="v"><span class="pos">8.4M</span></div></div>
           </div>
         </div>
       </div>
@@ -5251,86 +5014,112 @@ document.addEventListener('DOMContentLoaded',function(){
   .df-meta{grid-template-columns:1fr}
 }
 </style>
-<section id="deepfake" class="deepfake reveal">
-  <div class="deepfake-head">
-    <div class="kicker">Services · Deepfake Defense</div>
-    <h2 class="h1">When AI pretends to be you,<br>we help you take it down.</h2>
-    <p class="body-lg">AI fakes mislead your audience and dilute your brand. We help you defend what you've built.</p>
-  </div>
-  <div class="df-frame">
-    <div class="df-half authentic">
-      <video class="df-video-a" src="/videos/billgates-original.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+<section id="deepfake" class="service-section reveal">
+  <div class="service-grid">
+    <div class="service-content">
+      <div class="kicker">Services · Deepfake Defense</div>
+      <h2 class="h1">When AI pretends to be you,<br>we help you <span class="accent-word">take it down</span>.</h2>
+      <p class="service-body">AI fakes mislead your audience and dilute your brand. We help you defend what you've built — synthetic voices, face swaps, and unauthorized AI re-uses of your likeness, removed from YouTube.</p>
+      <div class="service-cta-row">
+        <a href="#audit" class="service-cta">Book a demo <span class="arrow">→</span></a>
+      </div>
     </div>
-    <div class="df-half deepfake">
-      <video class="df-video-b" src="/videos/billgates-deepfake.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
-      <span class="df-stamp">REMOVED</span>
-    </div>
-  </div>
-
-  <div class="df-meta">
-    <div class="df-meta-cell">
-      <strong>Authentic</strong>
-      Original Bill Gates interview &middot; audio fingerprint matches public archive &middot; channel verified.
-    </div>
-    <div class="df-meta-cell danger">
-      <strong>Synthetic &mdash; takedown filed</strong>
-      Deepfake audio &middot; face geometry mismatch &middot; lip-sync drift detected &middot; channel age &lt; 30 days.
+    <div class="service-visual" aria-hidden="true">
+      <div class="service-visual-chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url">studio.rightset.com<span class="url-accent">/deepfake</span></span>
+      </div>
+      <div class="service-visual-stage">
+        <div class="svc-df-stage">
+          <div class="svc-df-top">
+            <div class="svc-df-face">
+              <span class="stamp">SYNTHETIC</span>
+              <span class="scan-beam"></span>
+              <!-- Stylized face wireframe with detection markers -->
+              <svg viewBox="0 0 160 130" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <radialGradient id="dfFaceGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#b084f5" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#b084f5" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="160" height="130" fill="url(#dfFaceGlow)"/>
+                <!-- face outline -->
+                <ellipse cx="80" cy="68" rx="34" ry="42" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.65"/>
+                <!-- jaw -->
+                <path d="M52,78 Q80,108 108,78" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.55"/>
+                <!-- eyes -->
+                <ellipse cx="68" cy="60" rx="5" ry="2.4" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.8"/>
+                <ellipse cx="92" cy="60" rx="5" ry="2.4" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.8"/>
+                <circle cx="68" cy="60" r="1.2" fill="#c7ccc6"/>
+                <circle cx="92" cy="60" r="1.2" fill="#c7ccc6"/>
+                <!-- nose -->
+                <path d="M80,62 L77,76 L83,76 Z" fill="none" stroke="#c7ccc6" stroke-width="0.7" opacity="0.55"/>
+                <!-- mouth -->
+                <path d="M70,86 Q80,91 90,86" fill="none" stroke="#c7ccc6" stroke-width="0.8" opacity="0.7"/>
+                <!-- detection landmark dots (mesh) -->
+                <g fill="#b084f5" opacity="0.9">
+                  <circle cx="50" cy="55" r="1"/><circle cx="65" cy="47" r="1"/>
+                  <circle cx="80" cy="44" r="1"/><circle cx="95" cy="47" r="1"/>
+                  <circle cx="110" cy="55" r="1"/><circle cx="56" cy="72" r="1"/>
+                  <circle cx="104" cy="72" r="1"/><circle cx="63" cy="92" r="1"/>
+                  <circle cx="80" cy="100" r="1"/><circle cx="97" cy="92" r="1"/>
+                </g>
+                <!-- detection brackets (corner crosshairs) -->
+                <g stroke="#ff5e7a" stroke-width="1.2" fill="none">
+                  <path d="M40,30 L40,38 M40,30 L48,30"/>
+                  <path d="M120,30 L120,38 M120,30 L112,30"/>
+                  <path d="M40,106 L40,98 M40,106 L48,106"/>
+                  <path d="M120,106 L120,98 M120,106 L112,106"/>
+                </g>
+                <!-- lip-sync drift indicator -->
+                <g stroke="#ff5e7a" stroke-dasharray="2 2" stroke-width="0.6" opacity="0.7">
+                  <path d="M70,86 Q80,93 90,86" fill="none"/>
+                </g>
+              </svg>
+            </div>
+            <div class="svc-df-signals">
+              <div class="ttl">Detection signals</div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Face geometry mismatch</span><span class="pct">0.42σ</span></div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Lip-sync drift detected</span><span class="pct">84 ms</span></div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Voice clone (audio anomaly)</span><span class="pct">0.91</span></div>
+              <div class="svc-df-sig"><span class="ico"></span><span class="lbl">Channel age &lt; 30 days</span><span class="pct">flag</span></div>
+            </div>
+          </div>
+          <div class="svc-df-feed">
+            <div class="ttl">Recent takedowns</div>
+            <div class="svc-df-row">
+              <span class="stamp">REMOVED</span>
+              <div class="body">
+                <span class="ch">@ai-exec-clones · synthetic CEO interview</span>
+                <span class="why">face geometry mismatch · voice clone</span>
+              </div>
+            </div>
+            <div class="svc-df-row">
+              <span class="stamp">REMOVED</span>
+              <div class="body">
+                <span class="ch">@deep-replicas-04 · fake endorsement</span>
+                <span class="why">lip-sync drift · audio fingerprint anomaly</span>
+              </div>
+            </div>
+            <div class="svc-df-row">
+              <span class="stamp">REMOVED</span>
+              <div class="body">
+                <span class="ch">@cloned-voices · AI speech compilation</span>
+                <span class="why">voice clone · channel age &lt; 30 days</span>
+              </div>
+            </div>
+          </div>
+          <div class="svc-df-stat">
+            <div class="c"><div class="l">Flagged · month</div><div class="v">248</div></div>
+            <div class="c"><div class="l">Takedowns filed</div><div class="v"><span class="acc">196</span></div></div>
+            <div class="c"><div class="l">Detection acc.</div><div class="v"><span class="acc">99.4%</span></div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<script>
-// Deepfake-defense split-screen — pause both videos when the section is
-// scrolled off-screen (zero decode cost the rest of the page), and align
-// to t=0 + restart together when it scrolls back in. No per-frame drift
-// correction: the per-frame currentTime seeks were causing choppy
-// playback + CPU pressure on lower-end hardware. The two clips are sliced
-// from the same source so they stay visually in sync naturally.
-(function(){
-  var a = document.querySelector('.df-video-a');
-  var b = document.querySelector('.df-video-b');
-  var frame = document.querySelector('.df-frame');
-  if (!a || !b || !frame) return;
-
-  function bothReady(){return a.readyState >= 3 && b.readyState >= 3;}
-
-  function alignAndPlay(){
-    if (!bothReady()) return;
-    try { a.pause(); b.pause(); a.currentTime = 0; b.currentTime = 0; } catch(e){}
-    a.play().catch(function(){});
-    b.play().catch(function(){});
-  }
-
-  function whenReadyThen(cb){
-    if (bothReady()) { cb(); return; }
-    var fired = false;
-    function maybe(){ if (!fired && bothReady()) { fired = true; cb(); } }
-    a.addEventListener('canplay', maybe, {once:true});
-    b.addEventListener('canplay', maybe, {once:true});
-  }
-
-  // IntersectionObserver: only play when at least 10% of the frame is in
-  // viewport. Saves all video decode CPU/GPU work the rest of the time.
-  var io = new IntersectionObserver(function(entries){
-    if (entries[0].isIntersecting) {
-      whenReadyThen(alignAndPlay);
-    } else {
-      a.pause(); b.pause();
-    }
-  }, {threshold: 0.1});
-  io.observe(frame);
-
-  // Safety net: if either ever fires `ended` (shouldn't with loop=true,
-  // but in case a browser quirks out), restart both together.
-  function restartPair(){
-    a.currentTime = 0; b.currentTime = 0;
-    a.play().catch(function(){});
-    b.play().catch(function(){});
-  }
-  a.addEventListener('ended', restartPair);
-  b.addEventListener('ended', restartPair);
-})();
-</script>
 
 <div class="hairline"></div>
 
@@ -7122,200 +6911,6 @@ document.querySelectorAll('.btn').forEach(btn => {
       bg.style.transform = `translateY(${(offset - 0.5) * -15}px)`;
     });
   }, { passive: true });
-})();
-
-/* ===========================================================
-   V222.1 — Aliveness for home2 dashboard mocks
-   Tickers + rotating feed rows for Hero / Claims / Block /
-   Deepfake. Only initialized when those dashboards exist.
-   =========================================================== */
-(function home2Aliveness(){
-  function fmt(n){ return Math.floor(n).toLocaleString('en-US'); }
-  function pulse(el, cls){
-    if(!el) return;
-    cls = cls || 'val-bump';
-    el.classList.remove(cls);
-    void el.offsetWidth;
-    el.classList.add(cls);
-    setTimeout(function(){ el.classList.remove(cls); }, 700);
-  }
-  function tick(opts){
-    var el = opts.el;
-    if(!el) return;
-    var val = opts.start;
-    setInterval(function(){
-      val += (typeof opts.step === 'function') ? opts.step() : opts.step;
-      el.textContent = opts.format ? opts.format(val) : fmt(val);
-      pulse(el, opts.cls || 'val-bump');
-    }, opts.interval);
-  }
-
-  // ----- HERO DASHBOARD -----
-  tick({ el: document.querySelector('.hd-rev'),    start: 24180,  step: function(){ return 2 + Math.floor(Math.random()*14); }, interval: 2400, cls: 'val-bump-money' });
-  tick({ el: document.querySelector('.hd-claims'), start: 12847,  step: function(){ return Math.random()<0.45?1:0; }, interval: 3700 });
-
-  // ----- CLAIMS dashboard KPIs -----
-  var claimKpis = document.querySelectorAll('#claims .svc-claims-kpi .v');
-  if(claimKpis[0]) tick({ el: claimKpis[0], start: 12847,  step: function(){ return Math.random()<0.4?1:0; }, interval: 4100 });
-  if(claimKpis[1]) tick({ el: claimKpis[1], start: 128490, step: function(){ return 1 + Math.floor(Math.random()*8); }, interval: 2800, format: function(v){ return '$' + fmt(v); } });
-
-  // ----- BLOCK visual: counter, views-prevented, bar chart, ticker -----
-  var bvCounter = document.getElementById('bvCounter');
-  var bvViews   = document.getElementById('bvViews');
-  var bvLatestCh= document.getElementById('bvLatestCh');
-  var bvLatestTs= document.getElementById('bvLatestTs');
-  var bvBars    = document.getElementById('bvBars');
-  if(bvBars){
-    // Generate 24 bars approximating a daily activity curve
-    var basePattern = [22,18,15,17,25,38,52,68,78,86,92,88,84,80,75,72,68,62,55,60,68,62,52,48];
-    basePattern.forEach(function(h, i){
-      var b = document.createElement('span');
-      b.className = 'bar' + (i === 23 ? ' active' : '');
-      b.style.height = h + '%';
-      bvBars.appendChild(b);
-    });
-  }
-  if(bvCounter){
-    var bvCount = 1284;
-    setInterval(function(){
-      if(Math.random() < 0.6){
-        bvCount += 1;
-        bvCounter.textContent = fmt(bvCount);
-        pulse(bvCounter, 'val-bump');
-        // gently grow the active bar
-        var act = bvBars && bvBars.querySelector('.bar.active');
-        if(act){
-          var h = 70 + Math.floor(Math.random()*25);
-          act.style.height = h + '%';
-        }
-      }
-    }, 4200);
-  }
-  // Views prevented — slow upward drift in M
-  if(bvViews){
-    var bvM = 8.4;
-    setInterval(function(){
-      bvM += 0.01 + Math.random()*0.03;
-      bvViews.textContent = bvM.toFixed(1) + 'M';
-    }, 5500);
-  }
-  // Latest blocked ticker — rotate channel + reset timestamp
-  if(bvLatestCh && bvLatestTs){
-    var bvAge = 0;
-    var bvChans  = ['@feedrip','@clip-pirate','@reup-channel','@viralcuts','@scrape-feed','@auto-pirate','@bot-uploader','@cdn-mirror'];
-    var bvSufs   = ['es','de','fr','jp','it','pt-br'];
-    var bvKinds  = ['full re-upload','spanish edit','choreo','best-of clip','speech compilation','clip / react','german edit'];
-    function rotateLatest(){
-      var c = bvChans[Math.floor(Math.random()*bvChans.length)];
-      var s = Math.random()<0.5 ? '-'+bvSufs[Math.floor(Math.random()*bvSufs.length)] : '-'+Math.floor(Math.random()*9999);
-      var k = bvKinds[Math.floor(Math.random()*bvKinds.length)];
-      bvLatestCh.textContent = c + s + ' · ' + k;
-      bvLatestTs.textContent = 'just now';
-      bvAge = 0;
-    }
-    // tick the timestamp every second
-    setInterval(function(){
-      bvAge += 1;
-      if(bvAge < 60)       bvLatestTs.textContent = bvAge + 's ago';
-      else if(bvAge < 3600) bvLatestTs.textContent = Math.floor(bvAge/60) + 'm ago';
-    }, 1000);
-    setInterval(rotateLatest, 6500);
-  }
-
-  // ----- DEEPFAKE dashboard KPIs -----
-  var dfVs = document.querySelectorAll('#deepfake .svc-df-stat .c .v');
-  if(dfVs[0]) tick({ el: dfVs[0], start: 248, step: function(){ return Math.random()<0.3?1:0; }, interval: 6100 });
-
-  // ----- FEED ROW ROTATION -----
-  function maintainCount(parent, selector, max){
-    var rows = parent.querySelectorAll(selector);
-    while(rows.length > max){
-      var last = rows[rows.length-1];
-      last.classList.add('fade-out-row');
-      // Remove only after the collapse animation finishes, so the new
-      // row's growth and this row's shrink keep the container height stable.
-      setTimeout((function(el){ return function(){ if(el && el.parentNode) el.remove(); }; })(last), 580);
-      rows = parent.querySelectorAll(selector + ':not(.fade-out-row)');
-      if(rows.length <= max) break;
-    }
-  }
-
-  // Hero feed: mix CLAIMED and BLOCKED rows
-  (function heroFeed(){
-    var feed = document.querySelector('.hero-dash-feed');
-    if(!feed) return;
-    var pool = [
-      { type:'claim', ch:'@clip-archive · choreo re-upload',    minA:1500, maxA:4500 },
-      { type:'claim', ch:'@viral-cuts-de · german edit',         minA: 800, maxA:2200 },
-      { type:'claim', ch:'@reaction-zone · clip / react',        minA: 400, maxA:1500 },
-      { type:'claim', ch:'@daily-clips · speech compilation',    minA: 700, maxA:2400 },
-      { type:'claim', ch:'@compilation-x · best-of',             minA:1100, maxA:2900 },
-      { type:'block', ch:'@reup-channel-12 · full re-upload',    block:true },
-      { type:'block', ch:'@scrape-feed-99 · choreo edit',        block:true },
-      { type:'block', ch:'@auto-pirate-04 · speech edit',        block:true }
-    ];
-    setInterval(function(){
-      var item = pool[Math.floor(Math.random()*pool.length)];
-      var row = document.createElement('div');
-      row.className = 'hd-feed-row fade-in-row';
-      if(item.block){
-        row.innerHTML = '<span class="hd-stamp block">BLOCKED</span><span class="hd-ch">'+item.ch+'</span><span class="hd-amt">view denied</span>';
-      } else {
-        var amt = item.minA + Math.floor(Math.random()*(item.maxA-item.minA));
-        row.innerHTML = '<span class="hd-stamp claim">CLAIMED</span><span class="hd-ch">'+item.ch+'</span><span class="hd-amt">+$'+fmt(amt)+'</span>';
-      }
-      var head = feed.querySelector('.hd-feed-head');
-      if(head) head.after(row); else feed.prepend(row);
-      maintainCount(feed, '.hd-feed-row', 3);
-    }, 4800);
-  })();
-
-  // Claims feed
-  (function claimsFeed(){
-    var rows = document.querySelector('#claims .svc-claims-rows');
-    if(!rows) return;
-    var chans = ['@clip-archive','@viral-cuts-de','@daily-clips','@reaction-zone','@compilation-x','@speech-cuts','@react-hub-es'];
-    var kinds = ['choreo re-upload','spanish dub','speech compilation','clip / react','best-of','foreign edit','full episode'];
-    setInterval(function(){
-      var ch = chans[Math.floor(Math.random()*chans.length)];
-      var kd = kinds[Math.floor(Math.random()*kinds.length)];
-      var amt = 500 + Math.floor(Math.random()*4000);
-      var row = document.createElement('div');
-      row.className = 'svc-claims-row fade-in-row';
-      row.innerHTML = '<span><span class="ch">'+ch+'</span> · '+kd+'</span><span class="amt">$'+fmt(amt)+'</span>';
-      rows.prepend(row);
-      maintainCount(rows, '.svc-claims-row', 4);
-    }, 5200);
-  })();
-
-  // Block feed — handled inline above via bv-latest ticker (visual redesign)
-
-  // Deepfake feed
-  (function dfFeed(){
-    var feed = document.querySelector('#deepfake .svc-df-feed');
-    if(!feed) return;
-    var chans = ['@ai-fake-clones','@cloned-voice-09','@deep-replicas','@synthetic-cuts','@ai-clones-02','@fake-exec'];
-    var kinds = ['synthetic interview','fake CEO endorsement','AI speech compilation','cloned-voice excerpt','deepfake announcement','synthetic statement'];
-    var reasons = [
-      'face geometry mismatch · voice clone',
-      'lip-sync drift · audio fingerprint anomaly',
-      'voice clone · channel age < 30 days',
-      'face geometry mismatch · lip-sync drift',
-      'frame-level anomaly · voice clone'
-    ];
-    setInterval(function(){
-      var row = document.createElement('div');
-      row.className = 'svc-df-row fade-in-row';
-      row.innerHTML = '<span class="stamp">REMOVED</span>'
-        + '<div class="body">'
-        + '<span class="ch">'+chans[Math.floor(Math.random()*chans.length)]+' · '+kinds[Math.floor(Math.random()*kinds.length)]+'</span>'
-        + '<span class="why">'+reasons[Math.floor(Math.random()*reasons.length)]+'</span>'
-        + '</div>';
-      var ttl = feed.querySelector('.ttl');
-      if(ttl) ttl.after(row); else feed.prepend(row);
-      maintainCount(feed, '.svc-df-row', 3);
-    }, 7200);
-  })();
 })();
 
 </script>

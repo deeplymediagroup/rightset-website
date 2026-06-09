@@ -2532,7 +2532,7 @@ footer .f-meta{
 
 /* Accessibility fallback for reduced motion */
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}
   .reveal,.reveal-left,.reveal-right,.reveal-scale{opacity:1;transform:none !important}
   .stagger-children > *{opacity:1;transform:none}
   .hero-headline .word{opacity:1;transform:none}
